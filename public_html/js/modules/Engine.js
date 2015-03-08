@@ -1,16 +1,24 @@
-define(["InputHandler","Game"], function(inputHandler,game) {
+define(["InputHandler","Game"], function(inputHandler,Game) {
     return {
+        
+        game: {},
+        context:{},
         init: function() {
             inputHandler.init();
-            this.mainLoop();
+            var game = new Game();
+            
+            game.init();
+            
+            this.mainLoop(game);
         },
-        mainLoop: function() {
-            var mainLoop = window.setInterval(this.checkKeyState, 40);
+        mainLoop: function(game) {
+            var mainLoop = window.setInterval(this.mainLoopActions,40,game);
         },
-        mainLoopaActions: function(){
-            this.dispatchAction(); 
-            this.updateGame();
-            this.redraw();
+        mainLoopActions: function(game){
+            
+            this.context = game.getContext();
+            this.context.update(inputHandler,game);
+            this.context.redraw(inputHandler);
             
         },
         updateActors: function() 

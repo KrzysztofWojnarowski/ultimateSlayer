@@ -15,9 +15,19 @@ define(["Controlls"], function(controlls) {
             return keyMap;
         };
         this.keyMap = {};
+        /**
+         * 
+         * @returns {undefined}
+         */
         this.init = function() {
             this.keyMap = this.bindControlls();
         };
+        /**
+         * 
+         * @param {type} e
+         * @param {type} state
+         * @returns {undefined}
+         */
         this.setKey = function(e, state) {
 
             for (var x in this.keyMap) {
@@ -27,6 +37,10 @@ define(["Controlls"], function(controlls) {
                 }
             }
         };
+        /**
+         * return array of pressed keys empty if none
+         * @returns {Array}
+         */
         this.getKeysPressed = function() {
             var ret = [];
             for (var x in this.keyMap) {
