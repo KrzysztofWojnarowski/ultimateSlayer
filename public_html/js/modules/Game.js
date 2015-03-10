@@ -1,4 +1,4 @@
-define(["GameplayContext", "MenuContext"], function(GameplayContext, MenuContext) {
+define(["GameplayContext", "MenuContext", "LoadingContext"], function(GameplayContext, MenuContext, LoadingContext) {
 
     /**
      * init - load all needed stuff, show preloader etc
@@ -10,14 +10,18 @@ define(["GameplayContext", "MenuContext"], function(GameplayContext, MenuContext
     var Game = function() {
         this.context = {};
         this.contextCollection = [];
+        this.currentLevel ={};
+        
 
         this.init = function() {
             console.log("Initializing game object");
             this.contextCollection = {
-                menuContext:new MenuContext(this),
-                gameplayContext:new GameplayContext(this)
+                loadingContext: new LoadingContext(this),
+                menuContext: new MenuContext(this),
+                gameplayContext: new GameplayContext(this)
             };
-            this.context = this.contextCollection[0];
+
+            this.context = this.contextCollection.loadingContext;
         };
         this.getContext = function() {
             return this.context;
@@ -25,7 +29,7 @@ define(["GameplayContext", "MenuContext"], function(GameplayContext, MenuContext
         this.setContext = function(context) {
             this.context = this.contextCollection[context];
         };
-        
+
     };
     return (Game);
 

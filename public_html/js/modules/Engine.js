@@ -1,4 +1,4 @@
-define(["InputHandler","Game"], function(inputHandler,Game) {
+define(["InputHandler","Game","Viewport","config"], function(inputHandler,Game,ViewPort,config) {
     return {
         
         game: {},
@@ -6,15 +6,16 @@ define(["InputHandler","Game"], function(inputHandler,Game) {
         init: function() {
             inputHandler.init();
             var game = new Game();
+            var viewPort = new ViewPort();
             
+            viewPort.init(config.viewPort);
             game.init();
-            
-            this.mainLoop(game);
+           this.mainLoop(game,viewPort);
         },
-        mainLoop: function(game) {
-            var mainLoop = window.setInterval(this.mainLoopActions,40,game);
+        mainLoop: function(game,viewPort) {
+            var mainLoop = window.setInterval(this.mainLoopActions,40,game,viewPort);
         },
-        mainLoopActions: function(game){
+        mainLoopActions: function(game,viewPort){
             
             this.context = game.getContext();
             this.context.update(inputHandler,game);

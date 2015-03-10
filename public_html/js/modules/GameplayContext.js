@@ -12,7 +12,7 @@ define(function(gameInstance){
                     game.setContext("MenuContext");
                 }
             }
-            console.log("updateing Gameplay");
+            console.log("updating Gameplay");
         };
     
     };
