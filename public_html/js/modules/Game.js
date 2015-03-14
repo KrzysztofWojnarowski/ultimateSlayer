@@ -29,6 +29,9 @@ define(["GameplayContext", "MenuContext", "LoadingContext"], function(GameplayCo
         this.setContext = function(context) {
             this.context = this.contextCollection[context];
         };
+        this.getLevel = function(){
+            return this.currentLevel;
+        };
 
     };
     return (Game);

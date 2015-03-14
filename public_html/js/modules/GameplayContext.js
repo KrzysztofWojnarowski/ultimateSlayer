@@ -1,8 +1,11 @@
 define(function(gameInstance){
    
     var GameplayContext = function(){
-        this.redraw = function(){
-            console.log("redrawing Gameplay");
+        this.redraw = function(InputHandler,game,viewport){
+            var level = game.getLevel();
+            
+            viewport.drawLevel(level);
+           
         };
         
         this.update = function(inputHandler,game){
@@ -12,7 +15,12 @@ define(function(gameInstance){
                     game.setContext("MenuContext");
                 }
             }
-            console.log("updating Gameplay");
+           
+            
+        };
+        
+        this.buildStage = function(){
+           
         };
     
     };
