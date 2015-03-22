@@ -1,7 +1,7 @@
 define({
     set: [{
             index: 0,
-            backgroundImage: "assets/bg1Level.jpg",
+            backgroundImage: "assets/bg1.jpg",
             foregroundImage: "assets/level0F.png",
             viewPortInitial: {
                 x: 0,

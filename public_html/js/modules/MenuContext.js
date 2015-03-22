@@ -2,7 +2,7 @@ define(function(){
    
     var MenuContext = function(){
         this.redraw = function(){
-            console.log("redrawing Menu");
+           // console.log("redrawing Menu");
         };
         
         this.update = function(inputHandler,game){
@@ -12,7 +12,7 @@ define(function(){
                     game.setContext("gameplayContext");
                 }
             }
-            console.log("updateing Menu");
+            //console.log("updating Menu");
         };
     
     };

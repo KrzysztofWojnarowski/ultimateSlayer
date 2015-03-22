@@ -2,23 +2,22 @@ define({
    
     spriteFileUrl:"assets/skeleton_3.png",
     meshDataOffset:{
-        walkLeft:{x:0,y:0},
-        jumpLeft:{x:0,y:0},
-        shootLeft:{x:0,y:0},
-        standLeft:{x:0,y:0},
-        dieLeft:{x:0,y:0},
-        walkRight:{x:0,y:0},
-        jumpRigth:{x:0,y:0},
-        shootRigth:{x:0,y:0},
-        standRigth:{x:0,y:0},
-        dieRigth:{x:0,y:0}
+        walkLeft:{x:1,y:585},
+        jumpLeft:{x:1,y:0},
+        shootLeft:{x:1,y:0},
+        die:{x:1,y:1295},
+        walkRight:{x:1,y:712},
+        jumpRigth:{x:1,y:0},
+        shootRigth:{x:1,y:0},
+        stand:{x:1,y:648},
+        dieRigth:{x:1,y:0}
     },
     meshData:{
-        width:65,
+        width:64,
         height:65,
         walkFrames:9,
         jumpFrames:10,
-        standFrames:7,
+        standFrames:1,
         dieFrames:10
     },
     stamina:100,

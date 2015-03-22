@@ -27,6 +27,9 @@ define(["levels/Level"], function(levels) {
       },
       shallEnd:function(){
           
+      },
+      setStage:function(viewport){
+          
       }
       
       

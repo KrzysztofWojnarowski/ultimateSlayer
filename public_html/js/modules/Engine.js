@@ -15,10 +15,11 @@ define(["InputHandler", "Game", "Viewport", "config"], function(inputHandler, Ga
             var mainLoop = window.setInterval(this.mainLoopActions, config.game.dt, game, viewPort);
         },
         mainLoopActions: function(game, viewPort) {
-
-            this.context = game.getContext();
-            this.context.update(inputHandler, game,viewPort);
-            this.context.redraw(inputHandler,game,viewPort);
+            var k= performance.now();
+            game.context.update(inputHandler, game,viewPort);
+            game.context.redraw(inputHandler,game,viewPort);
+            var s = performance.now();
+            //console.log("Timing:",s-k);
 
         },
         updateActors: function()

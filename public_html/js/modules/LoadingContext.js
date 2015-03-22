@@ -29,7 +29,7 @@ define(["LevelController", "Actor"], function(levelController, Actor) {
                 level.actors[x].instance = actor;
             }
         };
-        this.update = function(inputHandler, game) {
+        this.update = function(inputHandler, game,viewport) {
             if (typeof game.currentLevel.index === "undefined") {
                 console.log("bindingLevel...");
                 game.currentLevel = levelController.getLevel(0);
@@ -41,9 +41,10 @@ define(["LevelController", "Actor"], function(levelController, Actor) {
                 console.log("Still loading");
                 if (this.isDataLoaded(this.imageData.background) &&
                         this.isDataLoaded(this.imageData.foreground) &&
-                        this.areActorsLoaded()
+                        this.areActorsLoaded(game.currentLevel.actors)
                         ) {
-                    this.initActorsAnimations(game);
+                    console.log("Actors loaded");
+                    this.initActorsAnimations(game,viewport);
                     this.loadingEnded = true;
                     this.loadingStarted = false;
                 }
@@ -63,11 +64,11 @@ define(["LevelController", "Actor"], function(levelController, Actor) {
         this.areActorsLoaded = function(actorsList) {
             var x = 0;
             for (x in actorsList) {
-                if (actorsList[x].instance.sprite.naturalWidth === 0) {
-                    return false;
+                if (typeof actorsList[x].instance.sprite !=="undefined" && actorsList[x].instance.sprite.naturalWidth !== 0) {
+                    return true;
                 }
             }
-            return true;
+            return false;
         };
         
         this.setStage = function(){
@@ -77,11 +78,11 @@ define(["LevelController", "Actor"], function(levelController, Actor) {
         this.redraw = function() {
         };
         
-        this.initActorsAnimations = function(game){
+        this.initActorsAnimations = function(game,viewport){
             var level = game.getLevel();
             for (var x in level.actors){
                 var actor = level.actors[x];
-                console.log("ActorInitialized: ",actor);
+                actor.instance.initAnimations(game,viewport);
             }
         };
 

@@ -2,6 +2,7 @@ define(["Controlls"], function(controlls) {
 
     function InputHandler(controlls) {
         this.controlls = controlls;
+        this.movesBlocked = false;
         this.bindControlls = function() {
             var keyMap = [],
                     controllsList = this.controlls;
