@@ -12,7 +12,7 @@ define(function(gameInstance){
             var keysPressed = inputHandler.getKeysPressed();
             for (var x in keysPressed){
                 if (keysPressed[x].meaning ==="pause"){
-                    game.setContext("MenuContext");
+                    game.setContext("menuContext");
                 }
             }
            

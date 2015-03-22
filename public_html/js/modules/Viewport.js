@@ -10,9 +10,7 @@ define(function() {
             this.drawContext.canvas.width=viewPortConfig.width;
             this.drawContext.canvas.height=viewPortConfig.height;
         };
-       this.putActor = function(mesh){
-           
-       };
+       
        
        this.getPerspective = function(){
            return this.camera.perspective;
@@ -49,6 +47,12 @@ define(function() {
            this.drawContext.drawImage(level.imageData.background,perspective.x,perspective.y);
            this.drawContext.drawImage(level.imageData.foreground,position.x,position.y);
        };
+       
+       this.drawActor = function(actor){
+           
+           
+       };
+       this.assambleActor = function(actor){};
       
         
     };

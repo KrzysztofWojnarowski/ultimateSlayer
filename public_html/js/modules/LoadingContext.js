@@ -1,4 +1,4 @@
-define(["LevelController"], function(levelController) {
+define(["LevelController", "Actor"], function(levelController, Actor) {
 
     var LoadingContext = function(gameInstance) {
 
@@ -9,23 +9,41 @@ define(["LevelController"], function(levelController) {
             foreground: {},
             background: {}
         };
+
+        this.assignStage = function(game) {
+            this.imageData.background = new Image();
+            this.imageData.foreground = new Image();
+            this.imageData.background.src = game.currentLevel.backgroundImage;
+            this.imageData.foreground.src = game.currentLevel.foregroundImage;
+            game.currentLevel.imageData = this.imageData;
+            console.log("Background Assigned");
+        };
+
+        this.assignActors = function(game) {
+            var level = game.getLevel();
+            for (var x in level.actors) {
+                var actor = new Actor();
+                require(["models/" + level.actors[x].type],function(entity){
+                    actor.loadEntity(entity);
+                });
+                level.actors[x].instance = actor;
+            }
+        };
         this.update = function(inputHandler, game) {
             if (typeof game.currentLevel.index === "undefined") {
                 console.log("bindingLevel...");
                 game.currentLevel = levelController.getLevel(0);
             } else if (this.loadingStarted === false && this.loadingEnded === false) {
                 this.loadingStarted = true;
-                
-                this.imageData.background = new Image();
-                this.imageData.foreground = new Image();
-                this.imageData.background.src = game.currentLevel.backgroundImage;
-                this.imageData.foreground.src = game.currentLevel.foregroundImage;
-                game.currentLevel.imageData = this.imageData;
-                console.log("Background Assigned");
+                this.assignStage(game);
+                this.assignActors(game);
             } else if (this.loadingEnded === false && this.loadingStarted === true) {
                 console.log("Still loading");
                 if (this.isDataLoaded(this.imageData.background) &&
-                        this.isDataLoaded(this.imageData.foreground)) {
+                        this.isDataLoaded(this.imageData.foreground) &&
+                        this.areActorsLoaded()
+                        ) {
+                    this.initActorsAnimations(game);
                     this.loadingEnded = true;
                     this.loadingStarted = false;
                 }
@@ -36,13 +54,35 @@ define(["LevelController"], function(levelController) {
         };
 
         this.isDataLoaded = function(imageElement) {
-            if (imageElement.naturalWidth === 0 && imageElement.naturalHeight === 0) {
+            if (imageElement.naturalWidth === 0) {
                 return false;
             }
             return true;
         };
 
+        this.areActorsLoaded = function(actorsList) {
+            var x = 0;
+            for (x in actorsList) {
+                if (actorsList[x].instance.sprite.naturalWidth === 0) {
+                    return false;
+                }
+            }
+            return true;
+        };
+        
+        this.setStage = function(){
+            
+        };
+
         this.redraw = function() {
+        };
+        
+        this.initActorsAnimations = function(game){
+            var level = game.getLevel();
+            for (var x in level.actors){
+                var actor = level.actors[x];
+                console.log("ActorInitialized: ",actor);
+            }
         };
 
 

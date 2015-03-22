@@ -1,7 +1,7 @@
 requirejs.config({
-    baseUrl:"js/modules/"
+    baseUrl: "js/modules/"
 });
-require(["App"],function(App){
-    
+
+require(["App"], function(App) {
     App.init();
 });

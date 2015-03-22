@@ -6,7 +6,12 @@ define(function(){
         };
         
         this.update = function(inputHandler,game){
-            
+            var keysPressed = inputHandler.getKeysPressed();
+            for (var x in keysPressed){
+                if (keysPressed[x].meaning ==="Esc"){
+                    game.setContext("gameplayContext");
+                }
+            }
             console.log("updateing Menu");
         };
     
