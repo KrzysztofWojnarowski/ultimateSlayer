@@ -23,13 +23,13 @@ define(["LevelController", "Actor"], function(levelController, Actor) {
             var level = game.getLevel();
             for (var x in level.actors) {
                 var actor = new Actor();
-                require(["models/" + level.actors[x].type],function(entity){
+                require(["models/" + level.actors[x].type], function(entity) {
                     actor.loadEntity(entity);
                 });
                 level.actors[x].instance = actor;
             }
         };
-        this.update = function(inputHandler, game,viewport) {
+        this.update = function(inputHandler, game, viewport) {
             if (typeof game.currentLevel.index === "undefined") {
                 console.log("bindingLevel...");
                 game.currentLevel = levelController.getLevel(0);
@@ -44,12 +44,14 @@ define(["LevelController", "Actor"], function(levelController, Actor) {
                         this.areActorsLoaded(game.currentLevel.actors)
                         ) {
                     console.log("Actors loaded");
-                    this.initActorsAnimations(game,viewport);
+                    this.initActorsAnimations(game, viewport);
                     this.loadingEnded = true;
                     this.loadingStarted = false;
                 }
             } else if (this.loadingEnded === true && this.loadingStarted === false) {
                 console.log("Assets loaded");
+                console.log("initiating camera");
+                viewport.initCamera(game);
                 game.setContext("gameplayContext");
             }
         };
@@ -64,25 +66,25 @@ define(["LevelController", "Actor"], function(levelController, Actor) {
         this.areActorsLoaded = function(actorsList) {
             var x = 0;
             for (x in actorsList) {
-                if (typeof actorsList[x].instance.sprite !=="undefined" && actorsList[x].instance.sprite.naturalWidth !== 0) {
+                if (typeof actorsList[x].instance.sprite !== "undefined" && actorsList[x].instance.sprite.naturalWidth !== 0) {
                     return true;
                 }
             }
             return false;
         };
-        
-        this.setStage = function(){
-            
+
+        this.setStage = function() {
+
         };
 
         this.redraw = function() {
         };
-        
-        this.initActorsAnimations = function(game,viewport){
+
+        this.initActorsAnimations = function(game, viewport) {
             var level = game.getLevel();
-            for (var x in level.actors){
+            for (var x in level.actors) {
                 var actor = level.actors[x];
-                actor.instance.initAnimations(game,viewport);
+                actor.instance.initAnimations(game, viewport);
             }
         };
 

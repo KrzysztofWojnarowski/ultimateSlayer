@@ -60,5 +60,15 @@ define(["Controlls"], function(controlls) {
     document.addEventListener("keyup", function(e) {
         inputHandler.setKey(e, false);
     });
+//    document.addEventListener("mousemove",function(e){
+//        
+//        var c = document.getElementsByTagName("canvas")[0];
+//        ctx= c.getContext("2d");
+//        var id = ctx.getImageData(e.layerX,e.layerY-20,e.layerX+1,e.layerY-20+1);
+//        for (x in id){
+//            console.log(id[x]);
+//        }
+//    });
+    
     return inputHandler;
 });

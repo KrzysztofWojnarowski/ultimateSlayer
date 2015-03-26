@@ -41,58 +41,94 @@ define(function() {
                 x: 0,
                 y: 0
             },
+            maxPerspective: 0,
+            perspectiveRatio: 0,
+            traceWindow: {
+                start: 0,
+                end: 0
+            },
             perspective: {
-                x: -800, y: 0
+                x: 0, y: 0
+            },
+            size: {
+                width: 0,
+                heigth: 0
             }
 
         };
 
+        this.initCamera = function(game) {
+            var level = game.getLevel();
+            
+
+            this.camera.position = {
+                x: 0, y: 0
+            };
+            this.camera.traceWindow = {
+                start: ~~this.drawContext.canvas.width * 0.1,
+                end: ~~this.drawContext.canvas.width * 0.6
+
+            };
+            this.camera.size = {
+                width: this.drawContext.canvas.width,
+                heigth: this.drawContext.canvas.height
+            };
+            this.camera.maxPerspective = level.imageData.background.naturalWidth;
+            this.camera.maxRight = level.map.width - this.camera.size.width;
+            this.camera.perspectiveRatio = level.imageData.background.naturalWidth / level.map.width;
+
+
+
+
+        };
+
+        this.updateCamera = function(actorObj) {
+            var camera = this.camera,aPos =actorObj.instance.position.x;
+            if (aPos > camera.traceWindow.start &&
+                    aPos < camera.traceWindow.end &&
+                    
+                    camera.position.x < camera.maxRight
+                    ) {
+                camera.position.x = -aPos+camera.traceWindow.start;
+                camera.perspective.x = ~~camera.position.x * camera.perspectiveRatio;
+            }
+        //    console.log(camera.position.x+aPos);
+        };
+
         this.drawLevel = function(level) {
-            //this.drawContext.clearContext();
-            this.animateTicker+=1;
-            this.setPerspective();
-            this.setPosition();
-            var perspective = this.getPerspective();
-            var position = this.getPosition();
-            this.drawContext.drawImage(level.imageData.background, perspective.x, perspective.y);
-            this.drawContext.drawImage(level.imageData.foreground, position.x, position.y);
+            var camera = this.camera;
+            this.animateTicker += 1;
+            this.updateCamera(level.actors[0]);
+            this.drawContext.drawImage(level.imageData.background, camera.perspective.x, camera.perspective.y);
+            this.drawContext.drawImage(level.imageData.foreground, camera.position.x, camera.position.y);
             var actors = level.actors;
+            
             for (var x in actors) {
                 this.drawActor(actors[x].instance);
             }
         };
 
         this.drawActor = function(actor) {
-           /* this.drawContext.drawImage(actor.sprite,
-            actor.entity.meshDataOffset.walkLeft.x*actor.frame,
-            actor.entity.meshDataOffset.walkLeft.y,
-            actor.entity.meshData.width,
-            actor.entity.meshData.heigth,
-            0,0,
-            65,65);
-            */
-           
             this.drawContext.drawImage(actor.sprite,
-            actor.entity.meshData.width*actor.frame,
-            actor.animation.offset,
-            actor.entity.meshData.width,
-            actor.entity.meshData.height,
-            actor.position.x,actor.position.y,
-            actor.entity.meshData.width,
-            actor.entity.meshData.height);
-            
-            
-            
-            //var id = this.bufferContext.getImageData(actor.frame*actor.entity.meshData.width,332 , actor.entity.meshData.width, actor.entity.meshData.height);
-            //this.drawContext.putImageData(id, actor.position.x, actor.position.y);
-            if(this.animateTicker%5===0){
-                actor.frame += 1;    
+                    actor.entity.meshData.width * actor.frame,
+                    actor.animation.offset,
+                    actor.entity.meshData.width,
+                    actor.entity.meshData.height,
+                    actor.position.x + this.camera.position.x, actor.position.y,
+                    actor.entity.meshData.width,
+                    actor.entity.meshData.height);
+            if (this.animateTicker % 3 === 0) {
+                actor.frame += 1;
             }
             if (actor.animation.frames <= actor.frame) {
                 actor.frame = 1;
             }
 
         };
+
+        
+
+
         this.assambleActor = function(actor) {
         };
 

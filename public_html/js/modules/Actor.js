@@ -14,7 +14,7 @@ define(function() {
         };
         this.previousAction = "stand";
         this.position = {
-            x: 0, y: 0
+            x: 0, y: 50
         };
         this.frame = 0;
         this.stamina, this.wepons, this.activeWepon, this.ammo, this.sprite;
@@ -27,6 +27,7 @@ define(function() {
 
 
         this.update = function() {
+            
         };
 
         this.loadEntity = function(entity) {

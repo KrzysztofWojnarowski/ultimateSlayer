@@ -9,6 +9,8 @@ define(function(gameInstance){
         };
         
         this.update = function(inputHandler,game){
+            
+          
             var keysPressed = inputHandler.getKeysPressed(),
                     actor = game.getLevel().actors[0].instance;
             if (keysPressed.length===0){
@@ -22,10 +24,13 @@ define(function(gameInstance){
                 if (keysPressed[x].meaning==="left"){
                     actor.animation.offset = actor.entity.meshDataOffset.walkLeft.y;
                     actor.animation.frames = actor.entity.meshData.walkFrames;
+                    actor.position.x-=2;
+                    
                 }
                 if (keysPressed[x].meaning==="right"){
                     actor.animation.offset = actor.entity.meshDataOffset.walkRight.y;
                     actor.animation.frames = actor.entity.meshData.walkFrames;
+                    actor.position.x+=2;
                 }
                 if (keysPressed[x].meaning==="fire"){
                     actor.animation.offset = actor.entity.meshDataOffset.die.y;
