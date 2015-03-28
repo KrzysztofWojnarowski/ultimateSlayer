@@ -3,6 +3,8 @@ define(["Controlls"], function(controlls) {
     function InputHandler(controlls) {
         this.controlls = controlls;
         this.movesBlocked = false;
+        this.bufferSize = 0;
+        this.keyboardState = {};
         this.bindControlls = function() {
             var keyMap = [],
                     controllsList = this.controlls;
@@ -12,6 +14,7 @@ define(["Controlls"], function(controlls) {
                 singleKey.meaning = controllsList[i];
                 singleKey.code = i;
                 keyMap.push(singleKey);
+                this.keyboardState[singleKey.meaning] = false;
             }
             return keyMap;
         };
@@ -30,11 +33,17 @@ define(["Controlls"], function(controlls) {
          * @returns {undefined}
          */
         this.setKey = function(e, state) {
-
-            for (var x in this.keyMap) {
-
-                if (parseInt(this.keyMap[x].code) === e.keyCode) {
-                    this.keyMap[x].isSet = state;
+            var keyMap = this.keyMap;
+            if (state===true){
+                this.bufferSize=1;
+            }else{
+                this.bufferSize=0;
+            }
+            for (var x in keyMap) {
+                if (parseInt(keyMap[x].code) === e.keyCode) {
+                    keyMap[x].isSet = state;
+                    this.keyboardState[keyMap[x].meaning] = state;
+            
                 }
             }
         };
@@ -46,11 +55,15 @@ define(["Controlls"], function(controlls) {
             var ret = [];
             for (var x in this.keyMap) {
                 if (this.keyMap[x].isSet === true) {
-                    ret.push(this.keyMap[x]);
+                    ret.push(this.keyMap[x].meaning);
                 }
                 ;
             }
             return ret;
+        };
+        
+        this.isPressed = function(meaning){
+           return this.keyboardState[meaning];
         };
     }
     inputHandler = new InputHandler(controlls);

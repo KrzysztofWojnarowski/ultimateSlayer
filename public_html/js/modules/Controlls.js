@@ -1,12 +1,12 @@
 define({
     
     
-    87:"up", //w
-    83:"down",//s - block in gasmeplay
-    65:"left",// a
-    68:"right", //d
-    32:"fire", //space
-    80:"pause", //p 
+    87:"Up", //w
+    83:"Down",//s - block in gasmeplay
+    65:"Left",// a
+    68:"Right", //d
+    32:"Fire", //space
+    80:"Pause", //p 
     49:"1", //1
     50:"2", //2 
     51:"3",  //3

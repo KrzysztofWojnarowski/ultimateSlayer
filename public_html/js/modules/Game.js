@@ -1,4 +1,4 @@
-define(["GameplayContext", "MenuContext", "LoadingContext"], function(GameplayContext, MenuContext, LoadingContext) {
+define(["GameplayContext", "MenuContext", "LoadingContext","Physics"], function(GameplayContext, MenuContext, LoadingContext,Physics) {
 
     /**
      * init - load all needed stuff, show preloader etc
@@ -12,6 +12,7 @@ define(["GameplayContext", "MenuContext", "LoadingContext"], function(GameplayCo
         this.contextCollection = [];
         this.currentLevel ={};
         this.actors =[];
+        this.physics = {};
         
 
         this.init = function() {
@@ -23,6 +24,8 @@ define(["GameplayContext", "MenuContext", "LoadingContext"], function(GameplayCo
             };
 
             this.context = this.contextCollection.loadingContext;
+            this.physics = new Physics();
+            
         };
         this.getContext = function() {
             return this.context;

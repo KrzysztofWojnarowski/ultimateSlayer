@@ -52,6 +52,8 @@ define(["LevelController", "Actor"], function(levelController, Actor) {
                 console.log("Assets loaded");
                 console.log("initiating camera");
                 viewport.initCamera(game);
+                console.log("initiating physics");
+                game.physics.init(game.getLevel().map);
                 game.setContext("gameplayContext");
             }
         };

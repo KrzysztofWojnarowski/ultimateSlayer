@@ -65,8 +65,8 @@ define(function() {
                 x: 0, y: 0
             };
             this.camera.traceWindow = {
-                start: ~~this.drawContext.canvas.width * 0.1,
-                end: ~~this.drawContext.canvas.width * 0.6
+                start: ~~this.drawContext.canvas.width * 0.2,
+                end: ~~this.drawContext.canvas.width * 0.9
 
             };
             this.camera.size = {
@@ -74,7 +74,7 @@ define(function() {
                 heigth: this.drawContext.canvas.height
             };
             this.camera.maxPerspective = level.imageData.background.naturalWidth;
-            this.camera.maxRight = level.map.width - this.camera.size.width;
+            this.camera.maxRight = level.map.width - this.camera.size.width/2;
             this.camera.perspectiveRatio = level.imageData.background.naturalWidth / level.map.width;
 
 
