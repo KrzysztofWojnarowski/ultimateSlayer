@@ -7,18 +7,36 @@ define(function(gameInstance) {
         };
         this.update = function(inputHandler, game) {
             var actor = game.getLevel().actors[0].instance;
-            if (inputHandler.bufferSize === 0 && !actor.isJumping()) {
+            if (inputHandler.bufferSize === 0 && !game.physics.inAir(actor) ) {
                 actor.velocity.x = 0;
                 actor.stand();
             }
-            
-            console.log(inputHandler.bufferSize );
             if (inputHandler.isPressed("Pause")) {
                 game.setContext("menuContext");
             }
 
+            if (!game.physics.inAir(actor)) {
+                this.handleControllsGround(actor, inputHandler, game);
+            }
+
+
+
+            console.log(game.physics.inAir(actor));
+            //console.log(actor.action);
+            // console.log(inputHandler.keyboardState);
+            game.physics.affectActor(actor);
+            
+        };
+
+        this.handleControllsGround = function(actor, inputHandler, game) {
             if (inputHandler.isPressed("Left")) {
-                actor.walk("Left");
+
+                if (inputHandler.isPressed("Up")) {
+                    actor.jump("Left");
+                } else {
+                    actor.walk("Left");
+                }
+
             }
             if (inputHandler.isPressed("Right")) {
                 actor.walk("Right");
@@ -28,15 +46,23 @@ define(function(gameInstance) {
                 actor.animation.frames = actor.entity.meshData.dieFrames;
             }
             if (inputHandler.isPressed("Up")) {
-                actor.jump();
+                actor.jump("Up");
+            }
+
+            if (inputHandler.isPressed("Right") && inputHandler.isPressed("Left")) {
+                actor.stand();
             }
 
 
+            if (inputHandler.isPressed("Up") && inputHandler.isPressed("Right")) {
+                actor.jump("Right");
+            }
+             if (inputHandler.isPressed("Up") && inputHandler.isPressed("Left")) {
+                actor.jump("Left");
+            }
 
-
-
-            game.physics.affectActor(actor);
         };
+
     };
     return(GameplayContext);
 });

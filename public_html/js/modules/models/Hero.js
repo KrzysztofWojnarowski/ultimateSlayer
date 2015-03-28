@@ -2,23 +2,19 @@ define({
    
     spriteFileUrl:"assets/skeleton_3.png",
     meshDataOffset:{
-        walkLeft:{x:1,y:585},
-        jumpLeft:{x:1,y:0},
-        shootLeft:{x:1,y:0},
-        die:{x:1,y:1295},
-        walkRight:{x:1,y:712},
-        jumpRigth:{x:1,y:0},
-        shootRigth:{x:1,y:0},
-        stand:{x:1,y:648},
-        dieRigth:{x:1,y:0}
+        walkLeft:{x:1,y:585,loop:true,frames:9},
+        jumpLeft:{x:1,y:65,loop:false,frames:7},
+        shootLeft:{x:1,y:0,loop:false},
+        die:{x:1,y:1295,loop:false,frames:10},
+        walkRight:{x:1,y:712,loop:true,frames:9},
+        jumpRight:{x:1,y:195,loop:false,frames:7},
+        jumpUp:{x:1,y:130,loop:false,frames:7},
+        shootRigth:{x:1,y:0,loop:false},
+        stand:{x:1,y:648,loop:false,frames:1}
     },
     meshData:{
         width:64,
-        height:65,
-        walkFrames:9,
-        jumpFrames:10,
-        standFrames:1,
-        dieFrames:10
+        height:65
     },
     stamina:100,
     wepons:["ripper"],

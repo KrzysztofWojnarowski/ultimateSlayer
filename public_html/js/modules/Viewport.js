@@ -59,7 +59,7 @@ define(function() {
 
         this.initCamera = function(game) {
             var level = game.getLevel();
-            
+
 
             this.camera.position = {
                 x: 0, y: 0
@@ -74,7 +74,7 @@ define(function() {
                 heigth: this.drawContext.canvas.height
             };
             this.camera.maxPerspective = level.imageData.background.naturalWidth;
-            this.camera.maxRight = level.map.width - this.camera.size.width/2;
+            this.camera.maxRight = level.map.width - this.camera.size.width / 2;
             this.camera.perspectiveRatio = level.imageData.background.naturalWidth / level.map.width;
 
 
@@ -83,16 +83,15 @@ define(function() {
         };
 
         this.updateCamera = function(actorObj) {
-            var camera = this.camera,aPos =actorObj.instance.position.x;
+            var camera = this.camera, aPos = actorObj.instance.position.x;
             if (aPos > camera.traceWindow.start &&
                     aPos < camera.traceWindow.end &&
-                    
                     camera.position.x < camera.maxRight
                     ) {
-                camera.position.x = -aPos+camera.traceWindow.start;
+                camera.position.x = -aPos + camera.traceWindow.start;
                 camera.perspective.x = ~~camera.position.x * camera.perspectiveRatio;
             }
-        //    console.log(camera.position.x+aPos);
+            //    console.log(camera.position.x+aPos);
         };
 
         this.drawLevel = function(level) {
@@ -102,13 +101,25 @@ define(function() {
             this.drawContext.drawImage(level.imageData.background, camera.perspective.x, camera.perspective.y);
             this.drawContext.drawImage(level.imageData.foreground, camera.position.x, camera.position.y);
             var actors = level.actors;
-            
+
             for (var x in actors) {
                 this.drawActor(actors[x].instance);
             }
         };
 
         this.drawActor = function(actor) {
+            if (this.animateTicker % 3 === 0) {
+                actor.frame += 1;
+            }
+            
+            if (actor.animation.frames <= actor.frame ) {
+                if (actor.animation.loop === true) {
+                    actor.frame = 1;
+
+                } else {
+                    actor.frame-= 1;
+                }
+            }
             this.drawContext.drawImage(actor.sprite,
                     actor.entity.meshData.width * actor.frame,
                     actor.animation.offset,
@@ -117,16 +128,12 @@ define(function() {
                     actor.position.x + this.camera.position.x, actor.position.y,
                     actor.entity.meshData.width,
                     actor.entity.meshData.height);
-            if (this.animateTicker % 3 === 0) {
-                actor.frame += 1;
-            }
-            if (actor.animation.frames <= actor.frame) {
-                actor.frame = 1;
-            }
+            
+
 
         };
 
-        
+
 
 
         this.assambleActor = function(actor) {

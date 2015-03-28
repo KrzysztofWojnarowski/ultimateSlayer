@@ -10,7 +10,8 @@ define(function() {
 
         this.animation = {
             offset: 1,
-            frames: 2
+            frames: 2,
+            loop: true
         };
         this.direction = 0;
         this.previousAction = "stand";
@@ -19,9 +20,9 @@ define(function() {
             x: 0, y: 50
         };
         this.directionAction = {
-           "Left":-1,
-           "Right":1,
-           "stand":0
+            "Left": -1,
+            "Right": 1,
+            "stand": 0
         };
         this.velocity = {
             x: 0, y: 0
@@ -60,8 +61,8 @@ define(function() {
         };
         this.initWalkLeft = function(viewport) {
             var coords = this.setInitCoords("walkLeft", "walkFrames");
-            this.imageData.walkLeft = viewport.bufferContext.getImageData(
-                    coords[0], coords[1], coords[2], coords[3]);
+
+
         };
         this.setInitCoords = function(action, frames) {
             var x1, y1, x2, y2,
@@ -79,15 +80,17 @@ define(function() {
                 return false;
             }
             this.velocity.x = 1.2 * this.directionAction[direction];
-            this.action = "walk"+direction;
-            this.setAnimationWalk();
+            this.action = "walk" + direction;
+            this.setAnimation();
         };
-        this.jump = function() {
+        this.jump = function(direction) {
             if (!this.isJumping()) {
                 this.velocity.y = -5;
                 this.position.y -= 3;
-                this.action = "jump";
+                this.action = "jump" + direction;
             }
+            this.action = "jump" + direction;
+            this.setAnimation();
         };
 
 
@@ -100,10 +103,10 @@ define(function() {
         this.shootRight = function() {
         };
         this.stand = function() {
-            if (!this.isJumping()) {
-                this.setAnimationStand();
-                this.action = "stand";
-            }
+
+            this.setAnimation();
+            this.action = "stand";
+
             if (Math.abs(this.velocity.x) > 0.3) {
                 if (this.velocity.x > 0) {
                     this.velocity.x -= 0.5;
@@ -143,15 +146,25 @@ define(function() {
             return false;
         };
 
-        this.setAnimationWalk = function() {
+        this.setAnimation = function() {
+            //console.log(this.action);
             this.animation.offset = this.entity.meshDataOffset[this.action].y;
-            this.animation.frames = this.entity.meshData.walkFrames;
+            this.animation.frames = this.entity.meshDataOffset[this.action].frames;
+            this.animation.loop = this.entity.meshDataOffset[this.action].loop;
         };
-        this.setAnimationStand = function() {
-            this.animation.offset = this.entity.meshDataOffset[this.action].y;
-            this.animation.frames = this.entity.meshData.standFrames;
 
-        };
+        /*this.setAnimationJump = function() {
+         this.animation.offset = this.entity.meshDataOffset[this.action].y;
+         this.animation.frames = this.entity.meshData.JumpFrames;
+         this.animation.loop = this.entity.meshDataOffset[this.action].loop;
+         };
+         
+         this.setAnimationStand = function() {
+         this.animation.offset = this.entity.meshDataOffset[this.action].y;
+         this.animation.frames = this.entity.meshData.standFrames;
+         this.animation.loop = this.entity.meshDataOffset[this.action].loop;
+         
+         };*/
 
 
     };

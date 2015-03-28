@@ -45,6 +45,12 @@ define(function(){
              return false;   
         };
         
+        this.inAir = function(actor){
+            if (actor.position.y<this.map.base){
+                return true;
+            }
+        };
+        
     };
     
     return (Physics);
