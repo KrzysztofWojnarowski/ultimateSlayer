@@ -7,6 +7,8 @@ define(function() {
             jumpLeft: {},
             jumpRight: {}
         };
+        this.jumpVelocity = 0;
+        this.walkVelocity = 0;
 
         this.animation = {
             offset: 1,
@@ -45,6 +47,9 @@ define(function() {
             this.entity = entity;
             this.initSprite();
             this.assignSprite();
+            this.jumpVelocity = entity.jumpVelocity;
+            this.walkVelocity = entity.walkVelocity;
+            console.log(entity);
 
         };
 
@@ -79,14 +84,14 @@ define(function() {
             if (this.isWalking() && this.direction === direction) {
                 return false;
             }
-            this.velocity.x = 1.2 * this.directionAction[direction];
+            this.velocity.x = this.walkVelocity * this.directionAction[direction];
             this.action = "walk" + direction;
             this.setAnimation();
         };
         this.jump = function(direction) {
             if (!this.isJumping()) {
-                this.velocity.y = -5;
-                this.position.y -= 3;
+                this.velocity.y = -this.jumpVelocity;
+                this.position.y -= this.walkVelocity;
                 this.action = "jump" + direction;
             }
             this.action = "jump" + direction;

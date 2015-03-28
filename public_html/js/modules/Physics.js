@@ -49,6 +49,7 @@ define(function(){
             if (actor.position.y<this.map.base){
                 return true;
             }
+            return false;
         };
         
     };
