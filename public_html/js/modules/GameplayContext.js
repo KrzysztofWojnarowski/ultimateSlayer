@@ -19,11 +19,6 @@ define(function(gameInstance) {
                 this.handleControllsGround(actor, inputHandler, game);
             }
 
-
-
-            console.log(game.physics.inAir(actor));
-            //console.log(actor.action);
-            // console.log(inputHandler.keyboardState);
             game.physics.affectActor(actor);
             
         };
