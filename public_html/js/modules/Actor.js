@@ -37,12 +37,8 @@ define(function() {
         this.setFrame = function(index) {
             this.frame = index;
         };
-
-
         this.update = function() {
-
         };
-
         this.loadEntity = function(entity) {
             this.entity = entity;
             this.initSprite();
@@ -52,11 +48,9 @@ define(function() {
             console.log(entity);
 
         };
-
         this.initSprite = function() {
             this.sprite = new Image();
         };
-
         this.assignSprite = function() {
             this.sprite.src = this.entity.spriteFileUrl;
         };
@@ -97,9 +91,6 @@ define(function() {
             this.action = "jump" + direction;
             this.setAnimation();
         };
-
-
-
         this.shootLeft = function() {
             if (this.isShooting())
                 return false;
@@ -152,25 +143,10 @@ define(function() {
         };
 
         this.setAnimation = function() {
-            //console.log(this.action);
             this.animation.offset = this.entity.meshDataOffset[this.action].y;
             this.animation.frames = this.entity.meshDataOffset[this.action].frames;
             this.animation.loop = this.entity.meshDataOffset[this.action].loop;
         };
-
-        /*this.setAnimationJump = function() {
-         this.animation.offset = this.entity.meshDataOffset[this.action].y;
-         this.animation.frames = this.entity.meshData.JumpFrames;
-         this.animation.loop = this.entity.meshDataOffset[this.action].loop;
-         };
-         
-         this.setAnimationStand = function() {
-         this.animation.offset = this.entity.meshDataOffset[this.action].y;
-         this.animation.frames = this.entity.meshData.standFrames;
-         this.animation.loop = this.entity.meshDataOffset[this.action].loop;
-         
-         };*/
-
 
     };
 

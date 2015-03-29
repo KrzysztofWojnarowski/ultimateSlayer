@@ -1,12 +1,12 @@
 define({
     
     viewPort:{
-        width:window.innerWidth,
-        height:window.innerHeight,
+        width:1300,
+        height:520,
         css:"border:1px solid black;",
         scale:{
-            x:2,
-            y:2
+            x:1.5,
+            y:1.5
         }
     },
     game:{

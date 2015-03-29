@@ -84,6 +84,7 @@ define(function() {
 
         this.updateCamera = function(actorObj) {
             var camera = this.camera, aPos = actorObj.instance.position.x;
+            camera.position.y = 100-actorObj.instance.position.y;
             if (aPos > camera.traceWindow.start &&
                     aPos < camera.traceWindow.end &&
                     camera.position.x < camera.maxRight
@@ -98,7 +99,7 @@ define(function() {
             var camera = this.camera;
             this.animateTicker += 1;
             this.updateCamera(level.actors[0]);
-            this.drawContext.drawImage(level.imageData.background, camera.perspective.x, camera.perspective.y);
+            this.drawContext.drawImage(level.imageData.background, camera.perspective.x,camera.position.y*0.1-20);
             this.drawContext.drawImage(level.imageData.foreground, camera.position.x, camera.position.y);
             var actors = level.actors;
 
@@ -125,7 +126,7 @@ define(function() {
                     actor.animation.offset,
                     actor.entity.meshData.width,
                     actor.entity.meshData.height,
-                    actor.position.x + this.camera.position.x, actor.position.y,
+                    actor.position.x + this.camera.position.x, actor.position.y + this.camera.position.y,
                     actor.entity.meshData.width,
                     actor.entity.meshData.height);
             
