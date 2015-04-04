@@ -4,8 +4,9 @@ define(function(gameInstance) {
         this.redraw = function(InputHandler, game, viewport) {
             var level = game.getLevel();
             viewport.drawLevel(level);
+            viewport.drawLevelWireframe(level);
         };
-        this.update = function(inputHandler, game) {
+        this.update = function(inputHandler, game, viewport) {
             var actor = game.getLevel().actors[0].instance;
             if (inputHandler.bufferSize === 0 && !game.physics.inAir(actor) ) {
                 actor.velocity.x = 0;
@@ -18,7 +19,7 @@ define(function(gameInstance) {
             if (!game.physics.inAir(actor)) {
                 this.handleControllsGround(actor, inputHandler, game);
             }
-
+            game.physics.setVisibleMap(viewport);
             game.physics.affectActor(actor);
             
         };

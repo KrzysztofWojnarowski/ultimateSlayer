@@ -99,14 +99,14 @@ define(function() {
             var camera = this.camera;
             this.animateTicker += 1;
             this.updateCamera(level.actors[0]);
-            this.drawContext.drawImage(level.imageData.background, camera.perspective.x,camera.position.y*0.1-20);
+            this.drawContext.drawImage(level.imageData.background, camera.perspective.x,camera.position.y*0.1-200);
             this.drawContext.drawImage(level.imageData.foreground, camera.position.x, camera.position.y);
             var actors = level.actors;
-
             for (var x in actors) {
                 this.drawActor(actors[x].instance);
             }
         };
+        
 
         this.drawActor = function(actor) {
             if (this.animateTicker % 3 === 0) {
@@ -129,9 +129,13 @@ define(function() {
                     actor.position.x + this.camera.position.x, actor.position.y + this.camera.position.y,
                     actor.entity.meshData.width,
                     actor.entity.meshData.height);
+        };
+        this.inSight = function(realNumber){
             
-
-
+            if (realNumber>=this.camera.position.x && realNumber<=this.camera.size.width){
+                return true;
+            }
+            return false;
         };
 
 
@@ -139,7 +143,17 @@ define(function() {
 
         this.assambleActor = function(actor) {
         };
-
+        this.drawLevelWireframe = function(level){
+            this.drawContext.beginPath();
+            this.drawContext.color="#dadada";
+            for (x in level.map.obstacles){
+                this.drawContext.moveTo((level.map.obstacles[x][0])+this.camera.position.x,(level.map.obstacles[x][0]*level.map.obstacles[x][2]+level.map.obstacles[x][3])+this.camera.position.y+65);
+                this.drawContext.lineTo((level.map.obstacles[x][1])+this.camera.position.x,(level.map.obstacles[x][1]*level.map.obstacles[x][2]+level.map.obstacles[x][3])+this.camera.position.y+65);
+                
+            }
+            this.drawContext.stroke();
+            this.drawContext.closePath();
+        }
 
     };
 
