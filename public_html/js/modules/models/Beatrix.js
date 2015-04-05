@@ -1,6 +1,7 @@
 define({
    
-    spriteFileUrl:"assets/skeleton_3.png",
+    spriteFileUrl:"assets/beatrix.png",
+    //spriteFileUrl:"assets/skeleton_3.png",
     meshDataOffset:{
         walkLeft:{x:1,y:585,loop:true,frames:9},
         walkRight:{x:1,y:712,loop:true,frames:9},
@@ -11,15 +12,15 @@ define({
         shootRigth:{x:1,y:0,loop:false},
         shootLeft:{x:1,y:0,loop:false},
         die:{x:1,y:1295,loop:false,frames:3}
-            },
+    },
     meshData:{
         width:64,
         height:65
-            },
-    stamina:100,
+    },
+    stamina:30,
     wepons:["ripper"],
     ammo:[{ripper:100}],
     jumpVelocity:9,
-    walkVelocity:2
+    walkVelocity:1.4
     
 });

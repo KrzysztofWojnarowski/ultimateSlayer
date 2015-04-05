@@ -103,7 +103,12 @@ define(function () {
 
         this.inbound = function(actor,level){
             if (actor.position.x<0){
-                actor
+                actor.position.x = 0;
+                actor.velocity.x = 0;
+            }
+            if (actor.position.x>level.width){
+                actor.position.x = level.width;
+                actor.velocity.x = 0;
             }
         }
 

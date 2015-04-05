@@ -41,13 +41,18 @@ define(function() {
         };
         this.loadEntity = function(entity) {
             this.entity = entity;
-            this.initSprite();
-            this.assignSprite();
+            this.sprite = new Image();
+            this.sprite.src = entity.spriteFileUrl;
             this.jumpVelocity = entity.jumpVelocity;
             this.walkVelocity = entity.walkVelocity;
-            console.log(entity);
-
+            
+            
         };
+        this.initPosition = function(position){
+            
+            this.position = position;
+        }
+        
         this.initSprite = function() {
             this.sprite = new Image();
         };

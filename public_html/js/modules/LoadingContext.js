@@ -5,6 +5,8 @@ define(["LevelController", "Actor"], function(levelController, Actor) {
         //this.gameInstance = gameInstance;
         this.loadingStarted = false;
         this.loadingEnded = false;
+        this.assigningActors = false;
+        this.models= [];
         this.imageData = {
             foreground: {},
             background: {}
@@ -20,14 +22,22 @@ define(["LevelController", "Actor"], function(levelController, Actor) {
         };
 
         this.assignActors = function(game) {
-            var level = game.getLevel();
-            for (var x in level.actors) {
-                var actor = new Actor();
-                require(["models/" + level.actors[x].type], function(entity) {
-                    actor.loadEntity(entity);
-                });
-                level.actors[x].instance = actor;
+            var level = game.getLevel(),x=0;
+            this.assigningActors = true;
+            var modelsModules = [];
+            for (var x in level.actors){
+                modelsModules.push("models/" + level.actors[x].type);
             }
+            require(modelsModules,function(){
+                var x=0;
+                for( x in arguments){
+                    var actor = new Actor();
+                    actor.loadEntity(arguments[x]);
+                    actor.position = level.actors[x].position;
+                    level.actors[x].instance = actor;
+                }
+            });
+            x=0;
         };
         this.update = function(inputHandler, game, viewport) {
             if (typeof game.currentLevel.index === "undefined") {
@@ -36,7 +46,9 @@ define(["LevelController", "Actor"], function(levelController, Actor) {
             } else if (this.loadingStarted === false && this.loadingEnded === false) {
                 this.loadingStarted = true;
                 this.assignStage(game);
-                this.assignActors(game);
+                if(this.assigningActors===false){
+                    this.assignActors(game);
+                }
             } else if (this.loadingEnded === false && this.loadingStarted === true) {
                 console.log("Still loading");
                 if (this.isDataLoaded(this.imageData.background) &&
@@ -66,13 +78,18 @@ define(["LevelController", "Actor"], function(levelController, Actor) {
         };
 
         this.areActorsLoaded = function(actorsList) {
-            var x = 0;
+            var x = 0,c=0;
+
             for (x in actorsList) {
                 if (typeof actorsList[x].instance.sprite !== "undefined" && actorsList[x].instance.sprite.naturalWidth !== 0) {
-                    return true;
+                    c++;
                 }
             }
-            return false;
+            if (c===actorsList.length){
+                return true;
+            }else{
+                return false;
+            }
         };
 
         this.setStage = function() {

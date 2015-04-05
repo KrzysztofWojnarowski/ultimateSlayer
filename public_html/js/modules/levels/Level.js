@@ -23,8 +23,32 @@ define({
                 {
                     type: "Hero",
                     position: {
-                        x: 0,
-                        y: 220
+                        x: 10,
+                        y: 20
+                    },
+                    instance:{}
+                },
+                 {
+                    type: "Vergil",
+                    position: {
+                        x: 100,
+                        y: 20
+                    },
+                    instance:{}
+                },
+                 {
+                    type: "Beatrix",
+                    position: {
+                        x: 210,
+                        y: 20
+                    },
+                    instance:{}
+                },
+                {
+                    type: "Beatrix",
+                    position: {
+                        x: 350,
+                        y: 10
                     },
                     instance:{}
                 }

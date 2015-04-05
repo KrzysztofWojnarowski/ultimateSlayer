@@ -7,7 +7,7 @@ define(function(gameInstance) {
             viewport.drawLevelWireframe(level);
         };
         this.update = function(inputHandler, game, viewport) {
-            var actor = game.getLevel().actors[0].instance;
+            var level = game.getLevel(),actor = level.actors[0].instance;
             if (inputHandler.bufferSize === 0 && !game.physics.inAir(actor) ) {
                 actor.velocity.x = 0;
                 actor.stand();
@@ -20,7 +20,14 @@ define(function(gameInstance) {
                 this.handleControllsGround(actor, inputHandler, game);
             }
             game.physics.setVisibleMap(viewport);
-            game.physics.affectActor(actor);
+            for (var x in level.actors){
+                game.physics.affectActor(level.actors[x].instance);
+                game.physics.inbound(level.actors[x].instance,level);
+                if (x!=0){
+                    level.actors[x].instance.walk("Right");
+                }
+            }
+            
             
         };
 
