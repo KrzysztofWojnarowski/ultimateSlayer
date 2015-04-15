@@ -1,6 +1,6 @@
-define(function() {
+define(function () {
 
-    var Actor = function() {
+    var Actor = function () {
         this.imageData = {
             walkLeft: {},
             walkRigth: {},
@@ -9,6 +9,7 @@ define(function() {
         };
         this.jumpVelocity = 0;
         this.walkVelocity = 0;
+        this.canInterruptAction = true;
 
         this.animation = {
             offset: 1,
@@ -30,45 +31,37 @@ define(function() {
             x: 0, y: 0
         };
         this.frame = 0;
-        this.stamina, this.wepons, this.activeWepon, this.ammo, this.sprite;
-        this.getFrame = function() {
+        this.stamina, this.weapons = [], this.activeWeapon, this.ammo, this.sprite;
+        this.getFrame = function () {
             return this.frame;
         };
-        this.setFrame = function(index) {
+        this.setFrame = function (index) {
             this.frame = index;
         };
-        this.update = function() {
+        this.update = function () {
         };
-        this.loadEntity = function(entity) {
+        this.loadEntity = function (entity) {
             this.entity = entity;
             this.sprite = new Image();
             this.sprite.src = entity.spriteFileUrl;
             this.jumpVelocity = entity.jumpVelocity;
             this.walkVelocity = entity.walkVelocity;
-            
-            
+
+
+
         };
-        this.initPosition = function(position){
-            
+        this.initPosition = function (position) {
+
             this.position = position;
         }
-        
-        this.initSprite = function() {
+
+        this.initSprite = function () {
             this.sprite = new Image();
         };
-        this.assignSprite = function() {
+        this.assignSprite = function () {
             this.sprite.src = this.entity.spriteFileUrl;
         };
-        this.initAnimations = function(game, viewport) {
-            viewport.bufferContext.drawImage(this.sprite, 0, 0);
-            this.initWalkLeft(viewport);
-        };
-        this.initWalkLeft = function(viewport) {
-            var coords = this.setInitCoords("walkLeft", "walkFrames");
-
-
-        };
-        this.setInitCoords = function(action, frames) {
+        this.setInitCoords = function (action, frames) {
             var x1, y1, x2, y2,
                     dataWidth = this.entity.meshData[frames] * this.entity.meshData.width,
                     dataHeight = this.entity.meshData.height;
@@ -79,7 +72,7 @@ define(function() {
             return new Array(x1, y1, x2, y2);
         };
 
-        this.walk = function(direction) {
+        this.walk = function (direction) {
             if (this.isWalking() && this.direction === direction) {
                 return false;
             }
@@ -87,7 +80,21 @@ define(function() {
             this.action = "walk" + direction;
             this.setAnimation();
         };
-        this.jump = function(direction) {
+
+        this.Shoot = function (direction) {
+            if (!this.activeWeapon.isShooting) {
+                this.activeWeapon.shoot();
+                this.action = "shoot" + direction + this.activeWeapon.entity.type;
+                this.setAnimation();
+                this.canInterruptAction = false;
+            }else{
+                this.stand();
+            }
+        };
+
+
+
+        this.jump = function (direction) {
             if (!this.isJumping()) {
                 this.velocity.y = -this.jumpVelocity;
                 this.position.y -= this.walkVelocity;
@@ -96,62 +103,60 @@ define(function() {
             this.action = "jump" + direction;
             this.setAnimation();
         };
-        this.shootLeft = function() {
-            if (this.isShooting())
-                return false;
-            this.action = "shootLeft";
-        };
-        this.shootRight = function() {
-        };
-        this.stand = function() {
+
+        this.stand = function () {
 
             this.setAnimation();
             this.action = "stand";
+            this.velocity.x = 0;
 
-            if (Math.abs(this.velocity.x) > 0.3) {
-                if (this.velocity.x > 0) {
-                    this.velocity.x -= 0.5;
-                } else {
-                    this.velocity.x += 0.5;
-                }
-
-            } else {
-                this.velocity.x = 0;
-                return false;
-            }
         };
-        this.isJumping = function() {
+        this.isJumping = function () {
             if (this.action === "jumpLeft" || this.action === "jumpRight" || this.action === "jump") {
                 return true;
             }
 
             return false;
         };
-        this.isWalking = function() {
+        this.isWalking = function () {
             if (this.action === "walkLeft" || this.action === "walkRight") {
                 return true;
             }
             return false;
         };
 
-        this.isStanding = function() {
+        this.isStanding = function () {
             if (this.action === "stand")
                 return true;
             return false;
         };
 
-        this.isShooting = function() {
+        this.isShooting = function () {
             if (this.action === "shootLeft" || this.action === "shootRight") {
                 return true;
             }
             return false;
         };
 
-        this.setAnimation = function() {
+        this.setAnimation = function () {
+            
             this.animation.offset = this.entity.meshDataOffset[this.action].y;
             this.animation.frames = this.entity.meshDataOffset[this.action].frames;
             this.animation.loop = this.entity.meshDataOffset[this.action].loop;
         };
+
+        this.addWeapon = function (weaponType, constructor, game) {
+            var weapon = new constructor();
+
+            weapon.init(game, weaponType);
+            this.weapons.push(weapon);
+            this.setActiveWeapon(weapon);
+        };
+
+        this.setActiveWeapon = function (weapon) {
+            this.activeWeapon = weapon;
+        };
+
 
     };
 

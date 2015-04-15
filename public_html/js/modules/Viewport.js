@@ -129,7 +129,26 @@ define(function() {
                     actor.position.x + this.camera.position.x, actor.position.y + this.camera.position.y,
                     actor.entity.meshData.width,
                     actor.entity.meshData.height);
+            if (actor.activeWeapon.isShooting){
+                this.drawWeapon(actor);
+            }        
         };
+        
+        this.drawWeapon = function(actor){
+            this.drawContext.drawImage(actor.activeWeapon.entity.sprite,
+                    actor.entity.meshData.width * actor.frame,
+                    actor.animation.offset,
+                    actor.entity.meshData.width,
+                    actor.entity.meshData.height,
+                    actor.position.x + this.camera.position.x, actor.position.y + this.camera.position.y,
+                    actor.entity.meshData.width,
+                    actor.entity.meshData.height);
+            
+            
+            
+        };
+        
+        
         this.inSight = function(realNumber){
             
             if (realNumber>=this.camera.position.x && realNumber<=this.camera.size.width){

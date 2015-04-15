@@ -18,7 +18,7 @@ define({
         height:65
     },
     stamina:30,
-    wepons:["ripper"],
+    weapons:["Bow"],
     ammo:[{ripper:100}],
     jumpVelocity:9,
     walkVelocity:1.4

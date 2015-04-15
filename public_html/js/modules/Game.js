@@ -13,6 +13,8 @@ define(["GameplayContext", "MenuContext", "LoadingContext","Physics"], function(
         this.currentLevel ={};
         this.actors =[];
         this.physics = {};
+        this.weapons = [];
+        
         
 
         this.init = function() {
@@ -37,7 +39,7 @@ define(["GameplayContext", "MenuContext", "LoadingContext","Physics"], function(
             return this.currentLevel;
         };
         
-
+        
     };
     return (Game);
 
