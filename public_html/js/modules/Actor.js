@@ -46,14 +46,11 @@ define(function () {
             this.sprite.src = entity.spriteFileUrl;
             this.jumpVelocity = entity.jumpVelocity;
             this.walkVelocity = entity.walkVelocity;
-
-
-
         };
         this.initPosition = function (position) {
 
             this.position = position;
-        }
+        };
 
         this.initSprite = function () {
             this.sprite = new Image();
@@ -82,34 +79,22 @@ define(function () {
         };
 
         this.Shoot = function (direction) {
-            if (!this.activeWeapon.isShooting) {
-                this.activeWeapon.shoot();
-                this.action = "shoot" + direction + this.activeWeapon.entity.type;
-                this.setAnimation();
-                this.canInterruptAction = false;
-            }else{
-                this.stand();
-            }
+            this.activeWeapon.shoot();
+            this.action = "shoot" + direction + this.activeWeapon.entity.type;
+            this.setAnimation();
         };
-
-
-
         this.jump = function (direction) {
             if (!this.isJumping()) {
                 this.velocity.y = -this.jumpVelocity;
-                this.position.y -= this.walkVelocity;
-                this.action = "jump" + direction;
+                this.position.y -= this.jumpVelocity;
             }
             this.action = "jump" + direction;
             this.setAnimation();
         };
-
         this.stand = function () {
-
             this.setAnimation();
             this.action = "stand";
             this.velocity.x = 0;
-
         };
         this.isJumping = function () {
             if (this.action === "jumpLeft" || this.action === "jumpRight" || this.action === "jump") {
@@ -139,7 +124,7 @@ define(function () {
         };
 
         this.setAnimation = function () {
-            
+
             this.animation.offset = this.entity.meshDataOffset[this.action].y;
             this.animation.frames = this.entity.meshDataOffset[this.action].frames;
             this.animation.loop = this.entity.meshDataOffset[this.action].loop;
@@ -156,11 +141,6 @@ define(function () {
         this.setActiveWeapon = function (weapon) {
             this.activeWeapon = weapon;
         };
-
-
     };
-
     return (Actor);
-
-
 });

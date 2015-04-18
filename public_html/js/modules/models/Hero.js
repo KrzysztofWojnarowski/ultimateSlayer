@@ -21,7 +21,7 @@ define({
     stamina:100,
     weapons:["Bow"],
     ammo:[{ripper:100}],
-    jumpVelocity:9,
+    jumpVelocity:8,
     walkVelocity:2
     
 });

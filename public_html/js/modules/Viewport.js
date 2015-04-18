@@ -109,7 +109,7 @@ define(function() {
         
 
         this.drawActor = function(actor) {
-            if (this.animateTicker % 3 === 0) {
+            if (this.animateTicker % 5 === 0) {
                 actor.frame += 1;
             }
             
