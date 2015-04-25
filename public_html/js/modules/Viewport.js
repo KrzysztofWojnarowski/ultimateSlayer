@@ -135,7 +135,8 @@ define(function() {
         };
         
         this.drawWeapon = function(actor){
-            this.drawContext.drawImage(actor.activeWeapon.entity.sprite,
+            
+            this.drawContext.drawImage(actor.activeWeapon.sprite,
                     actor.entity.meshData.width * actor.frame,
                     actor.animation.offset,
                     actor.entity.meshData.width,

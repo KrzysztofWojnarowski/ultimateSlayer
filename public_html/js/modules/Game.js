@@ -13,7 +13,9 @@ define(["GameplayContext", "MenuContext", "LoadingContext","Physics"], function(
         this.currentLevel ={};
         this.actors =[];
         this.physics = {};
-        this.weapons = [];
+        this.weapons = {};
+        this.weaponData = {};
+        this.ammo = [];
         
         
 

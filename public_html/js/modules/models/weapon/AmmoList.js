@@ -1,0 +1,3 @@
+define({
+   list:["Arrow","Dagger"]
+});

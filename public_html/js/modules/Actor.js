@@ -1,6 +1,7 @@
-define(function () {
+define(["models/EquipmentFactory"],function (EquipmentFactory) {
 
     var Actor = function () {
+        this.factory = new EquipmentFactory();
         this.imageData = {
             walkLeft: {},
             walkRigth: {},
@@ -80,7 +81,7 @@ define(function () {
 
         this.Shoot = function (direction) {
             this.activeWeapon.shoot();
-            this.action = "shoot" + direction + this.activeWeapon.entity.type;
+            this.action = "shoot" + direction + this.activeWeapon.type;
             this.setAnimation();
         };
         this.jump = function (direction) {
@@ -124,19 +125,12 @@ define(function () {
         };
 
         this.setAnimation = function () {
-
             this.animation.offset = this.entity.meshDataOffset[this.action].y;
             this.animation.frames = this.entity.meshDataOffset[this.action].frames;
             this.animation.loop = this.entity.meshDataOffset[this.action].loop;
         };
 
-        this.addWeapon = function (weaponType, constructor, game) {
-            var weapon = new constructor();
-
-            weapon.init(game, weaponType);
-            this.weapons.push(weapon);
-            this.setActiveWeapon(weapon);
-        };
+        
 
         this.setActiveWeapon = function (weapon) {
             this.activeWeapon = weapon;

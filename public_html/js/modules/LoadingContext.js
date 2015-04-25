@@ -1,4 +1,17 @@
-define(["LevelController", "Actor", "models/weapon/WeaponList","Weapon"], function (levelController, Actor, WeaponList,Weapon) {
+define(["LevelController", 
+    "Actor", 
+    "models/weapon/WeaponList",
+    "Weapon",
+    "models/weapon/AmmoList",
+    "Ammo",
+    "models/EquipmentFactory"], function (
+        levelController,
+        Actor,
+        WeaponList,
+        Weapon,
+        AmmoList,
+        Ammo,
+        EquipmentFactory) {
 
     var LoadingContext = function (gameInstance) {
 
@@ -8,6 +21,7 @@ define(["LevelController", "Actor", "models/weapon/WeaponList","Weapon"], functi
         this.assigningActors = false;
         this.assigningWeapons = false;
         this.models = [];
+        this.weaponData = {};
         this.imageData = {
             foreground: {},
             background: {}
@@ -19,7 +33,6 @@ define(["LevelController", "Actor", "models/weapon/WeaponList","Weapon"], functi
             this.imageData.background.src = game.currentLevel.backgroundImage;
             this.imageData.foreground.src = game.currentLevel.foregroundImage;
             game.currentLevel.imageData = this.imageData;
-            console.log("Background Assigned");
         };
 
         this.assignActors = function (game) {
@@ -42,31 +55,46 @@ define(["LevelController", "Actor", "models/weapon/WeaponList","Weapon"], functi
         };
 
         this.assignWeapons = function (game) {
-            console.log("Assigning weapons");
             var weaponList = WeaponList.list, c = 0;
             for (c in weaponList) {
                 weaponList[c] = "models/weapon/" + weaponList[c];
             }
             require(weaponList, function () {
                 var x = 0, weapon;
+                var factory = new EquipmentFactory();
                 for (x in arguments) {
-                    weapon = arguments[x];
-                    weapon.sprite.src = weapon.meshFile;
-                    weapon.prototype = Weapon;
-                    game.weapons.push(weapon);
+                    var weapon = factory.build(Weapon,arguments[x]);
+                    weapon.ammoModel = game.ammo[weapon.ammo];
+                    game.weapons[arguments[x].type]= weapon;
+                    game.weaponData[arguments[x].type] = arguments[x];
+                }
+            });
+            
+        };
+        
+        this.assignAmmo = function (game) {
+            var ammoList = AmmoList.list, c = 0;
+            for (c in ammoList) {
+                ammoList[c] = "models/weapon/" + ammoList[c];
+            }
+            require(ammoList, function () {
+                var x = 0, ammo;
+                var factory = new EquipmentFactory();
+                for (x in arguments) {
+                    
+                    game.ammo[arguments[x].type] = factory.build(Ammo,arguments[x]);
                 }
             });
         };
-
-
-
-
+        
+        
+        
         this.update = function (inputHandler, game, viewport) {
             if (typeof game.currentLevel.index === "undefined") {
-                console.log("bindingLevel...");
+                
                 game.currentLevel = levelController.getLevel(0);
             } else if (this.loadingStarted === false && this.loadingEnded === false) {
-                console.log("Loading started");
+                
                 this.loadingStarted = true;
                 this.assignStage(game);
                 if (this.assigningActors === false) {
@@ -74,6 +102,7 @@ define(["LevelController", "Actor", "models/weapon/WeaponList","Weapon"], functi
                     this.assigningActors = true;
                 }
                 if (this.assigningWeapons === false) {
+                    this.assignAmmo(game);
                     this.assignWeapons(game);
                     this.assigningWeapons = true;
                 }
@@ -120,14 +149,16 @@ define(["LevelController", "Actor", "models/weapon/WeaponList","Weapon"], functi
         };
 
         this.areWeaponsLoaded = function (weaponList) {
-            var x = 0, c = 0;
-            for (x = 0; x<weaponList.length;x++) {
-                
+            
+            var x, c = 0,d=0;
+            for ( x in weaponList) {
+                d++;
                 if (this.isDataLoaded(weaponList[x].sprite)) {
                     c++;
                 }
             }
-            return c === weaponList.length?true:false;
+            
+            return c === d?true:false;
         };
 
         this.setStage = function () {
@@ -139,10 +170,15 @@ define(["LevelController", "Actor", "models/weapon/WeaponList","Weapon"], functi
 
         this.assembleActors = function(game){
             var x = 0, y= 0;
+            var factory = new EquipmentFactory();
             for (x=0;x<game.currentLevel.actors.length;x++){
-                
-                for (y =0;y<game.currentLevel.actors[x].instance.entity.weapons.length;y++){
-                    game.currentLevel.actors[x].instance.addWeapon(game.currentLevel.actors[x].instance.entity.weapons[y],Weapon,game);
+                var actor = game.currentLevel.actors[x].instance;
+                for (y =0;y<actor.entity.weapons.length;y++){
+                    var weaponType = actor.entity.weapons[y],
+                    weapon = factory.build(Weapon,game.weaponData[weaponType]);    
+                    actor.weapons[weaponType] = weapon;
+                    actor.activeWeapon = weapon;
+                    
                 }
                 
             }

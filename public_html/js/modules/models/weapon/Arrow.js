@@ -1,9 +1,10 @@
-define(function(){
-    var Arrow  = function(){
-        
-    };
-    
-    
-    
-    
+define({
+   type:"Arrow", 
+   distance:100,
+   meshFile:"assets/bow.png",
+   velocity:10,
+   animation:{
+       shootLeft:{x:1,y:1105,loop:true,frames:9},
+       ShootRight:{x:1,y:1235,loop:true,frames:9}
+   }
 });
