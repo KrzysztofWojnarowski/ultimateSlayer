@@ -64,7 +64,6 @@ define(["LevelController",
                 var factory = new EquipmentFactory();
                 for (x in arguments) {
                     var weapon = factory.build(Weapon,arguments[x]);
-                    weapon.ammoModel = game.ammo[weapon.ammo];
                     game.weapons[arguments[x].type]= weapon;
                     game.weaponData[arguments[x].type] = arguments[x];
                 }
@@ -83,6 +82,7 @@ define(["LevelController",
                 for (x in arguments) {
                     
                     game.ammo[arguments[x].type] = factory.build(Ammo,arguments[x]);
+                    game.ammoData[arguments[x].type] = arguments[x];
                 }
             });
         };
@@ -175,8 +175,12 @@ define(["LevelController",
                 var actor = game.currentLevel.actors[x].instance;
                 for (y =0;y<actor.entity.weapons.length;y++){
                     var weaponType = actor.entity.weapons[y],
-                    weapon = factory.build(Weapon,game.weaponData[weaponType]);    
+                    weapon = factory.build(Weapon,game.weaponData[weaponType]);
+                    var ammo = factory.build(Ammo,game.ammoData[weapon.ammo]);
+                    ammo.setSurroundingContext(factory,game.ammoData[weapon.ammo],game,weapon);
+                    weapon.ammoModel = ammo;
                     actor.weapons[weaponType] = weapon;
+                    weapon.ownerActor = actor;
                     actor.activeWeapon = weapon;
                     
                 }

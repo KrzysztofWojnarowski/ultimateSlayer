@@ -51,6 +51,46 @@ define({
                         y: 10
                     },
                     instance:{}
+                },
+                 {
+                    type: "Vergil",
+                    position: {
+                        x: 100,
+                        y: 20
+                    },
+                    instance:{}
+                },
+                 {
+                    type: "Vergil",
+                    position: {
+                        x: 180,
+                        y: 20
+                    },
+                    instance:{}
+                },
+                 {
+                    type: "Vergil",
+                    position: {
+                        x: 230,
+                        y: 20
+                    },
+                    instance:{}
+                },
+                 {
+                    type: "Vergil",
+                    position: {
+                        x: 10,
+                        y: 20
+                    },
+                    instance:{}
+                },
+                 {
+                    type: "Vergil",
+                    position: {
+                        x: 190,
+                        y: 20
+                    },
+                    instance:{}
                 }
             ]
         }]

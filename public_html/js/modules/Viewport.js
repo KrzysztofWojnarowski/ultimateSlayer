@@ -105,6 +105,7 @@ define(function() {
             for (var x in actors) {
                 this.drawActor(actors[x].instance);
             }
+            
         };
         
 
@@ -149,6 +150,34 @@ define(function() {
             
         };
         
+        this.drawAmmo = function(ammo){
+            var actor = ammo.ownerWeapon.ownerActor;
+            this.drawContext.beginPath();
+            this.drawContext.strokeStyle="#00FF00";
+            this.drawContext.moveTo(ammo.position.x+this.camera.position.x,ammo.position.y+this.camera.position.y);
+            this.drawContext.lineTo(ammo.position.x+30+this.camera.position.x,ammo.position.y+this.camera.position.y);
+            this.drawContext.stroke();
+            this.drawContext.closePath();
+            return;
+            
+            
+            
+            this.drawContext.drawImage(ammo.sprite,
+                    actor.entity.meshData.width * actor.frame,
+                    actor.animation.offset,
+                    actor.entity.meshData.width,
+                    actor.entity.meshData.height,
+                    actor.position.x + this.camera.position.x, actor.position.y + this.camera.position.y,
+                    actor.entity.meshData.width,
+                    actor.entity.meshData.height);
+            
+            
+            
+        };
+        
+        
+        
+        
         
         this.inSight = function(realNumber){
             
@@ -165,7 +194,7 @@ define(function() {
         };
         this.drawLevelWireframe = function(level){
             this.drawContext.beginPath();
-            this.drawContext.color="#dadada";
+            this.drawContext.strokeStyle="#FF0000";
             for (x in level.map.obstacles){
                 this.drawContext.moveTo((level.map.obstacles[x][0])+this.camera.position.x,(level.map.obstacles[x][0]*level.map.obstacles[x][2]+level.map.obstacles[x][3])+this.camera.position.y+65);
                 this.drawContext.lineTo((level.map.obstacles[x][1])+this.camera.position.x,(level.map.obstacles[x][1]*level.map.obstacles[x][2]+level.map.obstacles[x][3])+this.camera.position.y+65);

@@ -10,7 +10,9 @@ define({
         jumpRight:{x:1,y:195,loop:false,frames:7},
         jumpUp:{x:1,y:130,loop:false,frames:7},
         shootRigth:{x:1,y:0,loop:false},
+        shootRightBow:{x:1,y:1225,loop:false,frames:12},
         shootLeft:{x:1,y:0,loop:false},
+        shootLeftBow:{x:1,y:1100,loop:false,frames:12},
         die:{x:1,y:1295,loop:false,frames:3}
     },
     meshData:{

@@ -15,12 +15,13 @@ define(["GameplayContext", "MenuContext", "LoadingContext","Physics"], function(
         this.physics = {};
         this.weapons = {};
         this.weaponData = {};
+        this.ammoData = {};
         this.ammo = [];
+        this.ammoArray = [];
         
         
 
         this.init = function() {
-            console.log("Initializing game object");
             this.contextCollection = {
                 loadingContext: new LoadingContext(this),
                 menuContext: new MenuContext(this),

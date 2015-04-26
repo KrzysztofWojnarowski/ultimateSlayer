@@ -80,7 +80,11 @@ define(["models/EquipmentFactory"],function (EquipmentFactory) {
         };
 
         this.Shoot = function (direction) {
-            this.activeWeapon.shoot();
+            if (this.activeWeapon.ammoLeft<=0){
+                this.stand();
+                return;
+            }
+            this.activeWeapon.shoot(direction);
             this.action = "shoot" + direction + this.activeWeapon.type;
             this.setAnimation();
         };

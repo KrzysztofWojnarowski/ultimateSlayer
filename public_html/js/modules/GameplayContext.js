@@ -4,9 +4,13 @@ define(function (gameInstance) {
 
 
         this.redraw = function (InputHandler, game, viewport) {
-            var level = game.getLevel();
+            var level = game.getLevel(),x;
             viewport.drawLevel(level);
             viewport.drawLevelWireframe(level);
+            
+            for (x in game.ammoArray){
+                viewport.drawAmmo(game.ammoArray[x]);
+            }
         };
         this.update = function (inputHandler, game, viewport) {
 
@@ -16,6 +20,7 @@ define(function (gameInstance) {
             }
             var level = game.getLevel();
             game.physics.setVisibleMap(viewport);
+            this.handleAmmo(game);
             this.updateActorsState(game, level, inputHandler);
 
 
@@ -34,12 +39,16 @@ define(function (gameInstance) {
                         this.handleControllsGround(actor, inputHandler, game);
                     }
                 } else {
-                    level.actors[x].instance.walk("Right");
+                    var dir=x%2==0?"Left":"Right";
+                            
+                   // level.actors[x].instance.Shoot(dir);
                 }
                 game.physics.affectActor(level.actors[x].instance);
                 game.physics.inbound(level.actors[x].instance, level);
             }
-        }
+        };
+        
+        
 
         this.handleControllsGround = function (actor, inputHandler, game) {
             if (inputHandler.isPressed("Left")) {
@@ -80,6 +89,15 @@ define(function (gameInstance) {
             }
 
         };
+        
+        this.handleAmmo = function(game){
+            var x,
+                    ammoArray = game.ammoArray;
+            for (x in ammoArray){
+                ammoArray[x].update();
+                
+            }
+        }
     };
     return(GameplayContext);
 });
