@@ -2,6 +2,7 @@ define({
    type:"Arrow", 
    distance:10,
    meshFile:"assets/bow.png",
+   damage:20,
    velocity:{
     x:12,
     y:0

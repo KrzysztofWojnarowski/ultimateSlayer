@@ -1,4 +1,4 @@
-define(["GameplayContext", "MenuContext", "LoadingContext","Physics"], function(GameplayContext, MenuContext, LoadingContext,Physics) {
+define(["GameplayContext", "MenuContext", "LoadingContext","Physics","AI"], function(GameplayContext, MenuContext, LoadingContext,Physics,AI) {
 
     /**
      * init - load all needed stuff, show preloader etc
@@ -18,6 +18,8 @@ define(["GameplayContext", "MenuContext", "LoadingContext","Physics"], function(
         this.ammoData = {};
         this.ammo = [];
         this.ammoArray = [];
+        this.AI = AI;
+        this.difficultyFactor = 0.1;
         
         
 

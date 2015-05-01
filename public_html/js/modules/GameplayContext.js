@@ -42,11 +42,10 @@ define(function (gameInstance) {
                     }
                 } else {
                     var dir = x % 2 == 0 ? "Left" : "Right";
-
-                    // level.actors[x].instance.Shoot(dir);
+                    game.AI.process(game,level.actors[x].instance,level.actors[0].instance);
+                    
                 }
-                ;
-
+                
                 game.physics.affectActor(level.actors[x].instance);
                 game.physics.inbound(level.actors[x].instance, level);
             }
@@ -63,14 +62,10 @@ define(function (gameInstance) {
                     actor.walk("Left");
                 }
             }
-            if (inputHandler.isPressed("Fire") && inputHandler.isPressed("Right")) {
+            
+            if (inputHandler.isPressed("Fire") ) {
                 actor.stand();
-                actor.Shoot("Right");
-                return;
-            }
-            if (inputHandler.isPressed("Fire") && inputHandler.isPressed("Left")) {
-                actor.stand();
-                actor.Shoot("Left");
+                actor.Shoot();
                 return;
             }
 
@@ -109,7 +104,6 @@ define(function (gameInstance) {
             
             for (x in actors) {
                 for (y in ammo) {
-                    
                     if (physics.ammoCollided(actors[x], ammo[y])) {
                         actors[x].instance.onCollideAmmo(ammo[y]);
                         

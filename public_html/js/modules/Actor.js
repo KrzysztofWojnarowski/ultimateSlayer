@@ -14,6 +14,7 @@ define(["models/EquipmentFactory"],function (EquipmentFactory) {
         this.height = 0;
         this.canInterruptAction = true;
         this.ownerGame ={};
+        this.stamina = 0;
 
         this.animation = {
             offset: 1,
@@ -21,7 +22,7 @@ define(["models/EquipmentFactory"],function (EquipmentFactory) {
             loop: true
         };
         this.direction = 0;
-        this.previousAction = "stand";
+        this.previousAction = "Right";
         this.action = "stand";
         this.position = {
             x: 0, y: 50
@@ -52,7 +53,10 @@ define(["models/EquipmentFactory"],function (EquipmentFactory) {
             this.walkVelocity = entity.walkVelocity;
             this.width = entity.width;
             this.height = entity.height;
+            this.stamina = entity.stamina;
+            
         };
+        
         this.initPosition = function (position) {
             this.position = position;
         };
@@ -78,12 +82,14 @@ define(["models/EquipmentFactory"],function (EquipmentFactory) {
             if (this.isWalking() && this.direction === direction) {
                 return false;
             }
+            this.previousAction = direction;
             this.velocity.x = this.walkVelocity * this.directionAction[direction];
             this.action = "walk" + direction;
             this.setAnimation();
         };
 
-        this.Shoot = function (direction) {
+        this.Shoot = function () {
+            direction = this.previousAction;
             if (this.activeWeapon.ammoLeft<=0){
                 this.stand();
                 return;
@@ -151,13 +157,14 @@ define(["models/EquipmentFactory"],function (EquipmentFactory) {
         
         this.die = function(){
             this.action = "die";
-            //console.log("Died",this);
+            this.setAnimation();
+            
             
             
         };
         this.isAlive = function(){
             return this.stamina>=0?true:false;
-        }
+        };
         
         
         

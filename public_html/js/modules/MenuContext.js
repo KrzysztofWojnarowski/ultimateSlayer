@@ -7,8 +7,11 @@ define(function(){
         
         this.update = function(inputHandler,game){
             var keysPressed = inputHandler.getKeysPressed();
+            
             for (var x in keysPressed){
-                if (keysPressed[x].meaning ==="Esc"){
+                //console.log(keysPressed[x].meaning);
+                if (keysPressed[x] ==="Esc"){
+                    
                     game.setContext("gameplayContext");
                 }
             }

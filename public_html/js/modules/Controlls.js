@@ -2,7 +2,7 @@ define({
     
     
     87:"Up", //w
-    83:"Down",//s - block in gasmeplay
+    83:"Down",//s - block in gameplay
     65:"Left",// a
     68:"Right", //d
     32:"Fire", //k
