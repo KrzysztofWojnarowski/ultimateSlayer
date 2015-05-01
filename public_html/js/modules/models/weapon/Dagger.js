@@ -1,9 +1,9 @@
 define({
    type:"Arrow", 
-   distance:10,
+   distance:300,
    meshFile:"assets/bow.png",
    velocity:{
-       x:5,y:0
+       x:3,y:0
    },
    animation:{
        shootLeft:{x:1,y:1105,loop:true,frames:9},

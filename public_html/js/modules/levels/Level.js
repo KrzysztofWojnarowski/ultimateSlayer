@@ -55,7 +55,7 @@ define({
                  {
                     type: "Vergil",
                     position: {
-                        x: 100,
+                        x: 400,
                         y: 20
                     },
                     instance:{}
@@ -63,7 +63,7 @@ define({
                  {
                     type: "Vergil",
                     position: {
-                        x: 180,
+                        x: 580,
                         y: 20
                     },
                     instance:{}
@@ -71,7 +71,7 @@ define({
                  {
                     type: "Vergil",
                     position: {
-                        x: 230,
+                        x: 630,
                         y: 20
                     },
                     instance:{}
@@ -79,7 +79,7 @@ define({
                  {
                     type: "Vergil",
                     position: {
-                        x: 10,
+                        x: 700,
                         y: 20
                     },
                     instance:{}
@@ -87,7 +87,7 @@ define({
                  {
                     type: "Vergil",
                     position: {
-                        x: 190,
+                        x: 890,
                         y: 20
                     },
                     instance:{}

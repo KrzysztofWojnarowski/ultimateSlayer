@@ -24,12 +24,10 @@ define(function () {
         this.collideGround = function (actor) {
             var
                     actorY = actor.position.y,
-                    actorX = actor.position.x,
-                    i = 0,
                     map = this.visibleMap,
                     groundPositions = this.getMapAtActor(actor, map),
                     ground = this.getClosestGround(actor, groundPositions);
-            if (ground < actor.position.y && Math.abs(ground - actor.position.y)<=10 ) {
+            if (ground < actorY && Math.abs(ground - actorY) <= 10) {
                 actor.position.y = ground;
                 actor.velocity.y = 0;
                 actor.inAir = false;
@@ -40,10 +38,11 @@ define(function () {
         };
         // vM - visible Map
         this.getMapAtActor = function (actor, vM) {
-            var x = 0, ret = [];
+            var x = 0, ret = [],
+                    ax = actor.position.x;
 
             for (x in vM) {
-                if (vM[x][0] <= actor.position.x && vM[x][1] >= actor.position.x) {
+                if (vM[x][0] <= ax && vM[x][1] >= ax) {
                     ret.push(vM[x]);
                 }
             }
@@ -77,9 +76,6 @@ define(function () {
             }
 
         };
-
-
-
         this.inAir = function (actor) {
             return actor.inAir;
         };
@@ -101,19 +97,29 @@ define(function () {
             ;
         };
 
-        this.inbound = function(actor,level){
-            if (actor.position.x<0){
+        this.inbound = function (actor, level) {
+            var ax = actor.position.x;
+            if (ax < 0) {
                 actor.position.x = 0;
                 actor.velocity.x = 0;
             }
-            if (actor.position.x>level.width){
+            if (ax > level.width) {
                 actor.position.x = level.width;
                 actor.velocity.x = 0;
             }
-        }
+        };
 
-
+        this.ammoCollided = function (actor, ammo) {
+            var
+                    hx = actor.position.x,
+                    hy = actor.position.y,
+                    hh = actor.instance.height,
+                    hw = actor.instance.width,
+                    ax = ammo.position.x,
+                    ay = ammo.position.y;
+           if (hx<ax && hx+hw>ax && hy<ay && hy+hh>ay) return true;
+           return false;
+        };
     };
-
     return (Physics);
 });

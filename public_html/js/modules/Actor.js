@@ -10,7 +10,10 @@ define(["models/EquipmentFactory"],function (EquipmentFactory) {
         };
         this.jumpVelocity = 0;
         this.walkVelocity = 0;
+        this.width = 0;
+        this.height = 0;
         this.canInterruptAction = true;
+        this.ownerGame ={};
 
         this.animation = {
             offset: 1,
@@ -47,9 +50,10 @@ define(["models/EquipmentFactory"],function (EquipmentFactory) {
             this.sprite.src = entity.spriteFileUrl;
             this.jumpVelocity = entity.jumpVelocity;
             this.walkVelocity = entity.walkVelocity;
+            this.width = entity.width;
+            this.height = entity.height;
         };
         this.initPosition = function (position) {
-
             this.position = position;
         };
 
@@ -139,6 +143,25 @@ define(["models/EquipmentFactory"],function (EquipmentFactory) {
         this.setActiveWeapon = function (weapon) {
             this.activeWeapon = weapon;
         };
+        
+        this.onCollideAmmo = function(ammo){
+            this.stamina=-ammo.damage;
+            
+        };
+        
+        this.die = function(){
+            this.action = "die";
+            //console.log("Died",this);
+            
+            
+        };
+        this.isAlive = function(){
+            return this.stamina>=0?true:false;
+        }
+        
+        
+        
+        
     };
     return (Actor);
 });

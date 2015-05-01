@@ -10,7 +10,8 @@ define(["models/EquipmentFactory"],function (EquipmentFactory) {
             if (this.isShooting || this.ammoLeft<=0){
                 return false;
             }
-            this.ammoModel.spawn("Right");
+            
+            this.ammoModel.spawn(direction);
             this.isShooting = true;
             this.ammoLeft--;
         };

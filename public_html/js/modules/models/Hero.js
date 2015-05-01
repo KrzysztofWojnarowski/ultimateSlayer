@@ -1,6 +1,8 @@
 define({
    
     spriteFileUrl:"assets/skeleton_3.png",
+    width:65,
+    height:65,
     meshDataOffset:{
         walkLeft:{x:1,y:585,loop:true,frames:9},
         walkRight:{x:1,y:712,loop:true,frames:9},
