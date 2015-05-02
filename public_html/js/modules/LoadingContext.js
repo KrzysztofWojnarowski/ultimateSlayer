@@ -30,6 +30,7 @@ define(["LevelController",
         this.assignStage = function (game,viewport) {
             this.imageData.background = new Image();
             this.imageData.foreground = new Image();
+            
             this.imageData.background.src = game.currentLevel.backgroundImage;
             this.imageData.foreground.src = game.currentLevel.foregroundImage;
             game.currentLevel.imageData = this.imageData;
@@ -93,6 +94,7 @@ define(["LevelController",
         
         
         this.update = function (inputHandler, game, viewport) {
+            game.Blood.load();
             if (typeof game.currentLevel.index === "undefined") {
                 
                 game.currentLevel = levelController.getLevel(0);
@@ -127,6 +129,7 @@ define(["LevelController",
                 game.physics.init(game.getLevel().map);
                 game.setContext("gameplayContext");
             }
+            
         };
 
         this.isDataLoaded = function (imageElement) {

@@ -1,4 +1,4 @@
-define(["GameplayContext", "MenuContext", "LoadingContext","Physics","AI"], function(GameplayContext, MenuContext, LoadingContext,Physics,AI) {
+define(["GameplayContext", "MenuContext", "LoadingContext","Physics","AI","models/goodies/Blood"], function(GameplayContext, MenuContext, LoadingContext,Physics,AI,Blood) {
 
     /**
      * init - load all needed stuff, show preloader etc
@@ -20,6 +20,7 @@ define(["GameplayContext", "MenuContext", "LoadingContext","Physics","AI"], func
         this.ammoArray = [];
         this.AI = AI;
         this.difficultyFactor = 0.01;
+        this.Blood = Blood;
         
         
 

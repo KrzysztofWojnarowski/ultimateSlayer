@@ -19,8 +19,6 @@ define(function() {
             this.animateTicker = 0;
 
         };
-
-
         this.getPerspective = function() {
             return this.camera.perspective;
         };

@@ -155,6 +155,9 @@ define(["models/EquipmentFactory"], function (EquipmentFactory) {
 
         this.onCollideAmmo = function (ammo) {
             this.stamina -= ammo.damage;
+            if (this.ownerGame.currentLevel.actors[0].instance===this){
+                this.ownerGame.Blood.trigger();
+            }
 
         };
 

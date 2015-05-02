@@ -2,7 +2,7 @@ define({
     set: [{
             index: 0,
             backgroundImage: "assets/bg1.jpg",
-            foregroundImage: "assets/level1.png",
+            foregroundImage: "assets/lev1.png",
             
             map:{
                 base:150,
@@ -11,7 +11,7 @@ define({
                     [0,190,0,150],
                     [190,400,0,-100],
                     [190,300,-1,345],
-                    [300,8000,0,50], // start,end,a,b
+                    [0,8000,0,800], // start,end,a,b
                           
                 ]
             },
@@ -29,7 +29,7 @@ define({
                     instance:{}
                 },
                 
-                 {
+             {
                     type: "Beatrix",
                     position: {
                         x: 210,

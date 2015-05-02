@@ -24,20 +24,11 @@ define(["models/EquipmentFactory"],function (EquipmentFactory) {
                 this.reloadingCounter ++;
             }
             if (this.reloadingCounter>=this.reloadTime){
-                
                 this.reloadingCounter =0;
                 this.isShooting=false;
                 this.isReady =true;
             }
         };
-        
-        
-
-
-
-
     };
     return (Weapon);
-
-
 });

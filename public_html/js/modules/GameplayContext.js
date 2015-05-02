@@ -1,32 +1,28 @@
 define(function (gameInstance) {
 
     var GameplayContext = function () {
-
         this.tick = 0;
-
-
-
         this.redraw = function (InputHandler, game, viewport) {
             var level = game.getLevel(), x;
             viewport.drawLevel(level, this.tick);
             viewport.drawLevelWireframe(level);
-
             for (x in game.ammoArray) {
                 viewport.drawAmmo(game.ammoArray[x]);
             }
+            game.Blood.redraw(viewport,game.currentLevel.actors[0].instance);
         };
         this.update = function (inputHandler, game, viewport) {
+            var level = game.getLevel();
 
             if (inputHandler.isPressed("Pause")) {
                 game.setContext("menuContext");
                 return true;
             }
-            var level = game.getLevel();
             game.physics.setVisibleMap(viewport);
             this.handleAmmo(game);
             this.handleAmmoEffect(level.actors, game.ammoArray, game.physics);
             this.updateActorsState(game, level, inputHandler);
-
+            game.Blood.update();
         };
 
         this.updateActorsState = function (game, level, inputHandler) {
@@ -76,23 +72,16 @@ define(function (gameInstance) {
                 actor.Shoot();
                 return;
             }
-
             if (inputHandler.isPressed("Right") && inputHandler.isPressed("Left")) {
                 actor.stand();
                 return;
             }
-
-
             if (inputHandler.isPressed("Right")) {
                 actor.walk("Right");
             }
             if (inputHandler.isPressed("Left")) {
                 actor.walk("Left");
             }
-
-
-
-
         };
 
         this.handleAmmo = function (game) {
@@ -101,8 +90,7 @@ define(function (gameInstance) {
             for (x in ammoArray) {
                 ammoArray[x].update();
 
-            }
-            ;
+            };
         };
 
         this.handleAmmoEffect = function (actors, ammo, physics) {
@@ -115,19 +103,14 @@ define(function (gameInstance) {
                 for (y in ammo) {
                     if (physics.ammoCollided(actors[x], ammo[y])) {
                         actors[x].instance.onCollideAmmo(ammo[y]);
-
                         ammo[y].onCollideActor();
                         if (!actors[x].instance.isAlive()) {
-
                             actors[x].instance.die();
                         }
                     }
-
                 }
             }
         };
-
-
     };
     return(GameplayContext);
 });
