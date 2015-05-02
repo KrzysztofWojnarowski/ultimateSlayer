@@ -13,8 +13,8 @@ define(function () {
         };
 
         this.gForce = function (actor) {
-            if (actor.velocity.y < -10) {
-                actor.velocity.y = -10;
+            if (actor.velocity.y > 10) {
+                actor.velocity.y = 10;
                 return;
             }
             actor.position.y = actor.position.y + actor.velocity.y;
