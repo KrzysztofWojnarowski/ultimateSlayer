@@ -19,7 +19,7 @@ define(["GameplayContext", "MenuContext", "LoadingContext","Physics","AI"], func
         this.ammo = [];
         this.ammoArray = [];
         this.AI = AI;
-        this.difficultyFactor = 0.1;
+        this.difficultyFactor = 0.01;
         
         
 

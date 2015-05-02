@@ -27,12 +27,13 @@ define(["LevelController",
             background: {}
         };
 
-        this.assignStage = function (game) {
+        this.assignStage = function (game,viewport) {
             this.imageData.background = new Image();
             this.imageData.foreground = new Image();
             this.imageData.background.src = game.currentLevel.backgroundImage;
             this.imageData.foreground.src = game.currentLevel.foregroundImage;
             game.currentLevel.imageData = this.imageData;
+            game.vieeport = viewport
         };
 
         this.assignActors = function (game) {
@@ -48,7 +49,9 @@ define(["LevelController",
                     var actor = new Actor();
                     actor.loadEntity(arguments[x]);
                     actor.position = level.actors[x].position;
+                    actor.ownerGame = game;
                     level.actors[x].instance = actor;
+                    
                 }
             });
 
@@ -96,7 +99,7 @@ define(["LevelController",
             } else if (this.loadingStarted === false && this.loadingEnded === false) {
                 
                 this.loadingStarted = true;
-                this.assignStage(game);
+                this.assignStage(game,viewport);
                 if (this.assigningActors === false) {
                     this.assignActors(game);
                     this.assigningActors = true;

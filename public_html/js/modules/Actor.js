@@ -1,4 +1,4 @@
-define(["models/EquipmentFactory"],function (EquipmentFactory) {
+define(["models/EquipmentFactory"], function (EquipmentFactory) {
 
     var Actor = function () {
         this.factory = new EquipmentFactory();
@@ -13,7 +13,7 @@ define(["models/EquipmentFactory"],function (EquipmentFactory) {
         this.width = 0;
         this.height = 0;
         this.canInterruptAction = true;
-        this.ownerGame ={};
+        this.ownerGame = {};
         this.stamina = 0;
 
         this.animation = {
@@ -54,9 +54,9 @@ define(["models/EquipmentFactory"],function (EquipmentFactory) {
             this.width = entity.width;
             this.height = entity.height;
             this.stamina = entity.stamina;
-            
+
         };
-        
+
         this.initPosition = function (position) {
             this.position = position;
         };
@@ -90,12 +90,13 @@ define(["models/EquipmentFactory"],function (EquipmentFactory) {
 
         this.Shoot = function () {
             direction = this.previousAction;
-            if (this.activeWeapon.ammoLeft<=0){
+            if (this.activeWeapon.ammoLeft <= 0) {
                 this.stand();
                 return;
             }
             this.activeWeapon.shoot(direction);
             this.action = "shoot" + direction + this.activeWeapon.type;
+            this.velocity.x = 0;
             this.setAnimation();
         };
         this.jump = function (direction) {
@@ -144,31 +145,64 @@ define(["models/EquipmentFactory"],function (EquipmentFactory) {
             this.animation.loop = this.entity.meshDataOffset[this.action].loop;
         };
 
-        
+
 
         this.setActiveWeapon = function (weapon) {
             this.activeWeapon = weapon;
         };
-        
-        this.onCollideAmmo = function(ammo){
-            this.stamina=-ammo.damage;
-            
+
+        this.onCollideAmmo = function (ammo) {
+            this.stamina -= ammo.damage;
+
         };
-        
-        this.die = function(){
+
+
+        this.posess = function () {
+            var x, minDist,dist,pointer,tmp,
+                    actorsList = this.ownerGame.currentLevel.actors,
+                    hx = this.position.x,
+                    hy = this.position.y;
+            minDist = Math.abs(hx - actorsList[1].instance.position.x) + Math.abs(hy + actorsList[1].instance.position.y);
+            pointer = 1;
+            for (x = 2; x < actorsList.length; x++) {
+                if (!actorsList[x].instance.isAlive()) {
+                    continue;
+                }
+                dist = Math.abs(hx - actorsList[x].instance.position.x) + Math.abs(hy + actorsList[x].instance.position.y);
+                if (dist<minDist){
+                    minDist = dist;
+                    pointer = x;
+                }
+
+            }
+            console.log(actorsList.length,pointer);
+            tmp = actorsList[0];
+            actorsList[0] = actorsList[pointer];
+            actorsList[pointer] = tmp;
+        };
+
+
+        this.die = function () {
             this.action = "die";
+            this.velocity.x = 0;
             this.setAnimation();
-            
-            
-            
+            return;
+            // second death concept;
+            var aList = this.ownerGame.currentLevel.actors;
+            for (var x in aList) {
+                if (aList[x].instance === this) {
+                    aList.splice(x, 1);
+                }
+            }
+
         };
-        this.isAlive = function(){
-            return this.stamina>=0?true:false;
+        this.isAlive = function () {
+            return this.stamina >= 0 ? true : false;
         };
-        
-        
-        
-        
+
+
+
+
     };
     return (Actor);
 });

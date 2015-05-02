@@ -9,7 +9,12 @@ define({
                 desiredDirection = hx - ax <= 0 ? "Left" : "Right",
                 effectiveRange = actor.activeWeapon.ammoModel.distance;
         
-        if (Math.abs(ay-hy)>20){
+        
+        
+        if (Math.random()>game.difficultyFactor){
+            return;
+        }
+        if (Math.abs(ay-hy)>10){
             actor.walk(desiredDirection);
             return;
         }
@@ -18,16 +23,13 @@ define({
             return;
         }else{
             actor.previousAction = desiredDirection;
-            actor.Shoot();
+            actor.Shoot(desiredDirection);
             return;
         }
-    },
-    
-    takeAction:function(action,direction,difficulty){
-        if (Math.random()<difficulty){
-            action(direction);
-        }
     }
+    
+    
+    
 
 
 

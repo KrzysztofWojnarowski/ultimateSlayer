@@ -2,10 +2,13 @@ define(function (gameInstance) {
 
     var GameplayContext = function () {
 
+        this.tick = 0;
+
+        
 
         this.redraw = function (InputHandler, game, viewport) {
             var level = game.getLevel(), x;
-            viewport.drawLevel(level);
+            viewport.drawLevel(level, this.tick);
             viewport.drawLevelWireframe(level);
 
             for (x in game.ammoArray) {
@@ -21,17 +24,24 @@ define(function (gameInstance) {
             var level = game.getLevel();
             game.physics.setVisibleMap(viewport);
             this.handleAmmo(game);
-
             this.handleAmmoEffect(level.actors, game.ammoArray, game.physics);
             this.updateActorsState(game, level, inputHandler);
+            this.tick++;
+            if (this.tick >= 999999) {
+                this.tick = 0;
+            }
 
 
         };
 
         this.updateActorsState = function (game, level, inputHandler) {
             for (var x in level.actors) {
+                if (!level.actors[x].instance.isAlive()) {
+                    game.physics.affectActor(level.actors[x].instance);
+                    continue;
+                }
                 level.actors[x].instance.activeWeapon.update();
-                if (x == 0) {
+                if (x==0) {
                     var actor = level.actors[0].instance;
                     if (inputHandler.bufferSize === 0 && !game.physics.inAir(actor) && !actor.activeWeapon.isShooting) {
                         actor.velocity.x = 0;
@@ -41,12 +51,10 @@ define(function (gameInstance) {
                         this.handleControllsGround(actor, inputHandler, game);
                     }
                 } else {
-                    var dir = x % 2 == 0 ? "Left" : "Right";
-                    game.AI.process(game,level.actors[x].instance,level.actors[0].instance);
-                    
+                    game.AI.process(game, level.actors[x].instance, level.actors[0].instance);
                 }
-                
                 game.physics.affectActor(level.actors[x].instance);
+
                 game.physics.inbound(level.actors[x].instance, level);
             }
         };
@@ -54,6 +62,15 @@ define(function (gameInstance) {
 
 
         this.handleControllsGround = function (actor, inputHandler, game) {
+            
+            
+            if (inputHandler.isPressed("Posess")){
+                console.log("Possesing");
+                actor.posess();
+                return;
+            }
+            
+            
             if (inputHandler.isPressed("Left")) {
 
                 if (inputHandler.isPressed("Up")) {
@@ -62,8 +79,8 @@ define(function (gameInstance) {
                     actor.walk("Left");
                 }
             }
-            
-            if (inputHandler.isPressed("Fire") ) {
+
+            if (inputHandler.isPressed("Fire")) {
                 actor.stand();
                 actor.Shoot();
                 return;
@@ -101,15 +118,18 @@ define(function (gameInstance) {
 
         this.handleAmmoEffect = function (actors, ammo, physics) {
             var x, y;
-            
+
             for (x in actors) {
+                if (!actors[x].instance.isAlive()) {
+                    continue;
+                }
                 for (y in ammo) {
                     if (physics.ammoCollided(actors[x], ammo[y])) {
                         actors[x].instance.onCollideAmmo(ammo[y]);
-                        
+
                         ammo[y].onCollideActor();
                         if (!actors[x].instance.isAlive()) {
-                            
+
                             actors[x].instance.die();
                         }
                     }

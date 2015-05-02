@@ -7,6 +7,7 @@ define({
     68:"Right", //d
     32:"Fire", //k
     80:"Pause", //p 
+    69:"Posess", // e  - posess closest enemy's body
     49:"1", //1
     50:"2", //2 
     51:"3",  //3

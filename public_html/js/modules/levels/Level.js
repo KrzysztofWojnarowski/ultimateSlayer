@@ -28,14 +28,7 @@ define({
                     },
                     instance:{}
                 },
-                 {
-                    type: "Vergil",
-                    position: {
-                        x: 100,
-                        y: 20
-                    },
-                    instance:{}
-                },
+                
                  {
                     type: "Beatrix",
                     position: {
@@ -44,46 +37,8 @@ define({
                     },
                     instance:{}
                 },
-                {
-                    type: "Beatrix",
-                    position: {
-                        x: 350,
-                        y: 10
-                    },
-                    instance:{}
-                },
-                 {
-                    type: "Vergil",
-                    position: {
-                        x: 400,
-                        y: 20
-                    },
-                    instance:{}
-                },
-                 {
-                    type: "Vergil",
-                    position: {
-                        x: 580,
-                        y: 20
-                    },
-                    instance:{}
-                },
-                 {
-                    type: "Vergil",
-                    position: {
-                        x: 630,
-                        y: 20
-                    },
-                    instance:{}
-                },
-                 {
-                    type: "Vergil",
-                    position: {
-                        x: 700,
-                        y: 20
-                    },
-                    instance:{}
-                },
+              
+               
                  {
                     type: "Vergil",
                     position: {

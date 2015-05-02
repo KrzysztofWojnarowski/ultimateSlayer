@@ -174,13 +174,7 @@ define(function() {
             
             
         };
-        
-        
-        
-        
-        
         this.inSight = function(realNumber){
-            
             if (realNumber>=this.camera.position.x && realNumber<=this.camera.size.width){
                 return true;
             }
@@ -202,7 +196,7 @@ define(function() {
             }
             this.drawContext.stroke();
             this.drawContext.closePath();
-        }
+        };
 
     };
 

@@ -14,7 +14,7 @@ define({
         shootRightBow:{x:1,y:1225,loop:false,frames:12},
         shootLeft:{x:1,y:0,loop:false},
         shootLeftBow:{x:1,y:1100,loop:false,frames:12},
-        die:{x:1,y:1295,loop:false,frames:3}
+        die:{x:1,y:1295,loop:false,frames:6}
     },
     meshData:{
         width:64,
