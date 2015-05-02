@@ -49,6 +49,7 @@ define(function () {
             return ret;
         }
         this.getClosestGround = function (actor, map) {
+            
             var ret = [],
                     actorX = actor.position.x,
                     actorY = actor.position.y,
@@ -71,9 +72,11 @@ define(function () {
 
         this.affectActor = function (actor) {
             actor.position.x = actor.velocity.x + actor.position.x;
+            this.inbound(actor,actor.ownerGame.currentLevel);
             if (!this.collideGround(actor)) {
                 this.gForce(actor);
             }
+            
 
         };
         this.inAir = function (actor) {
@@ -107,6 +110,7 @@ define(function () {
                 actor.position.x = level.width;
                 actor.velocity.x = 0;
             }
+            
         };
 
         this.ammoCollided = function (actor, ammo) {

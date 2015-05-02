@@ -104,10 +104,12 @@ define(["models/EquipmentFactory"], function (EquipmentFactory) {
                 this.velocity.y = -this.jumpVelocity;
                 this.position.y -= this.jumpVelocity;
             }
+            
             this.action = "jump" + direction;
             this.setAnimation();
         };
         this.stand = function () {
+            
             this.setAnimation();
             this.action = "stand";
             this.velocity.x = 0;
@@ -162,14 +164,14 @@ define(["models/EquipmentFactory"], function (EquipmentFactory) {
                     actorsList = this.ownerGame.currentLevel.actors,
                     hx = this.position.x,
                     hy = this.position.y;
-            minDist = Math.abs(hx - actorsList[1].instance.position.x) + Math.abs(hy + actorsList[1].instance.position.y);
-            pointer = 1;
-            for (x = 2; x < actorsList.length; x++) {
+            minDist = 1000;
+            pointer = 0;
+            for (x = 1; x < actorsList.length; x++) {
                 if (!actorsList[x].instance.isAlive()) {
                     continue;
                 }
                 dist = Math.abs(hx - actorsList[x].instance.position.x) + Math.abs(hy + actorsList[x].instance.position.y);
-                if (dist<minDist){
+                if (dist<minDist && actorsList[x].instance.isAlive()){
                     minDist = dist;
                     pointer = x;
                 }

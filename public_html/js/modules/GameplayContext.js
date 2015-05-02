@@ -4,7 +4,7 @@ define(function (gameInstance) {
 
         this.tick = 0;
 
-        
+
 
         this.redraw = function (InputHandler, game, viewport) {
             var level = game.getLevel(), x;
@@ -26,11 +26,6 @@ define(function (gameInstance) {
             this.handleAmmo(game);
             this.handleAmmoEffect(level.actors, game.ammoArray, game.physics);
             this.updateActorsState(game, level, inputHandler);
-            this.tick++;
-            if (this.tick >= 999999) {
-                this.tick = 0;
-            }
-
 
         };
 
@@ -41,7 +36,7 @@ define(function (gameInstance) {
                     continue;
                 }
                 level.actors[x].instance.activeWeapon.update();
-                if (x==0) {
+                if (x == 0) {
                     var actor = level.actors[0].instance;
                     if (inputHandler.bufferSize === 0 && !game.physics.inAir(actor) && !actor.activeWeapon.isShooting) {
                         actor.velocity.x = 0;
@@ -54,55 +49,49 @@ define(function (gameInstance) {
                     game.AI.process(game, level.actors[x].instance, level.actors[0].instance);
                 }
                 game.physics.affectActor(level.actors[x].instance);
-
-                game.physics.inbound(level.actors[x].instance, level);
             }
         };
 
 
 
         this.handleControllsGround = function (actor, inputHandler, game) {
-            
-            
-            if (inputHandler.isPressed("Posess")){
-                console.log("Possesing");
+            if (inputHandler.isPressed("Posess")) {
                 actor.posess();
                 return;
             }
-            
-            
-            if (inputHandler.isPressed("Left")) {
-
-                if (inputHandler.isPressed("Up")) {
+            if (inputHandler.isPressed("Up")) {
+                actor.action = "stand";
+                if (inputHandler.isPressed("Left")) {
                     actor.jump("Left");
-                } else {
-                    actor.walk("Left");
+                    return;
                 }
+                if (inputHandler.isPressed("Right")) {
+                    actor.jump("Right");
+                    return;
+                }
+                actor.velocity.x = 0;
+                actor.jump("Up");
             }
-
             if (inputHandler.isPressed("Fire")) {
-                actor.stand();
                 actor.Shoot();
                 return;
             }
 
+            if (inputHandler.isPressed("Right") && inputHandler.isPressed("Left")) {
+                actor.stand();
+                return;
+            }
+
+
             if (inputHandler.isPressed("Right")) {
                 actor.walk("Right");
             }
+            if (inputHandler.isPressed("Left")) {
+                actor.walk("Left");
+            }
 
-            if (inputHandler.isPressed("Right") && inputHandler.isPressed("Left")) {
-                actor.stand();
-            }
-            if (inputHandler.isPressed("Up")) {
-                if (inputHandler.isPressed("Left")) {
-                    actor.jump("Left");
-                } else if (inputHandler.isPressed("Right")) {
-                    actor.jump("Right");
-                } else {
-                    actor.velocity.x = 0;
-                    actor.jump("Up");
-                }
-            }
+
+
 
         };
 

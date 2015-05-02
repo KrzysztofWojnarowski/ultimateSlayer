@@ -26,6 +26,10 @@ define(["Controlls"], function(controlls) {
         this.init = function() {
             this.keyMap = this.bindControlls();
         };
+        
+        this.clearQueue = function(){
+            this.keyboardState = {};
+        }
         /**
          * 
          * @param {type} e
@@ -66,7 +70,7 @@ define(["Controlls"], function(controlls) {
            return this.keyboardState[meaning];
         };
     }
-    inputHandler = new InputHandler(controlls);
+    var inputHandler = new InputHandler(controlls);
     document.addEventListener("keydown", function(e) {
         inputHandler.setKey(e, true);
     });
