@@ -18,7 +18,6 @@ define(function (gameInstance) {
                 game.setContext("menuContext");
                 return true;
             }
-            game.physics.setVisibleMap(viewport);
             this.handleAmmo(game);
             this.handleAmmoEffect(level.actors, game.ammoArray, game.physics);
             this.updateActorsState(game, level, inputHandler);

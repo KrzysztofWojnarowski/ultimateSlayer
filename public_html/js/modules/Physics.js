@@ -9,7 +9,7 @@ define(function () {
 
             this.map = map;
             //TODO: Put g into config
-            this.g = 0.2;
+            this.g = 0.05;
         };
 
         this.gForce = function (actor) {
@@ -22,11 +22,13 @@ define(function () {
 
         };
         this.collideGround = function (actor) {
+            
             var
                     actorY = actor.position.y,
-                    map = this.visibleMap,
+                    map = actor.ownerGame.currentLevel.map.obstacles,
                     groundPositions = this.getMapAtActor(actor, map),
                     ground = this.getClosestGround(actor, groundPositions);
+            
             if (ground < actorY && Math.abs(ground - actorY) <= 10) {
                 actor.position.y = ground;
                 actor.velocity.y = 0;
@@ -50,17 +52,20 @@ define(function () {
         }
         this.getClosestGround = function (actor, map) {
             
-            var ret = [],
+            var ret = [],dist,
                     actorX = actor.position.x,
                     actorY = actor.position.y,
                     min = Math.abs(actorY - map[0][2] * actorX - map[0][3]),
                     index = 0,
                     i = 0;
+            
             for (i in map) {
-                if (min > Math.abs(actorY - map[i][2] * actorX - map[i][3])) {
-                    min = Math.abs(actorY - map[i][2] * actorX - map[i][3]);
+                dist = Math.abs(actorY - map[i][2] * actorX - map[i][3]);
+                if (min > dist || dist<15 ) {
+                    min = dist;
                     index = i;
                 }
+                
             }
             return map[index][2] * actorX + map[index][3];
 
@@ -85,19 +90,6 @@ define(function () {
 
         this.getVisibleActors = function (camera, actorArray) {
 
-        };
-
-        this.setVisibleMap = function (viewport) {
-            var i = 0;
-            this.visibleMap = [],
-                    map = this.map.obstacles;
-            for (i in map) {
-
-                if (viewport.inSight(map[i][0]) || viewport.inSight(map[i][1])) {
-                    this.visibleMap.push(map[i]);
-                }
-            }
-            ;
         };
 
         this.inbound = function (actor, level) {
