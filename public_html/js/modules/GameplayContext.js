@@ -50,7 +50,9 @@ define(function (gameInstance) {
                 }
                 level.actors[x].instance.activeWeapon.update();
                 if (x == 0) {
+                    
                     var actor = level.actors[0].instance;
+                    game.updatePossess();
                     if (inputHandler.bufferSize === 0 && !game.physics.inAir(actor) && !actor.activeWeapon.isShooting) {
                         actor.velocity.x = 0;
                         actor.stand();

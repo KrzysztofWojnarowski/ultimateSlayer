@@ -17,6 +17,7 @@ define(["models/EquipmentFactory"], function (EquipmentFactory) {
         this.stamina = 0;
         this.posessReload = false;
         this.posessTick = 0;
+        this.posessCounter = 5;
 
         this.animation = {
             offset: 1,
@@ -162,30 +163,35 @@ define(["models/EquipmentFactory"], function (EquipmentFactory) {
             }
 
         };
-
+        this.updatePosess = function(){
+            if (this.posessReload===true){
+                this.posessTick+=1;
+            }
+        }
 
         this.posess = function () {
-            if (this.posessTick>100){
-                this.posessTick =0;
-                this.posessReload = false;
+            
+            if (this.ownerGame.possession.counter<=0 || this.ownerGame.possession.reloading){
+                return ;
             }
-            if (this.posessReload===true){
-                this.posessTick++;
-                return;
-            }
-            this.posessReload = true;
+            
+            this.ownerGame.possession.reloading = true;
+            this.ownerGame.possession.counter-=1;
             var x, minDist,dist,pointer,tmp,
                     actorsList = this.ownerGame.currentLevel.actors,
                     hx = this.position.x,
                     hy = this.position.y;
-            minDist = 1000;
+            minDist = 100;
             pointer = 0;
+            
             for (x = 1; x < actorsList.length; x++) {
+                var victim = actorsList[x].instance;
                 if (!actorsList[x].instance.isAlive()) {
                     continue;
                 }
-                dist = Math.abs(hx - actorsList[x].instance.position.x) + Math.abs(hy + actorsList[x].instance.position.y);
-                if (dist<minDist && actorsList[x].instance.isAlive()){
+                dist = Math.abs(hx - victim.position.x) + Math.abs(hy - victim.position.y);
+                console.log(dist);
+                if (dist<minDist){
                     minDist = dist;
                     pointer = x;
                 }
@@ -210,11 +216,13 @@ define(["models/EquipmentFactory"], function (EquipmentFactory) {
         
         this.flyLeft = function(){
             this.velocity.x = -1.1*this.walkVelocity;
+            this.previousAction = "Left";
             this.animation.offset = this.entity.meshDataOffset["jumpLeft"].y;
         };
         
         this.flyRight = function(){
             this.velocity.x = 1.1*this.walkVelocity;
+            this.previousAction = "Right";
             this.animation.offset = this.entity.meshDataOffset["jumpRight"].y;
         }
 

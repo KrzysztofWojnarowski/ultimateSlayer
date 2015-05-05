@@ -10,6 +10,8 @@ define({
         update:function(actor){
             this.stamina = actor.stamina;
             this.activeWeapon = actor.activeWeapon.type;
+            this.posessCounter = actor.ownerGame.possession.counter;
+            this.posessLoad = actor.ownerGame.possession.tick;
             
         },
         redraw:function(viewport){
@@ -24,6 +26,7 @@ define({
             }
             dim = this.dimensions;
             ctx.beginPath();
+            
             ctx.strokeStyle = '#dd0000';
             ctx.fillStyle = '#111111';
             ctx.fillRect(0,350,1200,180);
@@ -32,7 +35,15 @@ define({
             ctx.fillRect(90,375,2*this.stamina,20);
             ctx.font="13px Verdana";
             ctx.fillText("Stamina: ",20,390);
+            ctx.fillText("Possessions Available: "+ this.posessCounter,500,390);
+            ctx.moveTo(500,400);
             
+            
+            if (this.posessLoad===0){
+                ctx.lineTo(500+180,400);
+            }else{
+                ctx.lineTo(500+180*(this.posessLoad/1000),400);
+            }
             ctx.fillText("Body Count: "+this.bodyCount,380,390);
             ctx.closePath();
             ctx.stroke();
