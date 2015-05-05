@@ -4,7 +4,7 @@ define({
    meshFile:"assets/bow.png",
    damage:10,
    velocity:{
-       x:3,y:0
+       x:30,y:0
    },
    animation:{
        shootLeft:{x:1,y:1105,loop:true,frames:9},

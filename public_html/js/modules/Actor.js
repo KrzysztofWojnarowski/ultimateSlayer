@@ -15,6 +15,8 @@ define(["models/EquipmentFactory"], function (EquipmentFactory) {
         this.canInterruptAction = true;
         this.ownerGame = {};
         this.stamina = 0;
+        this.posessReload = false;
+        this.posessTick = 0;
 
         this.animation = {
             offset: 1,
@@ -163,6 +165,15 @@ define(["models/EquipmentFactory"], function (EquipmentFactory) {
 
 
         this.posess = function () {
+            if (this.posessTick>100){
+                this.posessTick =0;
+                this.posessReload = false;
+            }
+            if (this.posessReload===true){
+                this.posessTick++;
+                return;
+            }
+            this.posessReload = true;
             var x, minDist,dist,pointer,tmp,
                     actorsList = this.ownerGame.currentLevel.actors,
                     hx = this.position.x,
@@ -180,7 +191,6 @@ define(["models/EquipmentFactory"], function (EquipmentFactory) {
                 }
 
             }
-            console.log(actorsList.length,pointer);
             tmp = actorsList[0];
             actorsList[0] = actorsList[pointer];
             actorsList[pointer] = tmp;
@@ -191,19 +201,22 @@ define(["models/EquipmentFactory"], function (EquipmentFactory) {
             this.action = "die";
             this.velocity.x = 0;
             this.setAnimation();
+            this.ownerGame.HUD.bodyCount++;
             return;
-            // second death concept;
-            var aList = this.ownerGame.currentLevel.actors;
-            for (var x in aList) {
-                if (aList[x].instance === this) {
-                    aList.splice(x, 1);
-                }
-            }
-
         };
         this.isAlive = function () {
             return this.stamina >= 0 ? true : false;
         };
+        
+        this.flyLeft = function(){
+            this.velocity.x = -1.1*this.walkVelocity;
+            this.animation.offset = this.entity.meshDataOffset["jumpLeft"].y;
+        };
+        
+        this.flyRight = function(){
+            this.velocity.x = 1.1*this.walkVelocity;
+            this.animation.offset = this.entity.meshDataOffset["jumpRight"].y;
+        }
 
 
 

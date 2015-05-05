@@ -4,7 +4,7 @@ define({
    meshFile:"assets/bow.png",
    damage:10,
    velocity:{
-    x:12,
+    x:32,
     y:0
    },
    animation:{

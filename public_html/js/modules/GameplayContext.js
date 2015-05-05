@@ -2,6 +2,7 @@ define(function (gameInstance) {
 
     var GameplayContext = function () {
         this.tick = 0;
+        
         this.redraw = function (InputHandler, game, viewport) {
             var level = game.getLevel(), x;
             viewport.drawLevel(level, this.tick);
@@ -10,6 +11,7 @@ define(function (gameInstance) {
                 viewport.drawAmmo(game.ammoArray[x]);
             }
             game.Blood.redraw(viewport,game.currentLevel.actors[0].instance);
+            game.HUD.redraw(viewport);
         };
         this.update = function (inputHandler, game, viewport) {
             var level = game.getLevel();
@@ -22,7 +24,23 @@ define(function (gameInstance) {
             this.handleAmmoEffect(level.actors, game.ammoArray, game.physics);
             this.updateActorsState(game, level, inputHandler);
             game.Blood.update();
+            
         };
+        
+        this.handleAirControl = function(actor, inputHandler, game){
+            
+            if (inputHandler.isPressed("Left") && inputHandler.isPressed("Right")) {
+                return;
+            }
+            if (inputHandler.isPressed("Left")) {
+                actor.flyLeft();
+                return;
+            }
+            if (inputHandler.isPressed("Right")) {
+                actor.flyRight();
+                return;
+            }
+        }
 
         this.updateActorsState = function (game, level, inputHandler) {
             for (var x in level.actors) {
@@ -37,9 +55,14 @@ define(function (gameInstance) {
                         actor.velocity.x = 0;
                         actor.stand();
                     }
+                    
                     if (!game.physics.inAir(actor) && !actor.activeWeapon.isShooting) {
                         this.handleControllsGround(actor, inputHandler, game);
+                    }else if (game.physics.inAir(actor)){
+                        this.handleAirControl(actor, inputHandler, game);
                     }
+                    
+                    game.HUD.update(actor);
                 } else {
                     game.AI.process(game, level.actors[x].instance, level.actors[0].instance);
                 }

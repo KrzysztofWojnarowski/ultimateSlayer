@@ -29,7 +29,7 @@ define(function () {
                     groundPositions = this.getMapAtActor(actor, map),
                     ground = this.getClosestGround(actor, groundPositions);
             
-            if (ground < actorY && Math.abs(ground - actorY) <= 10) {
+            if (ground < actorY+1 && Math.abs(ground - actorY) <= 10) {
                 actor.position.y = ground;
                 actor.velocity.y = 0;
                 actor.inAir = false;

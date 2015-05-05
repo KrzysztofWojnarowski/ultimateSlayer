@@ -64,7 +64,7 @@ define(function() {
             };
             this.camera.traceWindow = {
                 start: ~~this.drawContext.canvas.width * 0.2,
-                end: ~~level.map.width -10
+                end: ~~level.map.width - 600
 
             };
             this.camera.size = {
@@ -82,7 +82,7 @@ define(function() {
 
         this.updateCamera = function(actorObj) {
             var camera = this.camera, aPos = actorObj.instance.position.x;
-            camera.position.y = 100-actorObj.instance.position.y;
+            camera.position.y = 200-actorObj.instance.position.y;
             if (aPos > camera.traceWindow.start &&
                     aPos < camera.traceWindow.end &&
                     camera.position.x < camera.maxRight
@@ -97,7 +97,7 @@ define(function() {
             var camera = this.camera;
             this.animateTicker += 1;
             this.updateCamera(level.actors[0]);
-            this.drawContext.drawImage(level.imageData.background, camera.perspective.x,camera.position.y*0.1-200);
+            this.drawContext.drawImage(level.imageData.background, camera.perspective.x,camera.position.y*0.05-50);
             this.drawContext.drawImage(level.imageData.foreground, camera.position.x, camera.position.y);
             var actors = level.actors;
             for (var x in actors) {

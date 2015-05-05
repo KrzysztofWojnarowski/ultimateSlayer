@@ -1,4 +1,4 @@
-define(["GameplayContext", "MenuContext", "LoadingContext","Physics","AI","models/goodies/Blood"], function(GameplayContext, MenuContext, LoadingContext,Physics,AI,Blood) {
+define(["GameplayContext", "MenuContext", "LoadingContext","Physics","AI","models/goodies/Blood","models/goodies/HUD"], function(GameplayContext, MenuContext, LoadingContext,Physics,AI,Blood,HUD) {
 
     /**
      * init - load all needed stuff, show preloader etc
@@ -21,6 +21,7 @@ define(["GameplayContext", "MenuContext", "LoadingContext","Physics","AI","model
         this.AI = AI;
         this.difficultyFactor = 0.01;
         this.Blood = Blood;
+        this.HUD = HUD;
         
         
 
