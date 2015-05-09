@@ -190,7 +190,7 @@ define(["models/EquipmentFactory"], function (EquipmentFactory) {
                     continue;
                 }
                 dist = Math.abs(hx - victim.position.x) + Math.abs(hy - victim.position.y);
-                console.log(dist);
+                
                 if (dist<minDist){
                     minDist = dist;
                     pointer = x;

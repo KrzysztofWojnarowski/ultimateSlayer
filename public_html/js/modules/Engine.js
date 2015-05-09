@@ -12,6 +12,7 @@ define(["InputHandler", "Game", "Viewport", "config"], function(inputHandler, Ga
             this.mainLoop(game, viewPort);
         },
         mainLoop: function(game, viewPort) {
+           
             var mainLoop = window.setInterval(this.mainLoopActions, config.game.dt, game, viewPort);
         },
         mainLoopActions: function(game, viewPort) {

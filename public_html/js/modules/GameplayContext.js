@@ -6,9 +6,12 @@ define(function (gameInstance) {
         this.redraw = function (InputHandler, game, viewport) {
             var level = game.getLevel(), x;
             viewport.drawLevel(level, this.tick);
-            viewport.drawLevelWireframe(level);
+          
             for (x in game.ammoArray) {
                 viewport.drawAmmo(game.ammoArray[x]);
+            }
+            for (x in game.pickables){
+                viewport.drawPickable(game.pickables[x]);
             }
             game.Blood.redraw(viewport,game.currentLevel.actors[0].instance);
             game.HUD.redraw(viewport);
@@ -25,6 +28,7 @@ define(function (gameInstance) {
             this.updateActorsState(game, level, inputHandler);
             game.Blood.update();
             
+            
         };
         
         this.handleAirControl = function(actor, inputHandler, game){
@@ -40,7 +44,7 @@ define(function (gameInstance) {
                 actor.flyRight();
                 return;
             }
-        }
+        };
 
         this.updateActorsState = function (game, level, inputHandler) {
             for (var x in level.actors) {
@@ -57,7 +61,7 @@ define(function (gameInstance) {
                         actor.velocity.x = 0;
                         actor.stand();
                     }
-                    
+                    this.updatePickables(actor,game,game.physics);
                     if (!game.physics.inAir(actor) && !actor.activeWeapon.isShooting) {
                         this.handleControllsGround(actor, inputHandler, game);
                     }else if (game.physics.inAir(actor)){
@@ -117,12 +121,15 @@ define(function (gameInstance) {
             };
         };
         
-        this.updatePickables = function(game,actor){
-            var aPos = actor.position,x;
+        this.updatePickables = function(actor,game,physics){
+            //var aPos = actor.position,x;
             for(x in game.pickables){
-                
+                game.pickables[x].update();
+                 if (physics.collided(actor,game.pickables[x])) {
+                     game.pickables[x].onCollideActor(actor);
+                     delete game.pickables[x];
+                 }
             }
-            
         };
 
         this.handleAmmoEffect = function (actors, ammo, physics) {

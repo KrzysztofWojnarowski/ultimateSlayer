@@ -5,6 +5,7 @@ define(["LevelController",
     "models/weapon/AmmoList",
     "Ammo",
     "Pickable",
+    "models/Pickables/PickableSet",
     "models/EquipmentFactory"], function (
         levelController,
         Actor,
@@ -13,6 +14,7 @@ define(["LevelController",
         AmmoList,
         Ammo,
         Pickable,
+        PickableSet,
         EquipmentFactory) {
 
     var LoadingContext = function (gameInstance) {
@@ -36,7 +38,7 @@ define(["LevelController",
             this.imageData.background.src = game.currentLevel.backgroundImage;
             this.imageData.foreground.src = game.currentLevel.foregroundImage;
             game.currentLevel.imageData = this.imageData;
-            game.vieeport = viewport
+          
         };
 
         this.assignActors = function (game) {
@@ -200,19 +202,37 @@ define(["LevelController",
             var k,
                     models = [],
                     pickables = game.currentLevel.pickables,
-                    factory = new EquipmentFactory();
+                    factory = new EquipmentFactory(),
+                    levelPickables = game.currentLevel.pickables;
+                    
             
-            for (k in pickables){
-                models.push("models/Pickables/"+pickables[k].type);
-            }
-//            /return;
+            for (k in levelPickables){
+                var pickableData = levelPickables[k];
+                var pickable  = factory.build(Pickable, PickableSet[pickableData.type]);
+                pickable.position.x = pickableData.position.x;
+                pickable.position.y = pickableData.position.y;
+                game.pickables.push(pickable);
+            };
+            return;
+            
+            
             require(models, function () {
-                for (k in arguments) {
-                    var pickable = factory.build(Pickable, arguments[k]);
+                for (k in game.currentLevel.pickables) {
+                    console.log(k,game.currentLevel.pickables[k],arguments);
+                    var pickableData = arguments[game.currentLevel.pickables[k].type];
+                    pickableData.position.x = game.currentLevel.pickables[k].position.x;
+                    pickableData.position.y = game.currentLevel.pickables[k].position.y;
+                    var pickable = factory.build(Pickable, pickableData);
                     game.pickables.push(pickable);
+                    
                 }
             });
+            
+            
+            
         };
+        
+        
 
 
     };

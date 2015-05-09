@@ -17,10 +17,10 @@ define({
         width: 64,
         height: 65
     },
-    stamina: 30,
+    stamina: 40,
     weapons: ["Bow"],
     ammo: [{ripper: 100}],
-    jumpVelocity: 9,
-    walkVelocity: 1
+    jumpVelocity: 3,
+    walkVelocity: 2
 
 });

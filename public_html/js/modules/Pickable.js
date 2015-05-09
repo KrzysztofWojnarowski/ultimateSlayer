@@ -2,12 +2,22 @@ define(function(){
     
     var Pickable = function(){
         this.factory = {};
+        this.frames  = 4;
+        this.frame = 1;
+        this.tick = 1;
         this.position = {
             x:0,y:0
         };
         this.startPosition = {};
         this.update = function(){
-            
+            if (this.tick%30===0){
+                this.frame++;  
+                this.tick=1;
+            }
+            this.tick++;
+            if (this.frame>3){
+                this.frame=1;
+            };
         };
         this.setSurroundingContext = function(factory,data,game){
             this.factory = factory;

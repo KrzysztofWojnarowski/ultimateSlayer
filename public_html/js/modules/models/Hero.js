@@ -19,7 +19,7 @@ define({
         width: 64,
         height: 65
     },
-    stamina: 500,
+    stamina: 100,
     weapons: ["Bow"],
     ammo: [{ripper: 100}],
     jumpVelocity: 3.5,

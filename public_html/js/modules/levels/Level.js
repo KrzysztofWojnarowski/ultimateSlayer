@@ -22,60 +22,140 @@ define({
                 x: 0,
                 y: 0
             },
-            actors: [
+            actors:[
                 {
                     type: "Hero",
                     position: {
-                        x: 5,
-                        y: 20
+                        x: 15,
+                        y: 650
                     },
                     instance:{}
                 },
                     {
                     type: "Vergil",
                     position: {
-                        x: 5,
-                        y: 20
+                        x: 666,
+                        y: 415
+                    },
+                    instance:{}
+                },
+				{
+                    type: "Vergil",
+                    position: {
+                        x: 2500,
+                        y: 800
+                    },
+                    instance:{}
+                },
+				{
+                    type: "Vergil",
+                    position: {
+                        x: 1000,
+                        y: 1350
                     },
                     instance:{}
                 },
                  {
                     type: "Beatrix",
                     position: {
-                        x: 10,
-                        y: 20
+                        x: 4000,
+                        y: 1350
                     },
                     instance:{}
                 },
-				                 {
+				 {
+                    type: "Beatrix",
+                    position: {
+                        x: 4000,
+                        y: 800
+                    },
+                    instance:{}
+                },
+				 {
                     type: "Arwena",
                     position: {
-                        x: 15,
-                        y: 20
+                        x: 333,
+                        y: 1850
+                    },
+                    instance:{}
+                },
+				{
+                    type: "Vergil",
+                    position: {
+                        x: 2500,
+                        y: 2300
+                    },
+                    instance:{}
+                },
+                 {
+                    type: "Beatrix",
+                    position: {
+                        x: 3000,
+                        y: 2300
+                    },
+                    instance:{}
+                },
+				 {
+                    type: "Beatrix",
+                    position: {
+                        x: 3500,
+                        y: 2300
+                    },
+                    instance:{}
+                },
+				 {
+                    type: "Arwena",
+                    position: {
+                        x: 333,
+                        y: 2300
+                    },
+                    instance:{}
+                },
+				{
+                    type: "Arwena",
+                    position: {
+                        x: 2500,
+                        y: 1350
+                    },
+                    instance:{}
+                },
+				{
+                    type: "Arwena",
+                    position: {
+                        x: 2000,
+                        y: 1850
                     },
                     instance:{}
                 },
 					                 {
                     type: "Galadriela",
                     position: {
-                        x: 200,
-                        y: 20
+                        x: 3000,
+                        y: 1350
                     },
                     instance:{}
                 },
-									                 {
+				{
+                    type: "Galadriela",
+                    position: {
+                        x: 1900,
+                        y: 620
+                    },
+                    instance:{}
+                },
+				{
                     type: "Sam",
                     position: {
-                        x: 25,
-                        y: 20
+                        x: 2500,
+                        y: 2000
                     },
                     instance:{}
                 },
                 {
                     type: "Ladies",
                     position: {
-                        x: 35,
-                        y: 10
+                        x: 3500,
+                        y: 1000
                     },
                     instance:{}
                 }
@@ -83,8 +163,21 @@ define({
             pickables:[
                 {
                     type:"Heal",
-                    position:{x:1500,y:50}
+                    position:{x:1200,y:380}
+                },
+                 {
+                    type:"Heal",
+                    position:{x:1000,y:790}
+                },
+                 {
+                    type:"AmmoPack",
+                    position:{x:1200,y:2890}
+                },
+                 {
+                    type:"AmmoPack",
+                    position:{x:100,y:2980}
                 }
+                
             ]
         }]
 

@@ -1,10 +1,10 @@
-define(function() {
+define(function () {
 
-    var ViewPort = function() {
+    var ViewPort = function () {
         this.drawContext = {};
         this.bufferContext = {};
         this.window = {};
-        this.init = function(viewPortConfig) {
+        this.init = function (viewPortConfig) {
             var canvas = document.createElement("canvas");
             document.body.appendChild(canvas);
             this.drawContext = canvas.getContext("2d");
@@ -19,17 +19,17 @@ define(function() {
             this.animateTicker = 0;
 
         };
-        this.getPerspective = function() {
+        this.getPerspective = function () {
             return this.camera.perspective;
         };
-        this.getPosition = function() {
+        this.getPosition = function () {
             return this.camera.position;
         };
-        this.setPosition = function(actor) {
+        this.setPosition = function (actor) {
             this.camera.position.x -= 8;
             this.camera.position.y = 0;
         };
-        this.setPerspective = function() {
+        this.setPerspective = function () {
             this.camera.perspective.x -= 1;
             this.camera.perspective.y = 0;
         };
@@ -55,7 +55,7 @@ define(function() {
 
         };
 
-        this.initCamera = function(game) {
+        this.initCamera = function (game) {
             var level = game.getLevel();
 
 
@@ -80,9 +80,9 @@ define(function() {
 
         };
 
-        this.updateCamera = function(actorObj) {
+        this.updateCamera = function (actorObj) {
             var camera = this.camera, aPos = actorObj.instance.position.x;
-            camera.position.y = 200-actorObj.instance.position.y;
+            camera.position.y = 200 - actorObj.instance.position.y;
             if (aPos > camera.traceWindow.start &&
                     aPos < camera.traceWindow.end &&
                     camera.position.x < camera.maxRight
@@ -93,31 +93,31 @@ define(function() {
             //    console.log(camera.position.x+aPos);
         };
 
-        this.drawLevel = function(level) {
+        this.drawLevel = function (level) {
             var camera = this.camera;
             this.animateTicker += 1;
             this.updateCamera(level.actors[0]);
-            this.drawContext.drawImage(level.imageData.background, camera.perspective.x,camera.position.y*0.05-50);
+            this.drawContext.drawImage(level.imageData.background, camera.perspective.x, camera.position.y * 0.05 - 50);
             this.drawContext.drawImage(level.imageData.foreground, camera.position.x, camera.position.y);
             var actors = level.actors;
             for (var x in actors) {
                 this.drawActor(actors[x].instance);
             }
-            
-        };
-        
 
-        this.drawActor = function(actor) {
+        };
+
+
+        this.drawActor = function (actor) {
             if (this.animateTicker % 5 === 0) {
                 actor.frame += 1;
             }
-            
-            if (actor.animation.frames <= actor.frame ) {
+
+            if (actor.animation.frames <= actor.frame) {
                 if (actor.animation.loop === true) {
                     actor.frame = 1;
 
                 } else {
-                    actor.frame-= 1;
+                    actor.frame -= 1;
                 }
             }
             this.drawContext.drawImage(actor.sprite,
@@ -128,13 +128,13 @@ define(function() {
                     actor.position.x + this.camera.position.x, actor.position.y + this.camera.position.y,
                     actor.entity.meshData.width,
                     actor.entity.meshData.height);
-            if (actor.activeWeapon.isShooting){
+            if (actor.activeWeapon.isShooting) {
                 this.drawWeapon(actor);
-            }        
+            }
         };
-        
-        this.drawWeapon = function(actor){
-            
+
+        this.drawWeapon = function (actor) {
+
             this.drawContext.drawImage(actor.activeWeapon.sprite,
                     actor.entity.meshData.width * actor.frame,
                     actor.animation.offset,
@@ -143,23 +143,35 @@ define(function() {
                     actor.position.x + this.camera.position.x, actor.position.y + this.camera.position.y,
                     actor.entity.meshData.width,
                     actor.entity.meshData.height);
-            
-            
-            
+
+
+
         };
-        
-        this.drawAmmo = function(ammo){
+
+        this.drawPickable = function (pickable) {
+            
+            this.drawContext.drawImage(pickable.sprite,
+                    pickable.width * pickable.frame,
+                    0,
+                    pickable.width,
+                    pickable.height,
+                    pickable.position.x + this.camera.position.x, pickable.position.y + this.camera.position.y,
+                    pickable.width,
+                    pickable.height);
+        };
+
+        this.drawAmmo = function (ammo) {
             var actor = ammo.ownerWeapon.ownerActor;
             this.drawContext.beginPath();
-            this.drawContext.strokeStyle="#00FF00";
-            this.drawContext.moveTo(ammo.position.x+this.camera.position.x,ammo.position.y+this.camera.position.y);
-            this.drawContext.lineTo(ammo.position.x+30+this.camera.position.x,ammo.position.y+this.camera.position.y);
+            this.drawContext.strokeStyle = "#00FF00";
+            this.drawContext.moveTo(ammo.position.x + this.camera.position.x, ammo.position.y + this.camera.position.y);
+            this.drawContext.lineTo(ammo.position.x + 30 + this.camera.position.x, ammo.position.y + this.camera.position.y);
             this.drawContext.stroke();
             this.drawContext.closePath();
             return;
-            
-            
-            
+
+
+
             this.drawContext.drawImage(ammo.sprite,
                     actor.entity.meshData.width * actor.frame,
                     actor.animation.offset,
@@ -168,12 +180,12 @@ define(function() {
                     actor.position.x + this.camera.position.x, actor.position.y + this.camera.position.y,
                     actor.entity.meshData.width,
                     actor.entity.meshData.height);
-            
-            
-            
+
+
+
         };
-        this.inSight = function(realNumber){
-            if (realNumber>=this.camera.position.x && realNumber<=this.camera.size.width){
+        this.inSight = function (realNumber) {
+            if (realNumber >= this.camera.position.x && realNumber <= this.camera.size.width) {
                 return true;
             }
             return false;
@@ -182,15 +194,15 @@ define(function() {
 
 
 
-        this.assambleActor = function(actor) {
+        this.assambleActor = function (actor) {
         };
-        this.drawLevelWireframe = function(level){
+        this.drawLevelWireframe = function (level) {
             this.drawContext.beginPath();
-            this.drawContext.strokeStyle="#FF0000";
-            for (x in level.map.obstacles){
-                this.drawContext.moveTo((level.map.obstacles[x][0])+this.camera.position.x,(level.map.obstacles[x][0]*level.map.obstacles[x][2]+level.map.obstacles[x][3])+this.camera.position.y+65);
-                this.drawContext.lineTo((level.map.obstacles[x][1])+this.camera.position.x,(level.map.obstacles[x][1]*level.map.obstacles[x][2]+level.map.obstacles[x][3])+this.camera.position.y+65);
-                
+            this.drawContext.strokeStyle = "#FF0000";
+            for (x in level.map.obstacles) {
+                this.drawContext.moveTo((level.map.obstacles[x][0]) + this.camera.position.x, (level.map.obstacles[x][0] * level.map.obstacles[x][2] + level.map.obstacles[x][3]) + this.camera.position.y + 65);
+                this.drawContext.lineTo((level.map.obstacles[x][1]) + this.camera.position.x, (level.map.obstacles[x][1] * level.map.obstacles[x][2] + level.map.obstacles[x][3]) + this.camera.position.y + 65);
+
             }
             this.drawContext.stroke();
             this.drawContext.closePath();

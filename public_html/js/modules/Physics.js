@@ -49,7 +49,7 @@ define(function () {
                 }
             }
             return ret;
-        }
+        };
         this.getClosestGround = function (actor, map) {
             
             var ret = [],dist,
@@ -69,7 +69,7 @@ define(function () {
             }
             return map[index][2] * actorX + map[index][3];
 
-        }
+        };
 
         this.friction = function (actor) {
             actor.velocity.x = actor.velocity.x * 0.9;
@@ -113,6 +113,18 @@ define(function () {
                     hw = actor.instance.width,
                     ax = ammo.position.x,
                     ay = ammo.position.y;
+           if (hx<ax && hx+hw>ax && hy<ay && hy+hh>ay) return true;
+           return false;
+        };
+        
+        this.collided = function(a,b){
+             var
+                    hx = a.position.x,
+                    hy = a.position.y,
+                    hh = a.height,
+                    hw = a.width,
+                    ax = b.position.x,
+                    ay = b.position.y;
            if (hx<ax && hx+hw>ax && hy<ay && hy+hh>ay) return true;
            return false;
         };
