@@ -116,6 +116,14 @@ define(function (gameInstance) {
 
             };
         };
+        
+        this.updatePickables = function(game,actor){
+            var aPos = actor.position,x;
+            for(x in game.pickables){
+                
+            }
+            
+        };
 
         this.handleAmmoEffect = function (actors, ammo, physics) {
             var x, y;

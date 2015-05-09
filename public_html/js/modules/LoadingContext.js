@@ -4,6 +4,7 @@ define(["LevelController",
     "Weapon",
     "models/weapon/AmmoList",
     "Ammo",
+    "Pickable",
     "models/EquipmentFactory"], function (
         levelController,
         Actor,
@@ -11,6 +12,7 @@ define(["LevelController",
         Weapon,
         AmmoList,
         Ammo,
+        Pickable,
         EquipmentFactory) {
 
     var LoadingContext = function (gameInstance) {
@@ -109,6 +111,7 @@ define(["LevelController",
                 if (this.assigningWeapons === false) {
                     this.assignAmmo(game);
                     this.assignWeapons(game);
+                    this.loadPickables(game);
                     this.assigningWeapons = true;
                 }
             } else if (this.loadingEnded === false && this.loadingStarted === true) {
@@ -192,6 +195,23 @@ define(["LevelController",
                 }
                 
             }
+        };
+        this.loadPickables = function(game){
+            var k,
+                    models = [],
+                    pickables = game.currentLevel.pickables,
+                    factory = new EquipmentFactory();
+            
+            for (k in pickables){
+                models.push("models/Pickables/"+pickables[k].type);
+            }
+//            /return;
+            require(models, function () {
+                for (k in arguments) {
+                    var pickable = factory.build(Pickable, arguments[k]);
+                    game.pickables.push(pickable);
+                }
+            });
         };
 
 

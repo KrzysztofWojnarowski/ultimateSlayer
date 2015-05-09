@@ -27,6 +27,7 @@ define(["GameplayContext", "MenuContext", "LoadingContext", "Physics", "AI", "mo
             counter: 5,
             reloading: false
         };
+        this.pickables =[];
 
 
 
