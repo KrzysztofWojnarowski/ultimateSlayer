@@ -6,8 +6,11 @@ define({
                 hy = hero.position.y,
                 desiredDirection = hx - ax <= 0 ? "Left" : "Right",
                 effectiveRange = actor.activeWeapon.ammoModel.distance;
-        
-        if (Math.random()>game.difficultyFactor){
+        if (Math.abs(ax-hx)>500 || Math.abs(ay-hy)>300){
+            actor.stand();
+            return;
+        }
+        if ( Math.random()>game.difficultyFactor ){
             return;
         }
         if (Math.abs(ay-hy)>10){
