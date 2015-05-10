@@ -208,6 +208,9 @@ define(["models/EquipmentFactory"], function (EquipmentFactory) {
             this.velocity.x = 0;
             this.setAnimation();
             this.ownerGame.HUD.bodyCount++;
+            if (this.type==="Hero" || this.type==="Boss"){
+                this.deathMod(this.ownerGame);
+            }
             return;
         };
         this.isAlive = function () {
@@ -224,7 +227,7 @@ define(["models/EquipmentFactory"], function (EquipmentFactory) {
             this.velocity.x = 1.1*this.walkVelocity;
             this.previousAction = "Right";
             this.animation.offset = this.entity.meshDataOffset["jumpRight"].y;
-        }
+        };
 
 
 

@@ -1,0 +1,12 @@
+define({
+   type:"Boss_bow", 
+   distance:true,
+   ammo:"Boss_arrow",
+   ammoLeft:666,
+   meshFile:"assets/boss_bow.png",
+   reloadTime:100,
+   animation:{
+       shootLeft:{x:1,y:2210,loop:true,frames:9},
+       ShootRightBow:{x:1,y:2470,loop:true,frames:9}
+   }
+});

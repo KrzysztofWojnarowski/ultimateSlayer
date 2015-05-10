@@ -24,13 +24,13 @@ define(function () {
         this.collideGround = function (actor) {
             
             var
-                    actorY = actor.position.y,
+                    actorY = actor.position.y+actor.height,
                     map = actor.ownerGame.currentLevel.map.obstacles,
                     groundPositions = this.getMapAtActor(actor, map),
                     ground = this.getClosestGround(actor, groundPositions);
             
             if (ground < actorY+1 && Math.abs(ground - actorY) <= 10) {
-                actor.position.y = ground;
+                actor.position.y = ground - actor.height;
                 actor.velocity.y = 0;
                 actor.inAir = false;
             } else {

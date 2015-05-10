@@ -72,9 +72,9 @@ define(function () {
                 heigth: this.drawContext.canvas.height
             };
             this.camera.maxPerspective = level.imageData.background.naturalWidth;
-            this.camera.maxRight = level.map.width - this.camera.size.width / 2;
+            this.camera.maxRight = (level.map.width - this.camera.size.width-500);
             this.camera.perspectiveRatio = level.imageData.background.naturalWidth / level.map.width;
-
+            
 
 
 
@@ -83,12 +83,17 @@ define(function () {
         this.updateCamera = function (actorObj) {
             var camera = this.camera, aPos = actorObj.instance.position.x;
             camera.position.y = 200 - actorObj.instance.position.y;
+            if(aPos>camera.maxRight){
+                return;
+            }
             if (aPos > camera.traceWindow.start &&
-                    aPos < camera.traceWindow.end &&
-                    camera.position.x < camera.maxRight
-                    ) {
+                    aPos < camera.traceWindow.end) {
                 camera.position.x = -aPos + camera.traceWindow.start;
                 camera.perspective.x = ~~camera.position.x * camera.perspectiveRatio;
+             
+            }else{
+                
+                
             }
             //    console.log(camera.position.x+aPos);
         };

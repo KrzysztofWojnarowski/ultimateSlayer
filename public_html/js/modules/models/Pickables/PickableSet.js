@@ -3,9 +3,9 @@ define({
         position: {
             x: 0, y: 0
         },
-        meshFile: "assets/rotating_pentagram.png",
-        width: 65,
-        height: 70,
+        meshFile: "assets/rotating_pentagram_1.png",
+        width: 64,
+        height: 64,
         actorAction: function (actor) {
             actor.stamina += 30;
         }
@@ -15,12 +15,12 @@ define({
         position: {
             x: 0, y: 0
         },
-        meshFile: "assets/rotating_pentagram.png",
-        width: 65,
-        height: 70,
+        meshFile: "assets/rotating_ammo.png",
+        width: 64,
+        height: 64,
         actorAction: function (actor) {
             
-            actor.activetWeapon.ammoLeft += 30;
+            actor.activeWeapon.ammoLeft += 30;
         }
     }
 
