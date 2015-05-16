@@ -20,6 +20,9 @@ define(["models/EquipmentFactory"],function (EquipmentFactory) {
         this.reloadingCounter = 0;
         
         this.update = function () {
+            
+            
+            
             if (this.isShooting){
                 this.reloadingCounter ++;
             }

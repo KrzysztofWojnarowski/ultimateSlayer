@@ -99,13 +99,15 @@ define(["LevelController",
         
         this.update = function (inputHandler, game, viewport) {
             game.Blood.load();
-            if (typeof game.currentLevel.index === "undefined") {
-                
+            
+            if (typeof game.currentLevel.index !== "number") {
                 game.currentLevel = levelController.getLevel(0);
+                
             } else if (this.loadingStarted === false && this.loadingEnded === false) {
                 
                 this.loadingStarted = true;
                 this.assignStage(game,viewport);
+                
                 if (this.assigningActors === false) {
                     this.assignActors(game);
                     this.assigningActors = true;
@@ -124,10 +126,12 @@ define(["LevelController",
                         this.areActorsLoaded(game.currentLevel.actors) &&
                         this.areWeaponsLoaded(game.weapons)
                         ) {
+                    
                     this.assembleActors(game);
                     this.loadingEnded = true;
                     this.loadingStarted = false;
                 }
+                
 
             } else if (this.loadingEnded === true && this.loadingStarted === false) {
                 viewport.initCamera(game);
@@ -152,6 +156,7 @@ define(["LevelController",
                     c++;
                 }
             }
+            
             if (c === actorsList.length) {
                 return true;
             } else {
@@ -218,7 +223,7 @@ define(["LevelController",
             
             require(models, function () {
                 for (k in game.currentLevel.pickables) {
-                    console.log(k,game.currentLevel.pickables[k],arguments);
+                    
                     var pickableData = arguments[game.currentLevel.pickables[k].type];
                     pickableData.position.x = game.currentLevel.pickables[k].position.x;
                     pickableData.position.y = game.currentLevel.pickables[k].position.y;

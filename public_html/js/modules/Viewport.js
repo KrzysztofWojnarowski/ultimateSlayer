@@ -11,11 +11,9 @@ define(function () {
             this.drawContext.canvas.width = viewPortConfig.width;
             this.drawContext.canvas.height = viewPortConfig.height;
             this.drawContext.scale(viewPortConfig.scale.x, viewPortConfig.scale.y);
-            var buffer = document.createElement("canvas");
-            this.bufferContext = buffer.getContext("2d");
-            this.bufferContext.scale(viewPortConfig.scale.x, viewPortConfig.scale.y);
-            this.bufferContext.canvas.width = viewPortConfig.width;
-            this.bufferContext.canvas.height = viewPortConfig.height;
+            this.scale ={ x:viewPortConfig.scale.x,
+                y:viewPortConfig.scale.y};
+            
             this.animateTicker = 0;
 
         };
@@ -57,15 +55,12 @@ define(function () {
 
         this.initCamera = function (game) {
             var level = game.getLevel();
-
-
             this.camera.position = {
                 x: 0, y: 0
             };
             this.camera.traceWindow = {
                 start: ~~this.drawContext.canvas.width * 0.2,
                 end: ~~level.map.width - 600
-
             };
             this.camera.size = {
                 width: this.drawContext.canvas.width,
@@ -74,10 +69,6 @@ define(function () {
             this.camera.maxPerspective = level.imageData.background.naturalWidth;
             this.camera.maxRight = (level.map.width - this.camera.size.width-500);
             this.camera.perspectiveRatio = level.imageData.background.naturalWidth / level.map.width;
-            
-
-
-
         };
 
         this.updateCamera = function (actorObj) {
@@ -95,7 +86,7 @@ define(function () {
                 
                 
             }
-            //    console.log(camera.position.x+aPos);
+            
         };
 
         this.drawLevel = function (level) {
@@ -149,8 +140,6 @@ define(function () {
                     actor.entity.meshData.width,
                     actor.entity.meshData.height);
 
-
-
         };
 
         this.drawPickable = function (pickable) {
@@ -174,20 +163,6 @@ define(function () {
             this.drawContext.stroke();
             this.drawContext.closePath();
             return;
-
-
-
-            this.drawContext.drawImage(ammo.sprite,
-                    actor.entity.meshData.width * actor.frame,
-                    actor.animation.offset,
-                    actor.entity.meshData.width,
-                    actor.entity.meshData.height,
-                    actor.position.x + this.camera.position.x, actor.position.y + this.camera.position.y,
-                    actor.entity.meshData.width,
-                    actor.entity.meshData.height);
-
-
-
         };
         this.inSight = function (realNumber) {
             if (realNumber >= this.camera.position.x && realNumber <= this.camera.size.width) {
@@ -195,10 +170,6 @@ define(function () {
             }
             return false;
         };
-
-
-
-
         this.assambleActor = function (actor) {
         };
         this.drawLevelWireframe = function (level) {
@@ -207,7 +178,6 @@ define(function () {
             for (x in level.map.obstacles) {
                 this.drawContext.moveTo((level.map.obstacles[x][0]) + this.camera.position.x, (level.map.obstacles[x][0] * level.map.obstacles[x][2] + level.map.obstacles[x][3]) + this.camera.position.y + 65);
                 this.drawContext.lineTo((level.map.obstacles[x][1]) + this.camera.position.x, (level.map.obstacles[x][1] * level.map.obstacles[x][2] + level.map.obstacles[x][3]) + this.camera.position.y + 65);
-
             }
             this.drawContext.stroke();
             this.drawContext.closePath();
@@ -215,9 +185,6 @@ define(function () {
 
     };
 
-
-
     return (ViewPort);
-
 
 });

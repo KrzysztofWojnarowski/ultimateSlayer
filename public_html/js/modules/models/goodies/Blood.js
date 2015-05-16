@@ -5,7 +5,7 @@ define({
     current:0,
     shallBeDrawn:false,
     position:{
-        x:-100,y:-100
+        x:0,y:-100
     },
     ticker: 0,
     frames: ["blood1.png", "blood2.png", "blood3.png", "blood4.png"],
@@ -32,7 +32,7 @@ define({
     trigger:function(){
         this.shallBeDrawn=true;
         this.current=0;
-        this.position.x = -100*Math.random();
+        this.position.x = 600*Math.random();
         this.position.y = -100*Math.random();
     },
     

@@ -45,9 +45,6 @@ define(function(){
         };
         
     };
-    
     return (Pickable);
-    
-    
-    
+   
 });

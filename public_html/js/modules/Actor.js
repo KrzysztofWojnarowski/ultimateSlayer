@@ -18,6 +18,7 @@ define(["models/EquipmentFactory"], function (EquipmentFactory) {
         this.posessReload = false;
         this.posessTick = 0;
         this.posessCounter = 5;
+        this.index;
 
         this.animation = {
             offset: 1,
@@ -49,6 +50,7 @@ define(["models/EquipmentFactory"], function (EquipmentFactory) {
         this.update = function () {
         };
         this.loadEntity = function (entity) {
+            
             this.entity = entity;
             this.sprite = new Image();
             this.sprite.src = entity.spriteFileUrl;
@@ -57,7 +59,9 @@ define(["models/EquipmentFactory"], function (EquipmentFactory) {
             this.width = entity.width;
             this.height = entity.height;
             this.stamina = entity.stamina;
-
+            this.deathMod = entity.deathMod;
+            this.type = entity.type;
+            
         };
 
         this.initPosition = function (position) {
@@ -204,17 +208,24 @@ define(["models/EquipmentFactory"], function (EquipmentFactory) {
 
 
         this.die = function () {
+            
             this.action = "die";
             this.velocity.x = 0;
             this.setAnimation();
             this.ownerGame.HUD.bodyCount++;
-            if (this.type==="Hero" || this.type==="Boss"){
+            if (typeof this.deathMod ==="function"){
                 this.deathMod(this.ownerGame);
+            }else if(this.ownerGame.currentLevel.actors[0].instance.stamina<=0){
+                game.contextCollection.menuContext.endingType = "YouLoose";
+                game.contextCollection.menuContext.pageName = "endGame";
+                game.contextCollection.loadingContext.loadingStarted=false;
+                game.contextCollection.loadingContext.loadingEnded=false;
             }
+            
             return;
         };
         this.isAlive = function () {
-            return this.stamina >= 0 ? true : false;
+            return this.stamina > 0 ? true : false;
         };
         
         this.flyLeft = function(){

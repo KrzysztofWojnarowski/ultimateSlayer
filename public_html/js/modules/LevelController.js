@@ -1,4 +1,4 @@
-define(["levels/Level"], function(levels) {
+define(["levels/Level","models/EquipmentFactory"], function(levels,EquipmentFactory) {
     
   return{
       
@@ -20,7 +20,9 @@ define(["levels/Level"], function(levels) {
       },
       
       getLevel:function(index){
-          return levels.set[index];
+          var factory = new EquipmentFactory(),
+             dst={};
+          return factory.preventTypeClone(levels.set[index],dst);
       },
       buildLevel:function(){
           

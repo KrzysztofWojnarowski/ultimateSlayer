@@ -11,23 +11,23 @@ define({
         jumpRight:{x:1,y:390,loop:false,frames:7},
         jumpUp:{x:1,y:260,loop:false,frames:7},
         shootRigth:{x:1,y:0,loop:false},
-        shootRightBow:{x:1,y:2450,loop:false,frames:12},
+        shootRightBoss_bow:{x:1,y:2450,loop:false,frames:12},
         shootLeft:{x:1,y:0,loop:false},
-        shootLeftBow:{x:1,y:2200,loop:false,frames:12},
+        shootLeftBoss_bow:{x:1,y:2200,loop:false,frames:12},
         die:{x:1,y:2590,loop:false,frames:6}
     },
     meshData:{
         width:128,
         height:130
     },
-    stamina:300,
+    stamina:100,
     weapons:["Boss_bow"],
     ammo:[{ripper:100}],
     jumpVelocity:5,
-    walkVelocity:1.5,
+    walkVelocity:4.5,
     deathMod:function(game){
-        game.contextCollection.menuContext.page = "endGame";
-        game.contextCollection.menuContext.pageName = "YouWon";
+        game.contextCollection.menuContext.endingType = "YouWon";
+        game.contextCollection.menuContext.pageName = "endGame";
         game.setContext("menuContext");
         
     }

@@ -2,11 +2,27 @@ define(function (gameInstance) {
 
     var GameplayContext = function () {
         this.tick = 0;
+        this.redrawed=0;
+        this.fpsTick=0;
+        this.fps=0;
+        this.originalScale ={x:0,y:0};
         
+        this.performanceTest = function(){
+             if (performance.now() - this.redrawed<30){
+               return;
+            }
+            if(performance.now() - this.fpsTick>1000){
+                console.log(1000*this.fps/(performance.now()-this.fpsTick));
+                this.fps=0;
+                this.fpsTick = performance.now();
+            }
+            this.fps++;
+            this.redrawed = performance.now();
+        };
         this.redraw = function (InputHandler, game, viewport) {
+            //this.performanceTest();
             var level = game.getLevel(), x;
             viewport.drawLevel(level, this.tick);
-          
             for (x in game.ammoArray) {
                 viewport.drawAmmo(game.ammoArray[x]);
             }

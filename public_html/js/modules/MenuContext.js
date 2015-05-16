@@ -7,9 +7,14 @@ define(["GameText"], function (textAsset) {
         this.pageName = "menu";
         this.gameOverLogo = new Image();
         this.gameOverLogo.src = "assets/game_over.png";
+        this.endingType="";
 
         this.redrawEndGame = function (inputHandler, game, viewport) {
-            this.page = textAsset.youLoose;
+            if (this.endingType==="YouWon"){
+                this.page =  textAsset.youWon;
+            }else if(this.endingType==="YouLoose"){
+                this.page =  textAsset.youLoose;
+            }
             var vp = viewport.drawContext;
             viewport.drawContext.drawImage(this.gameOverLogo, 00, -100);
             vp.beginPath();
@@ -24,8 +29,11 @@ define(["GameText"], function (textAsset) {
         };
 
         this.redraw = function (InputHandler, game, viewport) {
-            this.redrawEndGame(InputHandler, game, viewport);
-            return;
+            if (this.pageName==="endGame"){
+                this.redrawEndGame(InputHandler, game, viewport);
+                return;
+            }
+            
             var vp = viewport.drawContext;
             vp.beginPath();
             vp.fillStyle = '#111111';
@@ -36,7 +44,7 @@ define(["GameText"], function (textAsset) {
             for (var x in this.page) {
                 vp.fillText(this.page[x], 20, 100 + 40 * x);
             }
-            //  vp.fillText(this.footer,20,100+40*x);
+            
 
             vp.closePath();
             vp.stroke();
@@ -44,9 +52,11 @@ define(["GameText"], function (textAsset) {
         };
 
         this.update = function (inputHandler, game) {
+            
             switch (this.pageName) {
                 case "menu":
                     this.page = textAsset.menu;
+                    
                     this.menuPage(inputHandler, game);
                     break;
                 case "history":
@@ -57,15 +67,21 @@ define(["GameText"], function (textAsset) {
                     this.controls(inputHandler, game);
                     this.page = textAsset.controls;
                     break;
+                case "endGame":
+                    this.gameEnd(inputHandler, game);
+                    
+                    break;
                     defauult: return;
+                    
             }
-
-
-
-
         };
 
-
+        this.gameEnd = function(inputHandler, game){
+            
+             if (inputHandler.isPressed("Esc")) {
+                this.pageName = "menu";
+            }
+        };
 
         this.menuPage = function (inputHandler, game) {
             if (inputHandler.isPressed("1")) {
@@ -78,6 +94,11 @@ define(["GameText"], function (textAsset) {
             if (inputHandler.isPressed("3")) {
                 this.pageName = "controls";
             }
+            
+            if (inputHandler.isPressed("Fire")) {
+               window.location.reload();
+            }
+
 
 
         };

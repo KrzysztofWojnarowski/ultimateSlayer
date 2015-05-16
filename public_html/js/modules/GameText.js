@@ -3,7 +3,8 @@ define({
     menu: [
         "1. - Play",
         "2. - Story",
-        "3. - Controls"
+        "3. - Controls",
+        "Space - Start new game"
 
 
 
@@ -37,8 +38,8 @@ define({
     ],
     pressEsc: "Press Esc to enter menu",
     youWon:["You Won!",
-        "Hell will never be thesame again!"],
-    youLoose:["You are worth nothning!","You died being dead!"]
+        "Hell will never be thesame again!","Press Esc to get back to previous Menu"],
+    youLoose:["You are worth nothning!","You died being dead!","Press Esc to get back to previous Menu"]
 
 });
 

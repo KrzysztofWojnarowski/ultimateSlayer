@@ -22,7 +22,16 @@ define({
     stamina: 100,
     weapons: ["Bow"],
     ammo: [{ripper: 100}],
-    jumpVelocity: 3.5,
-    walkVelocity: 10
+    jumpVelocity: 7.5,
+    walkVelocity: 2,
+    deathMod:function(game){
+        game.contextCollection.menuContext.endingType = "YouLoose";
+        game.contextCollection.menuContext.pageName = "endGame";
+        game.contextCollection.loadingContext.loadingStarted=false;
+        game.contextCollection.loadingContext.loadingEnded=false;
+        
+        game.setContext("menuContext");
+        
+    }
 
 });

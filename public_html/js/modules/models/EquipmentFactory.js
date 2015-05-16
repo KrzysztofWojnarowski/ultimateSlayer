@@ -23,6 +23,22 @@ define(
                     return dst;
                     
                 };
+                
+                this.preventTypeClone = function(srcObj,dst){
+                     for (var x in srcObj) {
+                        if (srcObj[x].constructor === Object) {
+                            dst[x] = {};
+                            dst[x] = this.preventTypeClone(srcObj[x], dst[x]);
+                        } else if(srcObj[x].constructor === Array){
+                           
+                            dst[x] = [];
+                            dst[x] = this.preventTypeClone(srcObj[x], dst[x]);
+                        }else{
+                            dst[x] = srcObj[x];
+                        }
+                    }
+                    return dst;
+                };
 
 
             };

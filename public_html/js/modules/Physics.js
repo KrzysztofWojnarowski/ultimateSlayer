@@ -24,13 +24,13 @@ define(function () {
         this.collideGround = function (actor) {
             
             var
-                    actorY = actor.position.y+actor.height,
+                    actorY = actor.position.y,
                     map = actor.ownerGame.currentLevel.map.obstacles,
                     groundPositions = this.getMapAtActor(actor, map),
                     ground = this.getClosestGround(actor, groundPositions);
             
             if (ground < actorY+1 && Math.abs(ground - actorY) <= 10) {
-                actor.position.y = ground - actor.height;
+                actor.position.y = ground ;
                 actor.velocity.y = 0;
                 actor.inAir = false;
             } else {
@@ -124,8 +124,12 @@ define(function () {
                     hh = a.height,
                     hw = a.width,
                     ax = b.position.x,
-                    ay = b.position.y;
-           if (hx<ax && hx+hw>ax && hy<ay && hy+hh>ay) return true;
+                    ay = b.position.y,
+                    aw  =b.width,
+                    ah  =b.height;
+                            
+           if (hx<ax && hx+hw>ax && hy<ay && hy+hh>ay || 
+               ax<hx && ax+aw>hx && ay<hy && ay+ah>hy     ) return true;
            return false;
         };
     };

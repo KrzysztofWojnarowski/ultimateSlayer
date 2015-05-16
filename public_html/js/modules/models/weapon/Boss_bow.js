@@ -1,6 +1,6 @@
 define({
    type:"Boss_bow", 
-   distance:true,
+   distance:500,
    ammo:"Boss_arrow",
    ammoLeft:666,
    meshFile:"assets/boss_bow.png",
