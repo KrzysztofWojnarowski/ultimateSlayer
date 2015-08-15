@@ -6,15 +6,15 @@ define(function () {
         this.visibleMap = [];
         this.g = 0;
         this.init = function (map, config) {
-
+              
             this.map = map;
             //TODO: Put g into config
-            this.g = 0.05;
+            this.g = 1.05;
         };
 
         this.gForce = function (actor) {
-            if (actor.velocity.y > 10) {
-                actor.velocity.y = 10;
+            if (actor.velocity.y > 20) {
+                actor.velocity.y = 20;
                 return;
             }
             actor.position.y = actor.position.y + actor.velocity.y;
@@ -29,7 +29,7 @@ define(function () {
                     groundPositions = this.getMapAtActor(actor, map),
                     ground = this.getClosestGround(actor, groundPositions);
             
-            if (ground < actorY+1 && Math.abs(ground - actorY) <= 10) {
+            if (ground < actorY+1 && Math.abs(ground - actorY) <= 20) {
                 actor.position.y = ground ;
                 actor.velocity.y = 0;
                 actor.inAir = false;
