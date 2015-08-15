@@ -1,43 +1,52 @@
-define(["InputHandler", "Game", "Viewport", "config"], function(inputHandler, Game, ViewPort, config) {
+define(["InputHandler", "Game", "Viewport", "config"], function (inputHandler, Game, ViewPort, config) {
+    var animationData = {};
     return {
         game: {},
         context: {},
-        init: function() {
+        init: function () {
             inputHandler.init();
-            var game = new Game();
-            var viewPort = new ViewPort();
+            animationData.game = new Game();
+            animationData.viewPort = new ViewPort();
 
-            viewPort.init(config.viewPort);
-            game.init();
-            this.mainLoop(game, viewPort);
+            animationData.viewPort.init(config.viewPort);
+            animationData.game.init();
+            this.mainLoop();
         },
-        mainLoop: function(game, viewPort) {
-           
-            var mainLoop = window.setInterval(this.mainLoopActions, config.game.dt, game, viewPort);
+        animationData:{
+            viewport:{},
+            game:{}    
         },
-        mainLoopActions: function(game, viewPort) {
+        mainLoop:function() {
+            function step(){
+                animationData.game.context.update(inputHandler, animationData.game,animationData.viewPort);
+                animationData.game.context.redraw(inputHandler,animationData.game,animationData.viewPort);
+                requestAnimationFrame(step);
+            }
+            step();
+        },
+        mainLoopActions: function() {
             var k= performance.now();
-            game.context.update(inputHandler, game,viewPort);
-            game.context.redraw(inputHandler,game,viewPort);
+            animationData.game.context.update(inputHandler, animationData.game,animationData.viewPort);
+            animationData.game.context.redraw(inputHandler,animationData.game,animationData.viewPort);
             var s = performance.now();
             //console.log("Timing:",s-k);
-
+            requestAnimationFrame(this.mainLoop);
         },
         updateActors: function()
         {
         },
-        updateArena: function() {
+        updateArena: function () {
         },
-        checkKeyState: function() {
+        checkKeyState: function () {
 
         },
-        redraw: function() {
+        redraw: function () {
         },
-        dispatchAction: function() {
+        dispatchAction: function () {
             //1 check keysState
             // perfor
         },
-        updateGame: function() {
+        updateGame: function () {
         }
 
 
