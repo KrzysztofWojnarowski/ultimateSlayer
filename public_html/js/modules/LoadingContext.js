@@ -28,15 +28,24 @@ define(["LevelController",
         this.weaponData = {};
         this.imageData = {
             foreground: {},
-            background: {}
+            background: {},
+            bl:false,
+            fl:false
         };
 
         this.assignStage = function (game,viewport) {
-            this.imageData.background = new Image();
-            this.imageData.foreground = new Image();
+            var imageData = this.imageData;
+            imageData.background = new Image();
+            imageData.foreground = new Image();
+            imageData.background.src = game.currentLevel.backgroundImage;
+            imageData.foreground.src = game.currentLevel.foregroundImage;
+            imageData.foreground.onload = function(e){
+                imageData.fl=true;
+            };
             
-            this.imageData.background.src = game.currentLevel.backgroundImage;
-            this.imageData.foreground.src = game.currentLevel.foregroundImage;
+            imageData.background.onload = function(){
+                imageData.bl=true;
+            };
             game.currentLevel.imageData = this.imageData;
           
         };
@@ -121,7 +130,7 @@ define(["LevelController",
             } else if (this.loadingEnded === false && this.loadingStarted === true) {
                 
                 
-                if (this.isDataLoaded(this.imageData.background) &&
+                if (this.imageData.bl === true && this.imageData.fl === true &&
                         this.isDataLoaded(this.imageData.foreground) &&
                         this.areActorsLoaded(game.currentLevel.actors) &&
                         this.areWeaponsLoaded(game.weapons)
@@ -142,9 +151,12 @@ define(["LevelController",
         };
 
         this.isDataLoaded = function (imageElement) {
+            
             if (imageElement.naturalWidth === 0) {
                 return false;
             }
+            
+            console.log("Loaded:",imageElement.naturalWidth,imageElement);
             return true;
         };
 
@@ -182,6 +194,7 @@ define(["LevelController",
         };
 
         this.redraw = function () {
+            
         };
 
         this.assembleActors = function(game){

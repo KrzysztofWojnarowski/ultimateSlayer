@@ -6,7 +6,10 @@ define(function () {
         this.window = {};
         this.init = function (viewPortConfig) {
             var canvas = document.createElement("canvas");
+            canvas.setAttribute("class","viewport");
+            
             document.body.appendChild(canvas);
+            
             this.drawContext = canvas.getContext("2d");
             this.drawContext.canvas.width = viewPortConfig.width;
             this.drawContext.canvas.height = viewPortConfig.height;
