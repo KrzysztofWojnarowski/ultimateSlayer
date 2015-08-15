@@ -145,6 +145,7 @@ define(["LevelController",
             } else if (this.loadingEnded === true && this.loadingStarted === false) {
                 viewport.initCamera(game);
                 game.physics.init(game.getLevel().map);
+                document.getElementById("preloader").style.display="none";
                 game.setContext("gameplayContext");
             }
             
