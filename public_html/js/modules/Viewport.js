@@ -97,7 +97,8 @@ define(function () {
             this.animateTicker += 1;
             this.updateCamera(level.actors[0]);
             this.drawContext.drawImage(level.imageData.background, camera.perspective.x, camera.position.y * 0.05 - 50);
-            this.drawContext.drawImage(level.imageData.foreground, camera.position.x, camera.position.y);
+            //this.drawContext.drawImage(level.imageData.foreground, camera.position.x, camera.position.y);
+            this.drawLevelWireframe(level);
             var actors = level.actors;
             for (var x in actors) {
                 this.drawActor(actors[x].instance);
@@ -176,14 +177,36 @@ define(function () {
         this.assambleActor = function (actor) {
         };
         this.drawLevelWireframe = function (level) {
+            var brick = level.imageData.levelBrick;
             this.drawContext.beginPath();
             this.drawContext.strokeStyle = "#FF0000";
             for (x in level.map.obstacles) {
-                this.drawContext.moveTo((level.map.obstacles[x][0]) + this.camera.position.x, (level.map.obstacles[x][0] * level.map.obstacles[x][2] + level.map.obstacles[x][3]) + this.camera.position.y + 65);
-                this.drawContext.lineTo((level.map.obstacles[x][1]) + this.camera.position.x, (level.map.obstacles[x][1] * level.map.obstacles[x][2] + level.map.obstacles[x][3]) + this.camera.position.y + 65);
+                this.drawLevelLine(level.map.obstacles[x],brick);
+                
+              //  this.drawContext.moveTo((level.map.obstacles[x][0]) + this.camera.position.x, (level.map.obstacles[x][0] * level.map.obstacles[x][2] + level.map.obstacles[x][3]) + this.camera.position.y + 65);
+              //  this.drawContext.lineTo((level.map.obstacles[x][1]) + this.camera.position.x, (level.map.obstacles[x][1] * level.map.obstacles[x][2] + level.map.obstacles[x][3]) + this.camera.position.y + 65);
             }
             this.drawContext.stroke();
             this.drawContext.closePath();
+        };
+        
+        this.drawLevelLine = function(element,image){
+            var startX = element[0] + this.camera.position.x ,
+                startY = (element[0] * element[2] + element[3]) + this.camera.position.y + 65,
+                endX = element[1] + this.camera.position.x,
+                endY = (element[1] * element[2] + element[3]) + this.camera.position.y + 65,
+                incrementVector =  image.naturalWidth*0.6,
+                x=startX,
+                y=startY;
+                while(x<endX-incrementVector){
+                  this.drawContext.drawImage(image,x,y - 80);    
+                   x = x+incrementVector;
+                   y = incrementVector*element[2]+y;
+                   
+                }
+                this.drawContext.drawImage(image,endX-incrementVector,y - 80);    
+                
+            
         };
 
     };

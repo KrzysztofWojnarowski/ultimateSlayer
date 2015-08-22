@@ -2,7 +2,7 @@ define({
     set: [{
             index: 0,
             backgroundImage: "assets/bg2.jpg",
-            foregroundImage: "assets/lev1.png",
+            levelBrick:"assets/levBrick1.png",
             map: {
                 base: 150,
                 width: 5000,

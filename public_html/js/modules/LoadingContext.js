@@ -27,7 +27,6 @@ define(["LevelController",
         this.models = [];
         this.weaponData = {};
         this.imageData = {
-            foreground: {},
             background: {},
             bl:false,
             fl:false
@@ -36,13 +35,12 @@ define(["LevelController",
         this.assignStage = function (game,viewport) {
             var imageData = this.imageData;
             imageData.background = new Image();
-            imageData.foreground = new Image();
+            imageData.levelBrick = new Image();
             imageData.background.src = game.currentLevel.backgroundImage;
-            imageData.foreground.src = game.currentLevel.foregroundImage;
-            imageData.foreground.onload = function(e){
+            imageData.levelBrick.src = game.currentLevel.levelBrick;
+            imageData.levelBrick.onload = function(e){
                 imageData.fl=true;
             };
-            
             imageData.background.onload = function(){
                 imageData.bl=true;
             };
@@ -131,7 +129,6 @@ define(["LevelController",
                 
                 
                 if (this.imageData.bl === true && this.imageData.fl === true &&
-                        this.isDataLoaded(this.imageData.foreground) &&
                         this.areActorsLoaded(game.currentLevel.actors) &&
                         this.areWeaponsLoaded(game.weapons)
                         ) {
@@ -156,8 +153,6 @@ define(["LevelController",
             if (imageElement.naturalWidth === 0) {
                 return false;
             }
-            
-            console.log("Loaded:",imageElement.naturalWidth,imageElement);
             return true;
         };
 
