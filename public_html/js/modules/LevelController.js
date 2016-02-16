@@ -1,4 +1,4 @@
-define(["levels/Level","models/EquipmentFactory"], function(levels,EquipmentFactory) {
+define(["levels/Level","models/EquipmentFactory","LevelGenerator"], function(levels,EquipmentFactory,LevelGenerator) {
     
   return{
       
@@ -20,9 +20,13 @@ define(["levels/Level","models/EquipmentFactory"], function(levels,EquipmentFact
       },
       
       getLevel:function(index){
+          var levelGenerator = new LevelGenerator();
+          var level = levelGenerator.generateLevel(0);
           var factory = new EquipmentFactory(),
              dst={};
-          return factory.preventTypeClone(levels.set[index],dst);
+     console.log(level);
+          //return factory.preventTypeClone(levels.set[index],dst);
+          return factory.preventTypeClone(level,dst);
       },
       buildLevel:function(){
           

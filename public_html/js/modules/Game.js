@@ -19,7 +19,7 @@ define(["GameplayContext", "MenuContext", "LoadingContext", "Physics", "AI", "mo
         this.ammo = [];
         this.ammoArray = [];
         this.AI = AI;
-        this.difficultyFactor = 0.01;
+        this.difficultyFactor = 0.1;
         this.Blood = Blood;
         this.HUD = HUD;
         this.possession = {

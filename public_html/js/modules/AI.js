@@ -20,7 +20,7 @@ define({
         if (Math.abs(ax-hx)>effectiveRange){
             actor.walk(desiredDirection);
             return;
-        }else{
+        }else if(Math.random()<game.difficultyFactor){
             actor.previousAction = desiredDirection;
             actor.Shoot(desiredDirection);
             return;
