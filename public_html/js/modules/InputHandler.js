@@ -77,6 +77,10 @@ define(["Controlls"], function(controlls) {
     document.addEventListener("keyup", function(e) {
         inputHandler.setKey(e, false);
     });
+    document.addEventListener('mouseup',function(e){
+        console.log(e);
+    });
+    
 //    document.addEventListener("mousemove",function(e){
 //        
 //        var c = document.getElementsByTagName("canvas")[0];

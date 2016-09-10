@@ -19,11 +19,11 @@ define({
         width: 64,
         height: 65
     },
-    stamina: 100,
+    stamina: 80,
     weapons: ["Bow"],
-    ammo: [{ripper: 100}],
+    ammo: [{ripper: 500}],
     jumpVelocity: 33.5,
-    walkVelocity: 5,
+    walkVelocity: 6,
     deathMod:function(game){
         game.contextCollection.menuContext.endingType = "YouLoose";
         game.contextCollection.menuContext.pageName = "endGame";

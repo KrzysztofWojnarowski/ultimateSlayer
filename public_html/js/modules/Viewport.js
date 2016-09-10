@@ -63,7 +63,7 @@ define(function () {
             };
             this.camera.traceWindow = {
                 start: ~~this.drawContext.canvas.width * 0.2,
-                end: ~~level.map.width - 600
+                end: ~~level.map.width - 800
             };
             this.camera.size = {
                 width: this.drawContext.canvas.width,

@@ -9,7 +9,7 @@ define([], function () {
                 allowedLevelChangeFactor = 50, //height step
                 actorGeneratePropability = 0.7,
                 pickableGeneratePropability = 0.1,
-                maxBlockLength = 800,
+                maxBlockLength = 500,
                 allowedLevelElements = 50, //how many lines may we generate
                 additionalBlockPropability=0.5,
                 actorTypes = [
@@ -43,9 +43,12 @@ define([], function () {
                 if(actor && Math.random()<actorGeneratePropability){
                     actors.push(actor);
                 }
+                if (x===(allowedLevelElements-2)){
+                    actors.push(this.generateActor("Boss"));
+                    
+                }
                 // add condition on generating enemy and pickables
             }
-            actors.push(this.generateActor("Boss"));
 
             level =
                     {
@@ -54,7 +57,7 @@ define([], function () {
                         levelBrick: "assets/levBrick1.png",
                         map: {
                             base: 150,
-                            width: 50000,
+                            width: xPosition+maxBlockLength*2,
                             obstacles: obstacles
                         },
                         viewPortInitial: {

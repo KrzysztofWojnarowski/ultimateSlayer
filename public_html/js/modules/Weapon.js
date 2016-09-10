@@ -6,12 +6,13 @@ define(["models/EquipmentFactory"],function (EquipmentFactory) {
         this.isShooting = false;
         this.ammoModel = {};
         this.ownerActor = {};
+        this.direction=null;
         this.shoot = function (direction) {
             if (this.isShooting || this.ammoLeft<=0){
                 return false;
             }
+            this.direction=direction;
             
-            this.ammoModel.spawn(direction);
             this.isShooting = true;
             this.ammoLeft--;
         };
@@ -20,11 +21,12 @@ define(["models/EquipmentFactory"],function (EquipmentFactory) {
         this.reloadingCounter = 0;
         
         this.update = function () {
-            
-            
-            
             if (this.isShooting){
                 this.reloadingCounter ++;
+                
+                if (this.reloadingCounter===30){
+                    this.ammoModel.spawn(this.direction);
+                }
             }
             if (this.reloadingCounter>=this.reloadTime){
                 this.reloadingCounter =0;
