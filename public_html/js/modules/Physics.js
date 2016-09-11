@@ -97,9 +97,6 @@ define(function () {
             if (ax < 0) {
                 actor.position.x = 0;
                 actor.velocity.x = 0;
-                
-               
-                
             }
             if (ax > viewport.camera.maxRight+viewport.camera.size.width*0.5) {
                 actor.position.x = viewport.camera.maxRight+viewport.camera.size.width*0.5;

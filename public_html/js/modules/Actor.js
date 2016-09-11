@@ -214,13 +214,14 @@ define(["models/EquipmentFactory"], function (EquipmentFactory) {
             this.velocity.x = 0;
             this.setAnimation();
             this.ownerGame.HUD.bodyCount++;
+            console.log(typeof this.deathMod);
             if (typeof this.deathMod ==="function"){
                 this.deathMod(this.ownerGame);
             }else if(this.ownerGame.currentLevel.actors[0].instance.stamina<=0){
-                game.contextCollection.menuContext.endingType = "YouLoose";
-                game.contextCollection.menuContext.pageName = "endGame";
-                game.contextCollection.loadingContext.loadingStarted=false;
-                game.contextCollection.loadingContext.loadingEnded=false;
+                this.ownerGame.contextCollection.menuContext.endingType = "YouLoose";
+                this.ownerGame.contextCollection.menuContext.pageName = "endGame";
+                this.ownerGame.contextCollection.loadingContext.loadingStarted=false;
+                this.ownerGame.contextCollection.loadingContext.loadingEnded=false;
             }
             
             return;

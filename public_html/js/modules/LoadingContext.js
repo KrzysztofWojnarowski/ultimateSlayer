@@ -1,5 +1,5 @@
-define(["LevelController", 
-    "Actor", 
+define(["LevelController",
+    "Actor",
     "models/weapon/WeaponList",
     "Weapon",
     "models/weapon/AmmoList",
@@ -24,28 +24,30 @@ define(["LevelController",
         this.loadingEnded = false;
         this.assigningActors = false;
         this.assigningWeapons = false;
+        this.nextLevelRequest = false;
         this.models = [];
         this.weaponData = {};
         this.imageData = {
             background: {},
-            bl:false,
-            fl:false
+            bl: false,
+            fl: false
         };
 
-        this.assignStage = function (game,viewport) {
+
+        this.assignStage = function (game, viewport) {
             var imageData = this.imageData;
             imageData.background = new Image();
             imageData.levelBrick = new Image();
             imageData.background.src = game.currentLevel.backgroundImage;
             imageData.levelBrick.src = game.currentLevel.levelBrick;
-            imageData.levelBrick.onload = function(e){
-                imageData.fl=true;
+            imageData.levelBrick.onload = function (e) {
+                imageData.fl = true;
             };
-            imageData.background.onload = function(){
-                imageData.bl=true;
+            imageData.background.onload = function () {
+                imageData.bl = true;
             };
             game.currentLevel.imageData = this.imageData;
-          
+
         };
 
         this.assignActors = function (game) {
@@ -63,7 +65,7 @@ define(["LevelController",
                     actor.position = level.actors[x].position;
                     actor.ownerGame = game;
                     level.actors[x].instance = actor;
-                    
+
                 }
             });
 
@@ -78,14 +80,14 @@ define(["LevelController",
                 var x = 0, weapon;
                 var factory = new EquipmentFactory();
                 for (x in arguments) {
-                    var weapon = factory.build(Weapon,arguments[x]);
-                    game.weapons[arguments[x].type]= weapon;
+                    var weapon = factory.build(Weapon, arguments[x]);
+                    game.weapons[arguments[x].type] = weapon;
                     game.weaponData[arguments[x].type] = arguments[x];
                 }
             });
-            
+
         };
-        
+
         this.assignAmmo = function (game) {
             var ammoList = AmmoList.list, c = 0;
             for (c in ammoList) {
@@ -95,26 +97,34 @@ define(["LevelController",
                 var x = 0, ammo;
                 var factory = new EquipmentFactory();
                 for (x in arguments) {
-                    
-                    game.ammo[arguments[x].type] = factory.build(Ammo,arguments[x]);
+
+                    game.ammo[arguments[x].type] = factory.build(Ammo, arguments[x]);
                     game.ammoData[arguments[x].type] = arguments[x];
                 }
             });
         };
-        
-        
-        
+
+
+
         this.update = function (inputHandler, game, viewport) {
+            if (this.nextLevelRequest) {
+                this.loadNextLevel(inputHandler, game, viewport);
+                console.log(this, game.currentLevel.index);
+                console.log(game.currentLevel.actors);
+            }
+
+
+
             game.Blood.load();
-            
+
             if (typeof game.currentLevel.index !== "number") {
                 game.currentLevel = levelController.getLevel(0);
-                
+
             } else if (this.loadingStarted === false && this.loadingEnded === false) {
-                
+
                 this.loadingStarted = true;
-                this.assignStage(game,viewport);
-                
+                this.assignStage(game, viewport);
+
                 if (this.assigningActors === false) {
                     this.assignActors(game);
                     this.assigningActors = true;
@@ -124,32 +134,32 @@ define(["LevelController",
                     this.assignWeapons(game);
                     this.loadPickables(game);
                     this.assigningWeapons = true;
+
                 }
+
             } else if (this.loadingEnded === false && this.loadingStarted === true) {
-                
-                
                 if (this.imageData.bl === true && this.imageData.fl === true &&
                         this.areActorsLoaded(game.currentLevel.actors) &&
                         this.areWeaponsLoaded(game.weapons)
                         ) {
-                    
+
                     this.assembleActors(game);
                     this.loadingEnded = true;
                     this.loadingStarted = false;
                 }
-                
+
 
             } else if (this.loadingEnded === true && this.loadingStarted === false) {
                 viewport.initCamera(game);
                 game.physics.init(game.getLevel().map);
-                document.getElementById("preloader").style.display="none";
+                document.getElementById("preloader").style.display = "none";
                 game.setContext("gameplayContext");
             }
-            
+
         };
 
         this.isDataLoaded = function (imageElement) {
-            
+
             if (imageElement.naturalWidth === 0) {
                 return false;
             }
@@ -164,7 +174,7 @@ define(["LevelController",
                     c++;
                 }
             }
-            
+
             if (c === actorsList.length) {
                 return true;
             } else {
@@ -173,16 +183,16 @@ define(["LevelController",
         };
 
         this.areWeaponsLoaded = function (weaponList) {
-            
-            var x, c = 0,d=0;
-            for ( x in weaponList) {
+
+            var x, c = 0, d = 0;
+            for (x in weaponList) {
                 d++;
                 if (this.isDataLoaded(weaponList[x].sprite)) {
                     c++;
                 }
             }
-            
-            return c === d?true:false;
+
+            return c === d ? true : false;
         };
 
         this.setStage = function () {
@@ -190,63 +200,75 @@ define(["LevelController",
         };
 
         this.redraw = function () {
-            
+
         };
 
-        this.assembleActors = function(game){
-            var x = 0, y= 0;
+        this.assembleActors = function (game) {
+            var x = 0, y = 0;
             var factory = new EquipmentFactory();
-            for (x=0;x<game.currentLevel.actors.length;x++){
+            for (x = 0; x < game.currentLevel.actors.length; x++) {
                 var actor = game.currentLevel.actors[x].instance;
-                for (y =0;y<actor.entity.weapons.length;y++){
+                for (y = 0; y < actor.entity.weapons.length; y++) {
                     var weaponType = actor.entity.weapons[y],
-                    weapon = factory.build(Weapon,game.weaponData[weaponType]);
-                    var ammo = factory.build(Ammo,game.ammoData[weapon.ammo]);
-                    ammo.setSurroundingContext(factory,game.ammoData[weapon.ammo],game,weapon);
+                            weapon = factory.build(Weapon, game.weaponData[weaponType]);
+                    var ammo = factory.build(Ammo, game.ammoData[weapon.ammo]);
+                    ammo.setSurroundingContext(factory, game.ammoData[weapon.ammo], game, weapon);
                     weapon.ammoModel = ammo;
                     actor.weapons[weaponType] = weapon;
                     weapon.ownerActor = actor;
                     actor.activeWeapon = weapon;
-                    
+
                 }
-                
+
             }
         };
-        this.loadPickables = function(game){
+        this.loadPickables = function (game) {
             var k,
                     models = [],
                     pickables = game.currentLevel.pickables,
                     factory = new EquipmentFactory(),
                     levelPickables = game.currentLevel.pickables;
-                    
-            
-            for (k in levelPickables){
+
+
+            for (k in levelPickables) {
                 var pickableData = levelPickables[k];
-                var pickable  = factory.build(Pickable, PickableSet[pickableData.type]);
+                var pickable = factory.build(Pickable, PickableSet[pickableData.type]);
                 pickable.position.x = pickableData.position.x;
                 pickable.position.y = pickableData.position.y;
                 game.pickables.push(pickable);
-            };
+            }
+            ;
             return;
-            
-            
+
+
             require(models, function () {
                 for (k in game.currentLevel.pickables) {
-                    
+
                     var pickableData = arguments[game.currentLevel.pickables[k].type];
                     pickableData.position.x = game.currentLevel.pickables[k].position.x;
                     pickableData.position.y = game.currentLevel.pickables[k].position.y;
                     var pickable = factory.build(Pickable, pickableData);
                     game.pickables.push(pickable);
-                    
+
                 }
             });
-            
-            
-            
+
+
+
         };
-        
-        
+
+        this.loadNextLevel = function (inputHandler, game, viewport) {
+            game.difficultyFactor = game.difficultyFactor * 1.5;
+            game.currentLevel = levelController.getLevel(++game.currentLevel.index);
+            this.nextLevelRequest = false;
+            this.loadingStarted = false;
+            this.loadingEnded = false;
+            this.assigningActors = false;
+            this.assigningWeapons = false;
+
+        };
+
+
 
 
     };

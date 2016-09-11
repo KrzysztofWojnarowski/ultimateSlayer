@@ -4,15 +4,20 @@ define({
         activeWeapon:{},
         posess:3,
         bodyCount:0,
+        level:0,
+        difficulty:0,
+        ammo:0,
         dimensions:null,
     
     
         update:function(actor){
             this.stamina = actor.stamina;
             this.activeWeapon = actor.activeWeapon.type;
+            this.difficulty = actor.ownerGame.difficultyFactor;
+            this.ammo = actor.activeWeapon.ammoLeft;
             this.posessCounter = actor.ownerGame.possession.counter;
             this.posessLoad = actor.ownerGame.possession.tick;
-            
+            this.level = actor.ownerGame.getLevel();
         },
         redraw:function(viewport){
             var ctx = viewport.drawContext,dim;
@@ -36,9 +41,10 @@ define({
             ctx.font="13px Verdana";
             ctx.fillText("Stamina: ",20,490);
             ctx.fillText("Possessions Available: "+ this.posessCounter,500,490);
+            ctx.fillText("Level: "+ this.level.index,900,490);
+            ctx.fillText("Game difficulty: "+ this.difficulty,20,530);
+            ctx.fillText("Ammo left: "+ this.ammo,500,530);
             ctx.moveTo(500,500);
-            
-            
             if (this.posessLoad===0){
                 ctx.lineTo(500+180,500);
             }else{

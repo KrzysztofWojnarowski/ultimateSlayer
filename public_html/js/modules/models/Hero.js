@@ -19,7 +19,7 @@ define({
         width: 64,
         height: 65
     },
-    stamina: 80,
+    stamina: 40,
     weapons: ["Bow"],
     ammo: [{ripper: 500}],
     jumpVelocity: 33.5,
@@ -29,7 +29,6 @@ define({
         game.contextCollection.menuContext.pageName = "endGame";
         game.contextCollection.loadingContext.loadingStarted=false;
         game.contextCollection.loadingContext.loadingEnded=false;
-        
         game.setContext("menuContext");
         
     }

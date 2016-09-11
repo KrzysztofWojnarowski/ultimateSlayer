@@ -20,11 +20,11 @@ define({
         width:128,
         height:130
     },
-    stamina:200,
+    stamina:20,
     weapons:["Boss_bow"],
     ammo:[{ripper:100}],
     jumpVelocity:5,
-    walkVelocity:4.5,
+    walkVelocity:6.5,
     deathMod:function(game){
         game.contextCollection.menuContext.endingType = "YouWon";
         game.contextCollection.menuContext.pageName = "endGame";
