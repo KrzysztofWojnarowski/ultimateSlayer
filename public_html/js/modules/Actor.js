@@ -1,4 +1,5 @@
-define(["models/EquipmentFactory"], function (EquipmentFactory) {
+define(["models/EquipmentFactory", "models/goodies/Hit"], function (EquipmentFactory, Hit) {
+    
 
     var Actor = function () {
         this.factory = new EquipmentFactory();
@@ -19,7 +20,8 @@ define(["models/EquipmentFactory"], function (EquipmentFactory) {
         this.posessTick = 0;
         this.posessCounter = 5;
         this.index;
-
+        this.mouseEvent = null;
+        this.hit = new Hit();
         this.animation = {
             offset: 1,
             frames: 2,
@@ -48,7 +50,7 @@ define(["models/EquipmentFactory"], function (EquipmentFactory) {
             this.frame = index;
         };
         this.update = function () {
-
+              
         };
         this.loadEntity = function (entity) {
 
@@ -101,6 +103,9 @@ define(["models/EquipmentFactory"], function (EquipmentFactory) {
             if (this.activeWeapon.ammoLeft <= 0) {
                 this.stand();
                 return;
+            }
+            if(this.mouseEvent){
+                direction = this.mouseEvent.layerX>200?"Right":"Left";
             }
             this.activeWeapon.shoot(direction);
             this.action = "shoot" + direction + this.activeWeapon.type;
@@ -165,8 +170,9 @@ define(["models/EquipmentFactory"], function (EquipmentFactory) {
             this.stamina -= ammo.damage;
             if (this.ownerGame.currentLevel.actors[0].instance === this) {
                 this.ownerGame.Blood.trigger();
+            } else {
+                this.hit.trigger(this);
             }
-
         };
         this.updatePosess = function () {
             if (this.posessReload === true) {
@@ -220,7 +226,7 @@ define(["models/EquipmentFactory"], function (EquipmentFactory) {
                 this.ownerGame.contextCollection.loadingContext.loadingStarted = false;
                 this.ownerGame.contextCollection.loadingContext.loadingEnded = false;
             }
-            if (typeof this.deathMod === "function"){
+            if (typeof this.deathMod === "function") {
                 this.deathMod(this.ownerGame);
             }
             return;

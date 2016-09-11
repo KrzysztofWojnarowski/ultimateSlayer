@@ -6,13 +6,28 @@ define(["models/EquipmentFactory"],function (EquipmentFactory) {
         this.isShooting = false;
         this.ammoModel = {};
         this.ownerActor = {};
+        this.shootingVector=[0,0];
         this.direction=null;
         this.shoot = function (direction) {
+            
             if (this.isShooting || this.ammoLeft<=0){
                 return false;
             }
             this.direction=direction;
-            
+            if(this.ownerActor.mouseEvent!=null){
+                
+            this.shootingVector=[
+               this.ownerActor.mouseEvent.layerX,
+               this.ownerActor.mouseEvent.layerY
+                
+            ];
+            }else{
+              this.shootingVector=[
+                0,
+                200
+                
+            ];  
+            }
             this.isShooting = true;
             this.ammoLeft--;
         };
@@ -25,7 +40,7 @@ define(["models/EquipmentFactory"],function (EquipmentFactory) {
                 this.reloadingCounter ++;
                 
                 if (this.reloadingCounter===30){
-                    this.ammoModel.spawn(this.direction);
+                    this.ammoModel.spawn(this.direction,this.shootingVector);
                 }
             }
             if (this.reloadingCounter>=this.reloadTime){

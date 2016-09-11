@@ -72,6 +72,7 @@ define(function (gameInstance) {
                 if (x == 0) {
                     
                     var actor = level.actors[0].instance;
+                    actor.mouseEvent = inputHandler.mouseEvent;
                     game.updatePossess();
                     if (inputHandler.bufferSize === 0 && !game.physics.inAir(actor) && !actor.activeWeapon.isShooting) {
                         actor.velocity.x = 0;
@@ -87,6 +88,7 @@ define(function (gameInstance) {
                     game.HUD.update(actor);
                 } else {
                     game.AI.process(game, level.actors[x].instance, level.actors[0].instance);
+                    level.actors[x].instance.hit.update();
                 }
                 game.physics.affectActor(level.actors[x].instance,viewport);
             }

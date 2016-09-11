@@ -135,6 +135,7 @@ define(function () {
             if (actor.activeWeapon.isShooting) {
                 this.drawWeapon(actor);
             }
+            actor.hit.redraw(this,actor);
         };
 
         this.drawWeapon = function (actor) {

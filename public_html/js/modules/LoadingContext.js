@@ -64,7 +64,9 @@ define(["LevelController",
                     actor.loadEntity(arguments[x]);
                     actor.position = level.actors[x].position;
                     actor.ownerGame = game;
+                    actor.hit.load();
                     level.actors[x].instance = actor;
+                    
 
                 }
             });
@@ -109,13 +111,12 @@ define(["LevelController",
         this.update = function (inputHandler, game, viewport) {
             if (this.nextLevelRequest) {
                 this.loadNextLevel(inputHandler, game, viewport);
-                console.log(this, game.currentLevel.index);
-                console.log(game.currentLevel.actors);
             }
 
 
 
             game.Blood.load();
+            
 
             if (typeof game.currentLevel.index !== "number") {
                 game.currentLevel = levelController.getLevel(0);

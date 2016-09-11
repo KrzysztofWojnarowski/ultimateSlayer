@@ -4,6 +4,7 @@ define(["Controlls"], function(controlls) {
         this.controlls = controlls;
         this.movesBlocked = false;
         this.bufferSize = 0;
+        this.mouseEvent = null;
         this.keyboardState = {};
         this.bindControlls = function() {
             var keyMap = [],
@@ -77,9 +78,15 @@ define(["Controlls"], function(controlls) {
     document.addEventListener("keyup", function(e) {
         inputHandler.setKey(e, false);
     });
-    document.addEventListener('mouseup',function(e){
-        console.log(e);
+    document.addEventListener('mousedown',function(e){
+        inputHandler.keyboardState["Fire"] = true;
+        inputHandler.mouseEvent = e;
     });
+    
+    document.addEventListener('mouseup',function(e){
+        inputHandler.keyboardState.Fire = false;
+    });
+
     
 //    document.addEventListener("mousemove",function(e){
 //        
