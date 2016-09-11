@@ -5,7 +5,7 @@ define({
     83:"Down",//s - block in gameplay
     65:"Left",// a
     68:"Right", //d
-    32:"Fire", //space
+    32:"Up", //space
     80:"Pause", //p 
     69:"Posess", // e  - posess closest enemy's body
     49:"1", //1

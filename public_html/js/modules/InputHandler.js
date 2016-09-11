@@ -73,9 +73,11 @@ define(["Controlls"], function(controlls) {
     }
     var inputHandler = new InputHandler(controlls);
     document.addEventListener("keydown", function(e) {
+        e.preventDefault();
         inputHandler.setKey(e, true);
     });
     document.addEventListener("keyup", function(e) {
+        e.preventDefault();
         inputHandler.setKey(e, false);
     });
     document.addEventListener('mousedown',function(e){
