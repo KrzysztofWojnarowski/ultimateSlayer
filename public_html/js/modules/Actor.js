@@ -48,10 +48,10 @@ define(["models/EquipmentFactory"], function (EquipmentFactory) {
             this.frame = index;
         };
         this.update = function () {
-            
+
         };
         this.loadEntity = function (entity) {
-            
+
             this.entity = entity;
             this.sprite = new Image();
             this.sprite.src = entity.spriteFileUrl;
@@ -62,7 +62,7 @@ define(["models/EquipmentFactory"], function (EquipmentFactory) {
             this.stamina = entity.stamina;
             this.deathMod = entity.deathMod;
             this.type = entity.type;
-            
+
         };
 
         this.initPosition = function (position) {
@@ -112,12 +112,12 @@ define(["models/EquipmentFactory"], function (EquipmentFactory) {
                 this.velocity.y = -this.jumpVelocity;
                 this.position.y -= this.jumpVelocity;
             }
-            
+
             this.action = "jump" + direction;
             this.setAnimation();
         };
         this.stand = function () {
-            
+
             this.setAnimation();
             this.action = "stand";
             this.velocity.x = 0;
@@ -163,40 +163,40 @@ define(["models/EquipmentFactory"], function (EquipmentFactory) {
 
         this.onCollideAmmo = function (ammo) {
             this.stamina -= ammo.damage;
-            if (this.ownerGame.currentLevel.actors[0].instance===this){
+            if (this.ownerGame.currentLevel.actors[0].instance === this) {
                 this.ownerGame.Blood.trigger();
             }
 
         };
-        this.updatePosess = function(){
-            if (this.posessReload===true){
-                this.posessTick+=1;
+        this.updatePosess = function () {
+            if (this.posessReload === true) {
+                this.posessTick += 1;
             }
         }
 
         this.posess = function () {
-            
-            if (this.ownerGame.possession.counter<=0 || this.ownerGame.possession.reloading){
-                return ;
+
+            if (this.ownerGame.possession.counter <= 0 || this.ownerGame.possession.reloading) {
+                return;
             }
-            
+
             this.ownerGame.possession.reloading = true;
-            this.ownerGame.possession.counter-=1;
-            var x, minDist,dist,pointer,tmp,
+            this.ownerGame.possession.counter -= 1;
+            var x, minDist, dist, pointer, tmp,
                     actorsList = this.ownerGame.currentLevel.actors,
                     hx = this.position.x,
                     hy = this.position.y;
             minDist = 100;
             pointer = 0;
-            
+
             for (x = 1; x < actorsList.length; x++) {
                 var victim = actorsList[x].instance;
                 if (!actorsList[x].instance.isAlive()) {
                     continue;
                 }
                 dist = Math.abs(hx - victim.position.x) + Math.abs(hy - victim.position.y);
-                
-                if (dist<minDist){
+
+                if (dist < minDist) {
                     minDist = dist;
                     pointer = x;
                 }
@@ -209,35 +209,34 @@ define(["models/EquipmentFactory"], function (EquipmentFactory) {
 
 
         this.die = function () {
-            
+
             this.action = "die";
             this.velocity.x = 0;
             this.setAnimation();
             this.ownerGame.HUD.bodyCount++;
-            console.log(typeof this.deathMod);
-            if (typeof this.deathMod ==="function"){
-                this.deathMod(this.ownerGame);
-            }else if(this.ownerGame.currentLevel.actors[0].instance.stamina<=0){
+            if (this.ownerGame.currentLevel.actors[0].instance.stamina <= 0) {
                 this.ownerGame.contextCollection.menuContext.endingType = "YouLoose";
                 this.ownerGame.contextCollection.menuContext.pageName = "endGame";
-                this.ownerGame.contextCollection.loadingContext.loadingStarted=false;
-                this.ownerGame.contextCollection.loadingContext.loadingEnded=false;
+                this.ownerGame.contextCollection.loadingContext.loadingStarted = false;
+                this.ownerGame.contextCollection.loadingContext.loadingEnded = false;
             }
-            
+            if (typeof this.deathMod === "function"){
+                this.deathMod(this.ownerGame);
+            }
             return;
         };
         this.isAlive = function () {
             return this.stamina > 0 ? true : false;
         };
-        
-        this.flyLeft = function(){
-            this.velocity.x = -1.1*this.walkVelocity;
+
+        this.flyLeft = function () {
+            this.velocity.x = -1.1 * this.walkVelocity;
             this.previousAction = "Left";
             this.animation.offset = this.entity.meshDataOffset["jumpLeft"].y;
         };
-        
-        this.flyRight = function(){
-            this.velocity.x = 1.1*this.walkVelocity;
+
+        this.flyRight = function () {
+            this.velocity.x = 1.1 * this.walkVelocity;
             this.previousAction = "Right";
             this.animation.offset = this.entity.meshDataOffset["jumpRight"].y;
         };
