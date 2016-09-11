@@ -41,7 +41,7 @@ define(function (gameInstance) {
             }
             this.handleAmmo(game);
             this.handleAmmoEffect(level.actors, game.ammoArray, game.physics);
-            this.updateActorsState(game, level, inputHandler);
+            this.updateActorsState(game, level, inputHandler,viewport);
             game.Blood.update();
             
             
@@ -62,10 +62,10 @@ define(function (gameInstance) {
             }
         };
 
-        this.updateActorsState = function (game, level, inputHandler) {
+        this.updateActorsState = function (game, level, inputHandler,viewport) {
             for (var x in level.actors) {
                 if (!level.actors[x].instance.isAlive()) {
-                    game.physics.affectActor(level.actors[x].instance);
+                    game.physics.affectActor(level.actors[x].instance,viewport);
                     continue;
                 }
                 level.actors[x].instance.activeWeapon.update();
@@ -88,7 +88,7 @@ define(function (gameInstance) {
                 } else {
                     game.AI.process(game, level.actors[x].instance, level.actors[0].instance);
                 }
-                game.physics.affectActor(level.actors[x].instance);
+                game.physics.affectActor(level.actors[x].instance,viewport);
             }
         };
 

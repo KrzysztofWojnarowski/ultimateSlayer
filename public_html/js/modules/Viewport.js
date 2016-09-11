@@ -63,30 +63,34 @@ define(function () {
             };
             this.camera.traceWindow = {
                 start: ~~this.drawContext.canvas.width * 0.2,
-                end: ~~level.map.width - 800
+                end: ~~level.map.width - this.drawContext.canvas.width
             };
             this.camera.size = {
                 width: this.drawContext.canvas.width,
                 heigth: this.drawContext.canvas.height
             };
+            console.log(this);
             this.camera.maxPerspective = level.imageData.background.naturalWidth;
-            this.camera.maxRight = (level.map.width - this.camera.size.width-500);
-            this.camera.perspectiveRatio = level.imageData.background.naturalWidth / level.map.width;
+            this.camera.maxRight = (level.map.width - 2*this.camera.size.width);
+            this.camera.perspectiveRatio = level.imageData.background.naturalWidth / (2*level.map.width);
         };
 
         this.updateCamera = function (actorObj) {
             var camera = this.camera, aPos = actorObj.instance.position.x;
             camera.position.y = 200 - actorObj.instance.position.y;
             if(aPos>camera.maxRight){
+                 
                 return;
+                
             }
             if (aPos > camera.traceWindow.start &&
                     aPos < camera.traceWindow.end) {
                 camera.position.x = -aPos + camera.traceWindow.start;
                 camera.perspective.x = ~~camera.position.x * camera.perspectiveRatio;
+                
              
             }else{
-                
+               
                 
             }
             

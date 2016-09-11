@@ -48,6 +48,7 @@ define(["models/EquipmentFactory"], function (EquipmentFactory) {
             this.frame = index;
         };
         this.update = function () {
+            
         };
         this.loadEntity = function (entity) {
             

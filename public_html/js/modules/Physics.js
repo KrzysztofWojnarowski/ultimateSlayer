@@ -75,9 +75,9 @@ define(function () {
             actor.velocity.x = actor.velocity.x * 0.9;
         };
 
-        this.affectActor = function (actor) {
+        this.affectActor = function (actor,viewport) {
             actor.position.x = actor.velocity.x + actor.position.x;
-            this.inbound(actor,actor.ownerGame.currentLevel);
+            this.inbound(actor,actor.ownerGame.currentLevel,viewport);
             if (!this.collideGround(actor)) {
                 this.gForce(actor);
             }
@@ -92,14 +92,17 @@ define(function () {
 
         };
 
-        this.inbound = function (actor, level) {
+        this.inbound = function (actor, level,viewport) {
             var ax = actor.position.x;
             if (ax < 0) {
                 actor.position.x = 0;
                 actor.velocity.x = 0;
+                
+               
+                
             }
-            if (ax > level.width) {
-                actor.position.x = level.width;
+            if (ax > viewport.camera.maxRight+viewport.camera.size.width*0.5) {
+                actor.position.x = viewport.camera.maxRight+viewport.camera.size.width*0.5;
                 actor.velocity.x = 0;
             }
             
