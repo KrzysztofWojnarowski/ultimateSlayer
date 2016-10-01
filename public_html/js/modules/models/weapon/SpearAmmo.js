@@ -1,10 +1,12 @@
 define({
-   type:"Arrow", 
-   distance:300,
+   type:"SpearAmmo", 
+   distance:0,
    meshFile:"assets/bow.png",
-   damage:10,
+   damage:1,
+   drawable:false,
    velocity:{
-       x:6,y:0
+    x:1.1,
+    y:0
    },
    animation:{
        shootLeft:{x:1,y:1105,loop:true,frames:9},

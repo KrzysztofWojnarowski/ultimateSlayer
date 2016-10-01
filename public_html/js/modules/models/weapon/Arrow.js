@@ -1,10 +1,11 @@
 define({
    type:"Arrow", 
-   distance:10,
+   distance:500,
    meshFile:"assets/bow.png",
    damage:10,
+   drawable:true,
    velocity:{
-    x:32,
+    x:80,
     y:0
    },
    animation:{

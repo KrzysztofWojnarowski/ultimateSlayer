@@ -2,7 +2,7 @@ define({
    type:"Bow", 
    distance:true,
    ammo:"Arrow",
-   ammoLeft:5000,
+   ammoLeft:50,
    meshFile:"assets/bow_skeleton.png",
    reloadTime:50,
    animation:{

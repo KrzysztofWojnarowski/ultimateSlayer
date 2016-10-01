@@ -1,8 +1,9 @@
 define({
    type:"Boss_arrow", 
-   distance:500,
+   distance:900,
    meshFile:"assets/boss_bow.png",
    damage:50,
+   drawable:false,
    velocity:{
     x:128,
     y:0

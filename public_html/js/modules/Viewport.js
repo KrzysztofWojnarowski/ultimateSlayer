@@ -69,7 +69,7 @@ define(function () {
                 width: this.drawContext.canvas.width,
                 heigth: this.drawContext.canvas.height
             };
-            console.log(this);
+           
             this.camera.maxPerspective = level.imageData.background.naturalWidth;
             this.camera.maxRight = (level.map.width - 2*this.camera.size.width);
             this.camera.perspectiveRatio = level.imageData.background.naturalWidth / (2*level.map.width);
@@ -117,8 +117,10 @@ define(function () {
             }
 
             if (actor.animation.frames <= actor.frame) {
+                 
                 if (actor.animation.loop === true) {
                     actor.frame = 1;
+                   
 
                 } else {
                     actor.frame -= 1;
@@ -164,6 +166,8 @@ define(function () {
         };
 
         this.drawAmmo = function (ammo) {
+            //don't draw spear ammo
+           // if( ammo.type=="SpearAmmo") return;
             var actor = ammo.ownerWeapon.ownerActor;
             this.drawContext.beginPath();
             this.drawContext.strokeStyle = "#00FF00";

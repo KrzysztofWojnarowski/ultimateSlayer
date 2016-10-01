@@ -11,14 +11,18 @@ define(function(){
         };
         this.startPosition = {};
         this.update = function(){
-            
-            if (Math.abs(this.startPosition.x - this.position.x )>this.distance || this.hitTarget){
+           var distanceX = Math.pow(this.position.x - this.startPosition.x,2),
+                   distanceY = Math.pow(this.position.y - this.startPosition.y,2),
+                   distance = Math.sqrt(distanceX+distanceY);
+           console.log(distance,this.distance);
+           
+            if (distance>this.distance || this.hitTarget){
                 this.game.ammoArray.splice(this,1);
                 return;
             };
             this.position.x=this.position.x + this.velocity.x*this.direction;
             
-            this.position.y=this.position.y + (50*(this.vector[1]-200)/(this.vector[0]-200)*this.direction );
+            this.position.y=this.position.y + this.velocity.y*(50*(this.vector[1]-200)/(this.vector[0]-200)*this.direction );
           
         };
         this.setSurroundingContext = function(factory,data,game,weapon){
@@ -30,6 +34,7 @@ define(function(){
         };
         
         this.clone = function(){
+            console.log(Ammo);
             return this.factory.build(Ammo,this.cloneData);
         };
         

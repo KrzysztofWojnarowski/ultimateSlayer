@@ -1,15 +1,17 @@
 
-audio{
-    display:none;
-}
 body{
     margin: 3% auto;
     width:1200px;
     background: #000000;
     color:#dd0000;
     display:block;
+    font-family: Arial, sans-serif;
     
 }
+audio{
+    display:none;
+}
+
 .viewport{
     border-radius: 50px;
 }
@@ -17,4 +19,18 @@ body{
     margin:auto auto;
     width:120px;
     height:100px;
+}
+#musicToggle{
+    width:60px;
+    display:block;
+    font-size: 1.6em;
+    background-color:#dd0000;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+}
+#controls{
+    margin:0 auto;
+    width:30%;
+    padding:5px;
 }

@@ -1,3 +1,3 @@
 define({
-   list:["Arrow","Dagger","Boss_arrow"]
+   list:["Arrow","Boss_arrow","SpearAmmo"]
 });

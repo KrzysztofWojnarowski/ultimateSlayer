@@ -11,8 +11,10 @@ define({
         jumpUp: {x: 1, y: 130, loop: false, frames: 7},
         shootRigth: {x: 1, y: 0, loop: false},
         shootRightBow: {x: 1, y: 1225, loop: false, frames: 12},
+        shootRightSpear: {x: 1, y: 450, loop: false, frames: 8},
         shootLeft: {x: 1, y: 0, loop: false},
-        shootLeftBow: {x: 1, y: 1100, loop: false, frames: 12},
+        shootLeftSpear: {x: 1, y: 320, loop: true, frames: 8},
+        shootLeftBow: {x: 1, y: 1100, loop: true, frames: 12},
         die: {x: 1, y: 1295, loop: false, frames: 6}
     },
     meshData: {
@@ -20,7 +22,7 @@ define({
         height: 65
     },
     stamina: 40,
-    weapons: ["Bow"],
+    weapons: ["Bow","Spear"],
     ammo: [{ripper: 500}],
     jumpVelocity: 33.5,
     walkVelocity: 6,
