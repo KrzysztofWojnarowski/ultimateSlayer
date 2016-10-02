@@ -3,7 +3,7 @@ define({
    distance:900,
    meshFile:"assets/boss_bow.png",
    damage:50,
-   drawable:false,
+   drawable:true,
    velocity:{
     x:128,
     y:0

@@ -10,13 +10,13 @@ define({
 
     ],
     controls: [
-        "W - Jump",
+        "W/Space - Jump",
         "A - Left",
         "D - Right",
         "E - Possess",
-        "Space - Shoot",
+        "Mouse1 - Shoot",
         "P - Pause",
-        "",
+        "1,2 - Bow, Spear",
         "Press Esc to get back to previous Menu"
     ],
     history: [

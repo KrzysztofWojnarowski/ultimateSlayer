@@ -97,6 +97,17 @@ define(function (gameInstance) {
 
 
         this.handleControllsGround = function (actor, inputHandler, game) {
+            
+            if(inputHandler.isPressed("1")){
+                actor.setActiveWeapon(actor.weapons["Bow"]);
+                return;
+            }
+            
+            if(inputHandler.isPressed("2")){
+                actor.setActiveWeapon(actor.weapons["Spear"]);
+                return;
+            }
+            
             if (inputHandler.isPressed("Posess")) {
                 actor.posess();
                 return;

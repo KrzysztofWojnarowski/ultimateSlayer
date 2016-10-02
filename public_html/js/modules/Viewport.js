@@ -141,7 +141,6 @@ define(function () {
         };
 
         this.drawWeapon = function (actor) {
-
             this.drawContext.drawImage(actor.activeWeapon.sprite,
                     actor.entity.meshData.width * actor.frame,
                     actor.animation.offset,
@@ -167,7 +166,7 @@ define(function () {
 
         this.drawAmmo = function (ammo) {
             //don't draw spear ammo
-           // if( ammo.type=="SpearAmmo") return;
+            if(ammo.drawable===false) return;
             var actor = ammo.ownerWeapon.ownerActor;
             this.drawContext.beginPath();
             this.drawContext.strokeStyle = "#00FF00";

@@ -29,8 +29,6 @@ define(["GameplayContext", "MenuContext", "LoadingContext", "Physics", "AI", "mo
         };
         this.pickables =[];
 
-
-
         this.init = function () {
             this.contextCollection = {
                 loadingContext: new LoadingContext(this),
