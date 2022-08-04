@@ -1,4 +1,4 @@
-define(["levels/Level","models/EquipmentFactory","LevelGenerator"], function(levels,EquipmentFactory,LevelGenerator) {
+define(["models/EquipmentFactory","LevelGenerator"], function(EquipmentFactory,LevelGenerator) {
     
   return{
       
