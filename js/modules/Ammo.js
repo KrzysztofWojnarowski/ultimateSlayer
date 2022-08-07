@@ -14,7 +14,7 @@ define(function(){
            var distanceX = Math.pow(this.position.x - this.startPosition.x,2),
                    distanceY = Math.pow(this.position.y - this.startPosition.y,2),
                    distance = Math.sqrt(distanceX+distanceY);
-           console.log(distance,this.distance);
+         
            
             if (distance>this.distance || this.hitTarget){
                 this.game.ammoArray.splice(this,1);
@@ -34,7 +34,6 @@ define(function(){
         };
         
         this.clone = function(){
-            console.log(Ammo);
             return this.factory.build(Ammo,this.cloneData);
         };
         

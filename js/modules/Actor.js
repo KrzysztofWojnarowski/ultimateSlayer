@@ -155,9 +155,11 @@ define(["models/EquipmentFactory", "models/goodies/Hit"], function (EquipmentFac
         };
 
         this.setAnimation = function () {
+            if (!this.entity.meshDataOffset[this.action]) return false;
             this.animation.offset = this.entity.meshDataOffset[this.action].y;
             this.animation.frames = this.entity.meshDataOffset[this.action].frames;
             this.animation.loop = this.entity.meshDataOffset[this.action].loop;
+            return true;
         };
 
 

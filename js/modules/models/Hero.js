@@ -25,7 +25,7 @@ define({
     weapons: ["Bow","Spear"],
     ammo: [{ripper: 500}],
     jumpVelocity: 33.5,
-    walkVelocity: 6,
+    walkVelocity: 3,
     deathMod:function(game){
         game.contextCollection.menuContext.endingType = "YouLoose";
         game.contextCollection.menuContext.pageName = "endGame";

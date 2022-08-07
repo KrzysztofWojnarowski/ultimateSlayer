@@ -112,12 +112,7 @@ define(["LevelController",
             if (this.nextLevelRequest) {
                 this.loadNextLevel(inputHandler, game, viewport);
             }
-
-
-
-            game.Blood.load();
-            
-
+            game.Blood.load();   
             if (typeof game.currentLevel.index !== "number") {
                 game.currentLevel = levelController.getLevel(0);
 
@@ -238,24 +233,6 @@ define(["LevelController",
                 pickable.position.y = pickableData.position.y;
                 game.pickables.push(pickable);
             }
-            ;
-            return;
-
-
-            require(models, function () {
-                for (k in game.currentLevel.pickables) {
-
-                    var pickableData = arguments[game.currentLevel.pickables[k].type];
-                    pickableData.position.x = game.currentLevel.pickables[k].position.x;
-                    pickableData.position.y = game.currentLevel.pickables[k].position.y;
-                    var pickable = factory.build(Pickable, pickableData);
-                    game.pickables.push(pickable);
-
-                }
-            });
-
-
-
         };
 
         this.loadNextLevel = function (inputHandler, game, viewport) {

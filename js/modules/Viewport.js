@@ -141,6 +141,7 @@ define(function () {
         };
 
         this.drawWeapon = function (actor) {
+            actor.activeWeapon.sprite.naturalWidth>0 &&
             this.drawContext.drawImage(actor.activeWeapon.sprite,
                     actor.entity.meshData.width * actor.frame,
                     actor.animation.offset,
