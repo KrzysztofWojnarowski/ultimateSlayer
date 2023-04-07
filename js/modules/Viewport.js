@@ -116,12 +116,9 @@ define(function () {
                 actor.frame += 1;
             }
 
-            if (actor.animation.frames <= actor.frame) {
-                 
+            if (actor.animation.frames <= actor.frame) {                
                 if (actor.animation.loop === true) {
                     actor.frame = 1;
-                   
-
                 } else {
                     actor.frame -= 1;
                 }
@@ -131,9 +128,10 @@ define(function () {
                     actor.animation.offset,
                     actor.entity.meshData.width,
                     actor.entity.meshData.height,
-                    actor.position.x + this.camera.position.x, actor.position.y + this.camera.position.y,
-                    actor.entity.meshData.width,
-                    actor.entity.meshData.height);
+                    actor.position.x + this.camera.position.x, 
+                    actor.position.y + this.camera.position.y,
+                    actor.entity.meshData.width*2,
+                    actor.entity.meshData.height*2);
             if (actor.activeWeapon.isShooting) {
                 this.drawWeapon(actor);
             }
@@ -147,9 +145,10 @@ define(function () {
                     actor.animation.offset,
                     actor.entity.meshData.width,
                     actor.entity.meshData.height,
-                    actor.position.x + this.camera.position.x, actor.position.y + this.camera.position.y,
-                    actor.entity.meshData.width,
-                    actor.entity.meshData.height);
+                    actor.position.x + this.camera.position.x, 
+                    actor.position.y + this.camera.position.y,
+                    actor.entity.meshData.width*2,
+                    actor.entity.meshData.height*2);
 
         };
 
@@ -171,10 +170,12 @@ define(function () {
             var actor = ammo.ownerWeapon.ownerActor;
             this.drawContext.beginPath();
             this.drawContext.strokeStyle = "#00FF00";
-            this.drawContext.moveTo(ammo.position.x + this.camera.position.x, ammo.position.y + this.camera.position.y);
-            this.drawContext.lineTo(ammo.position.x + 30 + this.camera.position.x, ammo.position.y + this.camera.position.y);
+            this.drawContext.moveTo(ammo.position.x + this.camera.position.x+30, ammo.position.y + this.camera.position.y+30);
+            this.drawContext.lineTo(ammo.position.x + 60 + this.camera.position.x, ammo.position.y + this.camera.position.y+30);
             this.drawContext.stroke();
             this.drawContext.closePath();
+
+
             return;
         };
         this.inSight = function (realNumber) {

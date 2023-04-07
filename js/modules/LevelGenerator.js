@@ -2,14 +2,14 @@ define([], function () {
 
     var LevelGenerator = function () {
         var currentPoint,
-                yLevel = Math.round(Math.random() * 500),
+                yLevel = parseInt(Math.random() * 500),
                 xPosition = 0,
                 aCoeficient = 0,
                 allowedAngleChangeFactor = 0.20,
                 allowedLevelChangeFactor = 50, //height step
                 actorGeneratePropability = 0.7,
                 pickableGeneratePropability = 0.1,
-                maxBlockLength = 500,
+                maxBlockLength = 50,
                 allowedLevelElements = 50, //how many lines may we generate
                 additionalBlockPropability=0.5,
                 actorTypes = [
@@ -33,7 +33,7 @@ define([], function () {
             actors.push(this.generateActor("Hero"));
             for (x = 0; x < allowedLevelElements; x++) {
                 // generate random actor from actors set
-                actor = this.generateActor(actorTypes[Math.round(Math.random()*(actorTypes.length-1))]);
+                actor = this.generateActor(actorTypes[parseInt(Math.random()*(actorTypes.length-1))]);
                 obstacles.push(this.generateLevelBlock());
                 if (Math.random()<additionalBlockPropability){
                     
@@ -80,7 +80,7 @@ define([], function () {
         }
 
         this.generateLevelBlock = function () {
-            var length = Math.round(Math.random() * maxBlockLength)+150,
+            var length = parseInt(Math.random() * maxBlockLength)+150,
                     startPosition = xPosition-60,
                     endPosition = xPosition + length,
                     
@@ -102,7 +102,7 @@ define([], function () {
         this.generateAdditionalBlock = function(){
             return [
                 xPosition,
-                xPosition+Math.round(Math.random()*maxBlockLength)+160,
+                xPosition+parseInt(Math.random()*maxBlockLength)+160,
                 0,
                 aCoeficient*xPosition+yLevel-200 - Math.round(Math.random()*300)
             ];

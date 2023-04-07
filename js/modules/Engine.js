@@ -17,6 +17,8 @@ define(["InputHandler", "Game", "Viewport", "config"], function (inputHandler, G
             game:{}    
         },
         mainLoop:function() {
+            var timing =[];
+            var c=0;
             function step(){
                 animationData.game.context.update(inputHandler, animationData.game,animationData.viewPort);
                 animationData.game.context.redraw(inputHandler,animationData.game,animationData.viewPort);
@@ -24,7 +26,7 @@ define(["InputHandler", "Game", "Viewport", "config"], function (inputHandler, G
             }
             step();
         },
-        mainLoopActions: function() {
+        /*mainLoopActions: function() {
             var k= performance.now();
             animationData.game.context.update(inputHandler, animationData.game,animationData.viewPort);
             animationData.game.context.redraw(inputHandler,animationData.game,animationData.viewPort);
@@ -49,6 +51,6 @@ define(["InputHandler", "Game", "Viewport", "config"], function (inputHandler, G
         updateGame: function () {
         }
 
-
+*/
     };
 });
