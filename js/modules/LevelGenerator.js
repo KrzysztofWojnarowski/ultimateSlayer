@@ -1,17 +1,24 @@
 define([], function () {
 
+    var xn=0.1;
+    _step = function(){
+        let k = xn > 0.5 ?4 :3.9;
+        return xn* k*(1 - xn);
+      };
+    random = function(){
+        xn = _step();
+        return xn;
+    };
+
     var LevelGenerator = function () {
-        var currentPoint,
-                yLevel = parseInt(Math.random() * 500),
+        var     yLevel = Math.round(random() * 500),
                 xPosition = 0,
                 aCoeficient = 0,
-                allowedAngleChangeFactor = 0.20,
-                allowedLevelChangeFactor = 50, //height step
-                actorGeneratePropability = 0.7,
-                pickableGeneratePropability = 0.1,
-                maxBlockLength = 50,
-                allowedLevelElements = 50, //how many lines may we generate
-                additionalBlockPropability=0.5,
+                allowedAngleChangeFactor = 0.3,
+                actorGeneratePropability = 0.2,
+                maxBlockLength = 40,
+                allowedLevelElements = 120, //how many lines may we generate
+                additionalBlockPropability=0.3,
                 actorTypes = [
                     "Vergil",
                     "Beatrix",
@@ -29,25 +36,31 @@ define([], function () {
 
 
         this.generateLevel = function (index) {
-            var x, obstacles = [], actors = [], actor, pickable, level = {};
-            actors.push(this.generateActor("Hero"));
+            var x, obstacles = [], actors = [], actor, level = {},pickables=[];
+                actors.push(this.generateActor("Hero"));
             for (x = 0; x < allowedLevelElements; x++) {
                 // generate random actor from actors set
-                actor = this.generateActor(actorTypes[parseInt(Math.random()*(actorTypes.length-1))]);
-                obstacles.push(this.generateLevelBlock());
-                if (Math.random()<additionalBlockPropability){
-                    
+                actor = this.generateActor(actorTypes[Math.round(random()*(actorTypes.length-1))]);
+                var blockData = this.generateLevelBlock(); 
+                obstacles.push(blockData);
+                if (random()<additionalBlockPropability){   
                     obstacles.push(this.generateAdditionalBlock());
-                    
                 }
-                if(actor && Math.random()<actorGeneratePropability){
+                if (random()<0.1){   
+                    pickables.push({
+                        type: "Heal",
+                        position: {x: blockData[0], y:blockData[3]-50}
+                    });
+                }
+
+
+                if(actor && random()<actorGeneratePropability){
                     actors.push(actor);
                 }
                 if (x===(allowedLevelElements-2)){
                     actors.push(this.generateActor("Boss"));
                     
                 }
-                // add condition on generating enemy and pickables
             }
 
             level =
@@ -65,10 +78,7 @@ define([], function () {
                             y: 0
                         },
                         actors: actors,
-                        pickables: [{
-                                type: "Heal",
-                                position: {x: 1200, y: 380}
-                            }],
+                        pickables: pickables,
                     };
 
 
@@ -76,15 +86,15 @@ define([], function () {
 
         }
         this.signRandom = function () {
-            return Math.random() > 0.5 ? 1 : -1;
+            return random() > 0.5 ? 1 : -1;
         }
 
         this.generateLevelBlock = function () {
-            var length = parseInt(Math.random() * maxBlockLength)+150,
+            var length = Math.round(random() * maxBlockLength)+150,
                     startPosition = xPosition-60,
                     endPosition = xPosition + length,
                     
-                    angleFactor =  Math.random() * allowedAngleChangeFactor * this.signRandom(),
+                    angleFactor =  random() * allowedAngleChangeFactor * this.signRandom(),
                     yStart = (aCoeficient-angleFactor)*startPosition+yLevel ;
            
             
@@ -102,16 +112,16 @@ define([], function () {
         this.generateAdditionalBlock = function(){
             return [
                 xPosition,
-                xPosition+parseInt(Math.random()*maxBlockLength)+160,
+                xPosition+Math.round(random()*maxBlockLength)+160,
                 0,
-                aCoeficient*xPosition+yLevel-200 - Math.round(Math.random()*300)
+                aCoeficient*xPosition+yLevel-200 - Math.round(random()*300)
             ];
         }
 
         this.generateActor = function (type) {
-            return (Math.random() < actorGeneratePropability || type) ?
+            return (random() < actorGeneratePropability || type) ?
                     {
-                        type: type ? type : ActorTypes[Math.round(Math.random() * (ActorTypes.length - 1))],
+                        type: type ? type : ActorTypes[Math.round(random() * (ActorTypes.length - 1))],
                         position: {
                             x: xPosition-100,
                             y: aCoeficient*xPosition+yLevel-100

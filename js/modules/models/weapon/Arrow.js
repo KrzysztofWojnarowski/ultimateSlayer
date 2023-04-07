@@ -1,6 +1,6 @@
 define({
    type:"Arrow", 
-   distance:800,
+   distance:20000,
    meshFile:"assets/bow.png",
    damage:10,
    drawable:true,

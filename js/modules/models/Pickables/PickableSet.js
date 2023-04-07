@@ -7,7 +7,7 @@ define({
         width: 64,
         height: 64,
         actorAction: function (actor) {
-            actor.stamina += 30;
+            actor.stamina+30 <= actor.maxStamina? actor.stamina += 30:actor.stamina = actor.maxStamina;
         }
 
     },

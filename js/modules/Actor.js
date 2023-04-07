@@ -16,6 +16,7 @@ define(["models/EquipmentFactory", "models/goodies/Hit"], function (EquipmentFac
         this.canInterruptAction = true;
         this.ownerGame = {};
         this.stamina = 0;
+        this.maxStamina=0;
         this.posessReload = false;
         this.posessTick = 0;
         this.posessCounter = 5;
@@ -42,7 +43,7 @@ define(["models/EquipmentFactory", "models/goodies/Hit"], function (EquipmentFac
             x: 0, y: 0
         };
         this.frame = 0;
-        this.stamina, this.weapons = [], this.activeWeapon, this.ammo, this.sprite;
+        this.weapons = [], this.activeWeapon, this.ammo, this.sprite;
         this.getFrame = function () {
             return this.frame;
         };
@@ -61,6 +62,7 @@ define(["models/EquipmentFactory", "models/goodies/Hit"], function (EquipmentFac
             this.walkVelocity = entity.walkVelocity;
             this.width = entity.width;
             this.height = entity.height;
+            this.maxStamina = entity.maxStamina ||100 ;
             this.stamina = entity.stamina;
             this.deathMod = entity.deathMod;
             this.type = entity.type;

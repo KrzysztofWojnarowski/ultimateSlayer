@@ -7,7 +7,7 @@ define({
                 desiredDirection = hx - ax <= 0 ? "Left" : "Right",
                 notDesiredDirection = hx - ax <= 0 ? "Right" : "Left",
                 effectiveRange = actor.activeWeapon.ammoModel.distance;
-        if (Math.abs(ax-hx)>500 || Math.abs(ay-hy)>300){
+        if (Math.abs(ax-hx)>800 || Math.abs(ay-hy)>500){
             actor.stand();
             return;
         }
@@ -21,9 +21,9 @@ define({
         if (Math.abs(ax-hx)>effectiveRange){
             actor.walk(desiredDirection);
             return;
-        }else if(Math.random()<game.difficultyFactor){
+        }else {
             if (actor.stamina<=20){
-                Math.random()<0.2?actor.jump(notDesiredDirection):actor.walk(notDesiredDirection);
+                Math.random()<0.05?actor.jump(notDesiredDirection):actor.walk(notDesiredDirection);
                 return;
             }
             

@@ -9,12 +9,12 @@ define(function () {
               
             this.map = map;
             //TODO: Put g into config
-            this.g = 1.05;
+            this.g = 1.45;
         };
 
         this.gForce = function (actor) {
-            if (actor.velocity.y > 20) {
-                actor.velocity.y = 20;
+            if (actor.velocity.y > 10) {
+                actor.velocity.y = 10;
                 return;
             }
             actor.position.y = actor.position.y + actor.velocity.y;

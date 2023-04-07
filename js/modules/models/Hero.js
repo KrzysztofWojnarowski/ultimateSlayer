@@ -22,6 +22,7 @@ define({
         height: 65
     },
     stamina: 40,
+    maxStamina:100,
     weapons: ["Bow","Spear"],
     ammo: [{ripper: 500}],
     jumpVelocity: 33.5,
