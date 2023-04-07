@@ -58,30 +58,29 @@ define(function () {
 
         this.initCamera = function (game) {
             var level = game.getLevel();
-            this.camera.position = {
+            var camera = this.camera;
+            camera.position = {
                 x: 0, y: 0
             };
-            this.camera.traceWindow = {
+            camera.traceWindow = {
                 start: ~~this.drawContext.canvas.width * 0.2,
                 end: ~~level.map.width - this.drawContext.canvas.width
             };
-            this.camera.size = {
+            camera.size = {
                 width: this.drawContext.canvas.width,
                 heigth: this.drawContext.canvas.height
             };
            
-            this.camera.maxPerspective = level.imageData.background.naturalWidth;
-            this.camera.maxRight = (level.map.width - 2*this.camera.size.width);
-            this.camera.perspectiveRatio = level.imageData.background.naturalWidth / (2*level.map.width);
+            camera.maxPerspective = level.imageData.background.naturalWidth;
+            camera.maxRight = (level.map.width - 2*this.camera.size.width);
+            camera.perspectiveRatio = level.imageData.background.naturalWidth / (2*level.map.width);
         };
 
         this.updateCamera = function (actorObj) {
             var camera = this.camera, aPos = actorObj.instance.position.x;
             camera.position.y = 200 - actorObj.instance.position.y;
-            if(aPos>camera.maxRight){
-                 
-                return;
-                
+            if(aPos>camera.maxRight){           
+                return;    
             }
             if (aPos > camera.traceWindow.start &&
                     aPos < camera.traceWindow.end) {
@@ -101,7 +100,6 @@ define(function () {
             this.animateTicker += 1;
             this.updateCamera(level.actors[0]);
             this.drawContext.drawImage(level.imageData.background, camera.perspective.x, camera.position.y * 0.05 - 50);
-            //this.drawContext.drawImage(level.imageData.foreground, camera.position.x, camera.position.y);
             this.drawLevelWireframe(level);
             var actors = level.actors;
             for (var x in actors) {
