@@ -21,7 +21,7 @@ define(function(){
             };
             this.position.x=this.position.x + this.velocity.x*this.direction;
             
-            this.position.y=this.position.y + this.velocity.y*(50*(this.vector[1]-200)/(this.vector[0]-200)*this.direction );
+            this.position.y=this.position.y + 0.8*this.velocity.y*(50*(this.vector[1]-200)/(this.vector[0]-200)*this.direction );
           
         };
         this.setSurroundingContext = function(factory,data,game,weapon){

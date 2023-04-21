@@ -167,11 +167,13 @@ define(function () {
             if(ammo.drawable===false) return;
             var actor = ammo.ownerWeapon.ownerActor;
             this.drawContext.beginPath();
-            this.drawContext.strokeStyle = "#00FF00";
+            this.drawContext.strokeStyle = "#DDBB00";
+            this.drawContext.lineWidth=5;
             this.drawContext.moveTo(ammo.position.x + this.camera.position.x+30, ammo.position.y + this.camera.position.y+30);
             this.drawContext.lineTo(ammo.position.x + 60 + this.camera.position.x, ammo.position.y + this.camera.position.y+30);
             this.drawContext.stroke();
             this.drawContext.closePath();
+            
 
 
             return;

@@ -20,7 +20,7 @@ define(function (gameInstance) {
             this.redrawed = performance.now();
         };
         this.redraw = function (InputHandler, game, viewport) {
-            //this.performanceTest();
+            this.performanceTest();
             var level = game.getLevel(), x;
             viewport.drawLevel(level, this.tick);
             for (x in game.ammoArray) {
