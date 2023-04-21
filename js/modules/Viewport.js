@@ -59,8 +59,8 @@ define(function () {
                 x: 0, y: 0
             };
             camera.traceWindow = {
-                start: ~~this.drawContext.canvas.width * 0.2,
-                end: ~~level.map.width - this.drawContext.canvas.width
+                start: Math.floor(this.drawContext.canvas.width * 0.2),
+                end: Math.floor(level.map.width - this.drawContext.canvas.width)
             };
             camera.size = {
                 width: this.drawContext.canvas.width,
@@ -81,7 +81,7 @@ define(function () {
             if (aPos > camera.traceWindow.start &&
                     aPos < camera.traceWindow.end) {
                 camera.position.x = -aPos + camera.traceWindow.start;
-                camera.perspective.x = ~~camera.position.x * camera.perspectiveRatio;
+                camera.perspective.x = Math.floor(camera.position.x * camera.perspectiveRatio);
                 
              
             }else{
@@ -148,14 +148,8 @@ define(function () {
 
         this.drawCrossHair = function(actor,inputHandler){
             var drawContext = this.drawContext;
-            var crosshair = actor.activeWeapon.crosshair ||{
-                color:"#ffffff",
-                radius:30,
-                position:{
-                    x:0,
-                    y:0
-                }
-            };
+            var crosshair = actor.activeWeapon.crosshair;
+            
             drawContext.beginPath();
             drawContext.strokeStyle = crosshair.color;
             drawContext.lineWidth=1;
