@@ -32,7 +32,7 @@ define({
     trigger:function(){
         this.shallBeDrawn=true;
         this.current=0;
-        this.position.x = 600*Math.random();
+        this.position.x = -100+110*Math.random()*(Math.random()>0.5?1:-1);
         this.position.y = -100*Math.random();
     },
     
