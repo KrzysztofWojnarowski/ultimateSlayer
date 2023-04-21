@@ -6,6 +6,7 @@ define(["Controlls"], function(controlls) {
         this.bufferSize = 0;
         this.mouseEvent = null;
         this.keyboardState = {};
+        this.mousePosition = {x:0,y:0};
         this.bindControlls = function() {
             var keyMap = [],
                     controllsList = this.controlls;
@@ -81,12 +82,26 @@ define(["Controlls"], function(controlls) {
         inputHandler.setKey(e, false);
     });
     document.addEventListener('mousedown',function(e){
+        e.preventDefault();
         inputHandler.keyboardState["Fire"] = true;
         inputHandler.mouseEvent = e;
+        inputHandler.mousePosition = {
+            x:e.offsetX,
+            y:e.offsetY
+        }
     });
     
     document.addEventListener('mouseup',function(e){
+        e.preventDefault();
         inputHandler.keyboardState.Fire = false;
+    });
+
+    document.addEventListener('mousemove',function(e){
+        e.preventDefault();
+        inputHandler.mousePosition = {
+            x:e.offsetX,
+            y:e.offsetY
+        }
     });
 
     

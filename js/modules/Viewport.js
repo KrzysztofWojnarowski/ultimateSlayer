@@ -12,11 +12,7 @@ define(function () {
             
             this.drawContext = canvas.getContext("2d");
             this.drawContext.canvas.width = viewPortConfig.width;
-            this.drawContext.canvas.height = viewPortConfig.height;
-            this.drawContext.scale(viewPortConfig.scale.x, viewPortConfig.scale.y);
-            this.scale ={ x:viewPortConfig.scale.x,
-                y:viewPortConfig.scale.y};
-            
+            this.drawContext.canvas.height = viewPortConfig.height; 
             this.animateTicker = 0;
 
         };
@@ -150,6 +146,27 @@ define(function () {
 
         };
 
+        this.drawCrossHair = function(actor,inputHandler){
+            var drawContext = this.drawContext;
+            var crosshair = actor.activeWeapon.crosshair ||{
+                color:"#ffffff",
+                radius:30,
+                position:{
+                    x:0,
+                    y:0
+                }
+            };
+            drawContext.beginPath();
+            drawContext.strokeStyle = crosshair.color;
+            drawContext.lineWidth=1;
+            drawContext.arc(crosshair.position.x+this.camera.position.x,crosshair.position.y+this.camera.position.y,crosshair.radius,0,6.3);
+            drawContext.stroke();
+            drawContext.closePath();
+        }
+
+
+
+
         this.drawPickable = function (pickable) {
             
             this.drawContext.drawImage(pickable.sprite,
@@ -164,18 +181,15 @@ define(function () {
 
         this.drawAmmo = function (ammo) {
             //don't draw spear ammo
-            if(ammo.drawable===false) return;
-            var actor = ammo.ownerWeapon.ownerActor;
-            this.drawContext.beginPath();
-            this.drawContext.strokeStyle = "#DDBB00";
-            this.drawContext.lineWidth=5;
-            this.drawContext.moveTo(ammo.position.x + this.camera.position.x+30, ammo.position.y + this.camera.position.y+30);
-            this.drawContext.lineTo(ammo.position.x + 60 + this.camera.position.x, ammo.position.y + this.camera.position.y+30);
-            this.drawContext.stroke();
-            this.drawContext.closePath();
-            
-
-
+            if(ammo.drawable===false) return;  
+            var drawContext   = this.drawContext;        
+            drawContext.beginPath();
+            drawContext.strokeStyle = "#DDBB00";
+            drawContext.lineWidth=5;
+            drawContext.moveTo(ammo.position.x +this.camera.position.x, ammo.position.y+this.camera.position.y );
+            drawContext.lineTo(ammo.position.x + 60 +this.camera.position.x, ammo.position.y +this.camera.position.y);
+            drawContext.stroke();
+            drawContext.closePath();
             return;
         };
         this.inSight = function (realNumber) {
@@ -184,17 +198,13 @@ define(function () {
             }
             return false;
         };
-        this.assambleActor = function (actor) {
-        };
+
         this.drawLevelWireframe = function (level) {
             var brick = level.imageData.levelBrick;
             this.drawContext.beginPath();
             this.drawContext.strokeStyle = "#FF0000";
             for (x in level.map.obstacles) {
                 this.drawLevelLine(level.map.obstacles[x],brick);
-                
-              //  this.drawContext.moveTo((level.map.obstacles[x][0]) + this.camera.position.x, (level.map.obstacles[x][0] * level.map.obstacles[x][2] + level.map.obstacles[x][3]) + this.camera.position.y + 65);
-              //  this.drawContext.lineTo((level.map.obstacles[x][1]) + this.camera.position.x, (level.map.obstacles[x][1] * level.map.obstacles[x][2] + level.map.obstacles[x][3]) + this.camera.position.y + 65);
             }
             this.drawContext.stroke();
             this.drawContext.closePath();

@@ -9,17 +9,25 @@ define(["models/EquipmentFactory"],function (EquipmentFactory) {
         this.shootingVector=[0,0];
         this.direction=null;
         this.ammoTriggered = false;
-        this.shoot = function (direction) {
+        this.crosshair = {
+            
+                color:"#ffffff",
+                radius:30,
+                position:{
+                    x:0,
+                    y:0
+                }
+        };
+        this.shoot = function (direction,mousePosition) {
             
             if (this.isShooting || this.ammoLeft<=0){
                 return false;
             }
             this.direction=direction;
             if(this.ownerActor.mouseEvent!=null){
-                
             this.shootingVector=[
-               this.ownerActor.mouseEvent.layerX,
-               this.ownerActor.mouseEvent.layerY
+               this.crosshair.position.x,
+               this.crosshair.position.y
                 
             ];
             }else{
@@ -36,8 +44,9 @@ define(["models/EquipmentFactory"],function (EquipmentFactory) {
         this.isReady = true;
         this.reloadingCounter = 0;
         
-        this.update = function () {
-            
+        this.update = function (mousePosition) {
+            this.crosshair.position.x=mousePosition.x+this.ownerActor.position.x-50;
+            this.crosshair.position.y = mousePosition.y+this.ownerActor.position.y-200;
             if (this.isShooting){
                 this.reloadingCounter ++;
                 

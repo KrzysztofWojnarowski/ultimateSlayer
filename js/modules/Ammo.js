@@ -20,9 +20,8 @@ define(function(){
                 return;
             };
             this.position.x=this.position.x + this.velocity.x*this.direction;
-            
-            this.position.y=this.position.y + 0.8*this.velocity.y*(50*(this.vector[1]-200)/(this.vector[0]-200)*this.direction );
-          
+            var a = (this.vector[1]-this.startPosition.y)/(this.vector[0]-this.startPosition.x);
+            this.position.y=this.position.y + a*this.velocity.x*this.direction;
         };
         this.setSurroundingContext = function(factory,data,game,weapon){
             
@@ -46,7 +45,7 @@ define(function(){
                 instance.position.x = this.ownerWeapon.ownerActor.position.x;
             }
             
-            instance.position.y = this.ownerWeapon.ownerActor.position.y+30;
+            instance.position.y = this.ownerWeapon.ownerActor.position.y+64;
             instance.vector = vector;
             
             instance.startPosition = {

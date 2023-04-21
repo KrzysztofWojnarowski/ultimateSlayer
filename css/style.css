@@ -8,6 +8,9 @@ body{
     font-family: Arial, sans-serif;
     
 }
+canvas:hover{
+    cursor:none
+}
 
 .viewport{
     border-radius: 50px;

@@ -20,7 +20,7 @@ define(function (gameInstance) {
             this.redrawed = performance.now();
         };
         this.redraw = function (InputHandler, game, viewport) {
-            this.performanceTest();
+            //this.performanceTest();
             var level = game.getLevel(), x;
             viewport.drawLevel(level, this.tick);
             for (x in game.ammoArray) {
@@ -31,6 +31,7 @@ define(function (gameInstance) {
             }
             game.Blood.redraw(viewport,game.currentLevel.actors[0].instance);
             game.HUD.redraw(viewport);
+            viewport.drawCrossHair(game.currentLevel.actors[0].instance,InputHandler);
         };
         this.update = function (inputHandler, game, viewport) {
             var level = game.getLevel();
@@ -68,7 +69,7 @@ define(function (gameInstance) {
                     game.physics.affectActor(level.actors[x].instance,viewport);
                     continue;
                 }
-                level.actors[x].instance.activeWeapon.update();
+                level.actors[x].instance.activeWeapon.update(inputHandler.mousePosition);
                 if (x == 0) {
                     
                     var actor = level.actors[0].instance;
@@ -87,7 +88,7 @@ define(function (gameInstance) {
                     
                     game.HUD.update(actor);
                 } else {
-                    game.AI.process(game, level.actors[x].instance, level.actors[0].instance);
+                    game.AI.process(game, level.actors[x].instance, level.actors[0].instance,inputHandler);
                     level.actors[x].instance.hit.update();
                 }
                 game.physics.affectActor(level.actors[x].instance,viewport);
@@ -126,7 +127,7 @@ define(function (gameInstance) {
                 actor.jump("Up");
             }
             if (inputHandler.isPressed("Fire")) {
-                actor.Shoot();
+                actor.Shoot(inputHandler.mousePosition);
                 return;
             }
             if (inputHandler.isPressed("Right") && inputHandler.isPressed("Left")) {

@@ -1,5 +1,5 @@
 define({
-    process: function (game, actor, hero) {
+    process: function (game, actor, hero,inputHandler) {
         var ax = actor.position.x,
                 ay = actor.position.y,
                 hx = hero.position.x,
@@ -28,7 +28,7 @@ define({
             }
             
             actor.previousAction = desiredDirection;
-            actor.Shoot(desiredDirection);
+            actor.Shoot(desiredDirection,inputHandler.mousePosition);
             return;
         }
     }

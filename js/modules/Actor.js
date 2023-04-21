@@ -100,16 +100,16 @@ define(["models/EquipmentFactory", "models/goodies/Hit"], function (EquipmentFac
             this.setAnimation();
         };
 
-        this.Shoot = function () {
+        this.Shoot = function (mousePosition) {
             direction = this.previousAction;
             if (this.activeWeapon.ammoLeft <= 0) {
                 this.stand();
                 return;
             }
             if(this.mouseEvent){
-                direction = this.mouseEvent.layerX>200?"Right":"Left";
+                direction = mousePosition.x>200?"Right":"Left";
             }
-            this.activeWeapon.shoot(direction);
+            this.activeWeapon.shoot(direction,mousePosition);
             this.action = "shoot" + direction + this.activeWeapon.type;
             this.velocity.x = 0;
             this.setAnimation();

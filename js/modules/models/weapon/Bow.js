@@ -8,5 +8,13 @@ define({
    animation:{
        shootLeftBow:{x:1,y:1105,loop:true,frames:9},
        ShootRightBow:{x:1,y:1235,loop:true,frames:9}
+   },
+   crosshair:{
+    color:"#ff3333",
+    radius:5,
+    position:{
+        x:0,
+        y:0,
+    }
    }
 });

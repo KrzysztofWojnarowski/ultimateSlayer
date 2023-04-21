@@ -5,8 +5,8 @@ define({
         height:520,
         css:"border:1px solid black;",
         scale:{
-            x:0.9,
-            y:0.9
+            x:1,
+            y:1
         }
     },
     game:{

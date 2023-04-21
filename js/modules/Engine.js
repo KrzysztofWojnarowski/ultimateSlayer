@@ -26,31 +26,5 @@ define(["InputHandler", "Game", "Viewport", "config"], function (inputHandler, G
             }
             step();
         },
-        /*mainLoopActions: function() {
-            var k= performance.now();
-            animationData.game.context.update(inputHandler, animationData.game,animationData.viewPort);
-            animationData.game.context.redraw(inputHandler,animationData.game,animationData.viewPort);
-            var s = performance.now();
-            //console.log("Timing:",s-k);
-            requestAnimationFrame(this.mainLoop);
-        },
-        updateActors: function()
-        {
-        },
-        updateArena: function () {
-        },
-        checkKeyState: function () {
-
-        },
-        redraw: function () {
-        },
-        dispatchAction: function () {
-            //1 check keysState
-            // perfor
-        },
-        updateGame: function () {
-        }
-
-*/
     };
 });
