@@ -23,7 +23,11 @@ define({
             return;
         }else {
             if (actor.stamina<=20){
-                Math.random()<0.05?actor.jump(notDesiredDirection):actor.walk(notDesiredDirection);
+                if(Math.random()<0.05){
+                   // actor.jump(notDesiredDirection)
+                }else{
+                    actor.walk(notDesiredDirection)
+                };
                 return;
             }
             
@@ -32,10 +36,4 @@ define({
             return;
         }
     }
-    
-    
-    
-
-
-
 });
