@@ -1,5 +1,9 @@
+
+
+
 Violent 2d platform game
 Controls:
+
 W - jump
 A - left
 D - right
@@ -11,7 +15,7 @@ Click - fire
 
 
 
-
+Play on https://krzysztofwojnarowski.github.io/ultimateSlayer/
 
 
 The Story:
@@ -24,4 +28,5 @@ After getting to Hell He started taking it over...
 You started taking it over.
 You said You'll be back.
 And You always keep Your promisess.
+
 
