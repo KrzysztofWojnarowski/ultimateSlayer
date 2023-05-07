@@ -98,9 +98,13 @@ define(function () {
             this.drawContext.drawImage(level.imageData.background, camera.perspective.x, camera.position.y * 0.05 - 50);
             this.drawLevelWireframe(level);
             var actors = level.actors;
-            for (var x in actors) {
-                this.drawActor(actors[x].instance);
-            }
+            var al = actors.length;
+            
+               actors.forEach((actor)=>{
+                this.drawActor(actor.instance);
+            });
+            
+            this.drawActor(actors[0].instance);
 
         };
 
